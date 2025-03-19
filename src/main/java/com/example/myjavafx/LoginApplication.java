@@ -9,6 +9,7 @@ import java.io.IOException;
 
 public class LoginApplication extends Application {
     static Stage stage;
+
     @Override
     public void start(Stage stage) throws IOException {
         LoginApplication.stage = stage;
@@ -21,6 +22,18 @@ public class LoginApplication extends Application {
 
     public static void moveToDashboard() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("dashboard.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+        stage.setScene(scene);
+    }
+
+    public static void moveToReports() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("reports.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+        stage.setScene(scene);
+    }
+
+    public static void moveToProfile() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("profile.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stage.setScene(scene);
     }

@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
+
 public class DashboardController {
 
     @FXML
@@ -15,15 +17,25 @@ public class DashboardController {
 
     @FXML
     private ImageView profileimg;
+    private ActionEvent event;
 
     @FXML
-    void goToDashboard(ActionEvent event) {
-        System.out.println("Hello World");
-        time.setText("Time: " + time.getText());
+    void goToDashboard(ActionEvent event) throws IOException {
+        this.event = event;
+        LoginApplication.moveToDashboard();
     }
 
     @FXML
-    void goToProfile(MouseEvent event) {
+    void goToProfile(MouseEvent event) throws IOException {
         System.out.println("clicked");
+        LoginApplication.moveToProfile();
     }
+
+
+    @FXML
+    void goToReports(ActionEvent event) throws IOException {
+        this.event = event;
+        LoginApplication.moveToReports();
+    }
+
 }

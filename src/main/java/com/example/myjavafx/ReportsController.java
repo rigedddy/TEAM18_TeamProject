@@ -8,13 +8,10 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
-public class ProfileController {
+public class ReportsController {
 
     @FXML
     private ImageView profileimg;
-
-    @FXML
-    private ImageView profileimg1;
 
     @FXML
     private Label time;
@@ -36,11 +33,6 @@ public class ProfileController {
     void goToReports(ActionEvent event) throws IOException {
         this.event = event;
         LoginApplication.moveToReports();
-    }
-
-    @FXML
-    void signOut(ActionEvent event) {
-
     }
 
 }
