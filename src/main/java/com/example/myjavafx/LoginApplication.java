@@ -38,6 +38,14 @@ public class LoginApplication extends Application {
         stage.setScene(scene);
     }
 
+    public static void moveToFilms() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("films.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+        stage.setScene(scene);
+    }
+
+
+
     public static void main(String[] args) {
         launch();
     }

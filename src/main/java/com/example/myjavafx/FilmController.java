@@ -8,18 +8,19 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
-public class ProfileController {
+public class FilmController {
 
     @FXML
     private ImageView profileimg;
 
     @FXML
-    private ImageView profileimg1;
-
-    @FXML
     private Label time;
     private ActionEvent event;
 
+    @FXML
+    void createNewFilm(ActionEvent event) {
+
+    }
     @FXML
     void goToDashboard(ActionEvent event) throws IOException {
         this.event = event;
@@ -42,10 +43,4 @@ public class ProfileController {
         this.event = event;
         LoginApplication.moveToFilms();
     }
-
-    @FXML
-    void signOut(ActionEvent event) {
-
-    }
-
 }

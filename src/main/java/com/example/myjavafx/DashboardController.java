@@ -29,6 +29,7 @@ public class DashboardController {
     void goToProfile(MouseEvent event) throws IOException {
         System.out.println("clicked");
         LoginApplication.moveToProfile();
+
     }
 
 
@@ -36,6 +37,11 @@ public class DashboardController {
     void goToReports(ActionEvent event) throws IOException {
         this.event = event;
         LoginApplication.moveToReports();
+    }
+    @FXML
+    void goToFilms(ActionEvent event) throws IOException {
+        this.event = event;
+        LoginApplication.moveToFilms();
     }
 
 }
