@@ -55,7 +55,7 @@
                   <Font name="Cambria Math" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="600.0" layoutY="22.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Reports" textFill="WHITE">
+            <Button layoutX="600.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToReports" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Reports" textFill="WHITE">
                <font>
                   <Font name="Cambria Math" size="20.0" />
                </font>
@@ -70,7 +70,7 @@
                   <Image url="@images/LOGO.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="profileimg" fitHeight="65.0" fitWidth="50.0" layoutX="1203.0" layoutY="23.0" onMouseClicked="#goToProfile" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="profileimg" fitHeight="65.0" fitWidth="50.0" layoutX="1203.0" layoutY="23.0" onDragDetected="#goToProfile" onMouseClicked="#goToProfile" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/profile.png" />
                </image>
