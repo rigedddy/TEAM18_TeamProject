@@ -25,7 +25,7 @@ public class ReportsController {
 
     @FXML
     void goToProfile(MouseEvent event) throws IOException {
-        System.out.println("clicked");
+        //System.out.println("clicked");
         LoginApplication.moveToProfile();
     }
 
