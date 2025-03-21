@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class FilmController {
 
@@ -18,25 +19,42 @@ public class FilmController {
     private Label time;
     @FXML
     private TextField filmIDTextField;
+    @FXML
+    private TextField TitleTextField;
     int filmid;
     String registeredFilmID;
+    String filmTitle;
+    @FXML
+    private TextField LicenseTextField;
+    @FXML
+    private TextField DurationTextField;
+    @FXML
+    private TextField VenueTextField;
+    @FXML
+    private TextField DateTextField;
+
+    String license;
+    String duration;
+    String venue;
+    String date;
 
 
 
 
-
+    //get the data that was inputted by user, we can export this to sql
     @FXML
     void createNewFilm(ActionEvent event) {
-        // Get the text from the Film ID field
-        registeredFilmID = filmIDTextField.getText();
 
-        // Print to console (for debugging)
-        System.out.println("New Film Scheduled with ID: " + registeredFilmID.replaceAll("FilmID", ""));
+        registeredFilmID = filmIDTextField.getText();
+        filmTitle = TitleTextField.getText();
+        license = LicenseTextField.getText();
+        duration = DurationTextField.getText();
+        venue = VenueTextField.getText();
+        date = DateTextField.getText();
+        String[] data = {registeredFilmID, filmTitle, license, duration, venue, date};
+        System.out.println("the registered data: "+ Arrays.toString(data));
     }
-    @FXML
-    void RegisterFilmID(ActionEvent event) {
-        //vfhbdk
-    }
+
     @FXML
     void goToDashboard(ActionEvent event) throws IOException {
         LoginApplication.moveToDashboard();
@@ -44,7 +62,7 @@ public class FilmController {
 
     @FXML
     void goToProfile(MouseEvent event) throws IOException {
-        System.out.println("clicked");
+
         LoginApplication.moveToProfile();
     }
 
@@ -58,5 +76,8 @@ public class FilmController {
         LoginApplication.moveToFilms();
     }
 
-
+    @FXML
+    void goToBooking(ActionEvent event) throws IOException {
+        LoginApplication.moveToBooking();
+    }
 }

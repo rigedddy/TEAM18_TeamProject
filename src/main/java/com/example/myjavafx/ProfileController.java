@@ -38,6 +38,10 @@ public class ProfileController {
         LoginApplication.moveToReports();
     }
     @FXML
+    void goToBooking(ActionEvent event) throws IOException {
+        LoginApplication.moveToBooking();
+    }
+    @FXML
     void goToFilms(ActionEvent event) throws IOException {
         this.event = event;
         LoginApplication.moveToFilms();

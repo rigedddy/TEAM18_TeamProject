@@ -16,6 +16,10 @@ public class ReportsController {
     @FXML
     private Label time;
     private ActionEvent event;
+    @FXML
+    void goToBooking(ActionEvent event) throws IOException {
+        LoginApplication.moveToBooking();
+    }
 
     @FXML
     void goToDashboard(ActionEvent event) throws IOException {
