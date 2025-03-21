@@ -13,29 +13,16 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane layoutX="776.0" layoutY="33.0" prefHeight="540.0" prefWidth="482.0" style="-fx-background-color: #d8dfe6;">
-               <children>
-                  <Text layoutX="18.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upcoming Events">
-                     <font>
-                        <Font name="Cambria Math" size="20.0" />
-                     </font>
-                  </Text>
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="27.0" layoutY="87.0" prefHeight="487.0" prefWidth="716.0" style="-fx-background-color: #d8dfe6;">
-               <children>
-                  <Text layoutX="12.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ticket sales Per Event">
-                     <font>
-                        <Font name="Cambria Math" size="20.0" />
-                     </font>
-                  </Text>
-               </children>
-            </AnchorPane>
-            <Text fill="#2e4a63" layoutX="26.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LANCASTER'S MUSIC HALL">
+            <Text fill="#2e4a63" layoutX="26.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BOOKING">
                <font>
                   <Font name="Calibri Bold" size="63.0" />
                </font>
             </Text>
+            <Label layoutX="14.0" layoutY="86.0" prefHeight="42.0" prefWidth="411.0" text="Register a New Booking Below:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
    </center>
    <top>

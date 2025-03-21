@@ -3,6 +3,7 @@ package com.example.myjavafx;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
@@ -15,15 +16,29 @@ public class FilmController {
 
     @FXML
     private Label time;
-    private ActionEvent event;
+    @FXML
+    private TextField filmIDTextField;
+    int filmid;
+    String registeredFilmID;
+
+
+
+
 
     @FXML
     void createNewFilm(ActionEvent event) {
+        // Get the text from the Film ID field
+        registeredFilmID = filmIDTextField.getText();
 
+        // Print to console (for debugging)
+        System.out.println("New Film Scheduled with ID: " + registeredFilmID.replaceAll("FilmID", ""));
+    }
+    @FXML
+    void RegisterFilmID(ActionEvent event) {
+        //vfhbdk
     }
     @FXML
     void goToDashboard(ActionEvent event) throws IOException {
-        this.event = event;
         LoginApplication.moveToDashboard();
     }
 
@@ -35,14 +50,13 @@ public class FilmController {
 
     @FXML
     void goToReports(ActionEvent event) throws IOException {
-        this.event = event;
         LoginApplication.moveToReports();
     }
 
     @FXML
     void goToFilms(ActionEvent event) throws IOException {
-        this.event = event;
         LoginApplication.moveToFilms();
     }
+
 
 }
