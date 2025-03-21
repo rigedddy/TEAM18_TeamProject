@@ -73,7 +73,7 @@
                   <Font name="Cambria Math" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="270.0" layoutY="22.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Booking" textFill="WHITE">
+            <Button layoutX="270.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToBooking" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Booking" textFill="WHITE">
                <font>
                   <Font name="Cambria Math" size="20.0" />
                </font>

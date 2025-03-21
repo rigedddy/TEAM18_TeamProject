@@ -31,7 +31,10 @@ public class DashboardController {
         LoginApplication.moveToProfile();
 
     }
-
+    @FXML
+    void goToBooking(ActionEvent event) throws IOException {
+        LoginApplication.moveToBooking();
+    }
 
     @FXML
     void goToReports(ActionEvent event) throws IOException {

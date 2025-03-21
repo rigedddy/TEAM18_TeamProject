@@ -28,13 +28,55 @@
                   </Text>
                </children>
             </AnchorPane>
-            <Button layoutX="510.0" layoutY="68.0" mnemonicParsing="false" onAction="#createNewFilm" prefHeight="114.0" prefWidth="259.0" text="Schedule a New Film" />
-            <TextField layoutX="509.0" layoutY="182.0" prefHeight="38.0" prefWidth="280.0" text="FilmID: " />
-            <AnchorPane layoutX="887.0" layoutY="174.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #111111;" />
-            <TextField layoutX="509.0" layoutY="224.0" prefHeight="38.0" prefWidth="280.0" text="Title: " />
-            <TextField layoutX="508.0" layoutY="264.0" prefHeight="38.0" prefWidth="280.0" text="LicenseCost:" />
-            <TextField layoutX="509.0" layoutY="302.0" prefHeight="38.0" prefWidth="280.0" text="TicketsSold:" />
-            <TextField layoutX="509.0" layoutY="342.0" prefHeight="38.0" prefWidth="280.0" text="Duration:" />
+            <Button layoutX="510.0" layoutY="68.0" mnemonicParsing="false" onAction="#createNewFilm" prefHeight="114.0" prefWidth="317.0" text="Schedule a New Film">
+               <font>
+                  <Font name="Cambria Math" size="18.0" />
+               </font></Button>
+            <TextField fx:id="filmIDTextField" layoutX="509.0" layoutY="209.0" prefHeight="38.0" prefWidth="320.0" />
+            <TextField fx:id="TitleTextField" layoutX="509.0" layoutY="278.0" prefHeight="38.0" prefWidth="320.0" />
+            <TextField fx:id="LicenseTextField" layoutX="509.0" layoutY="346.0" prefHeight="38.0" prefWidth="320.0" />
+            <TextField fx:id="DurationTextField" layoutX="509.0" layoutY="416.0" prefHeight="38.0" prefWidth="320.0" />
+            <AnchorPane layoutX="865.0" layoutY="68.0" prefHeight="533.0" prefWidth="341.0" style="-fx-background-color: #d8dfe6;">
+               <children>
+                  <Text layoutX="22.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Empty Spaces on Calendar">
+                     <font>
+                        <Font name="Cambria Math" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <Text layoutX="510.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FilmID:">
+               <font>
+                  <Font name="Cambria Math" size="20.0" />
+               </font>
+            </Text>
+            <Text layoutX="511.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title:">
+               <font>
+                  <Font name="Cambria Math" size="20.0" />
+               </font>
+            </Text>
+            <Text layoutX="511.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LicenseCost:">
+               <font>
+                  <Font name="Cambria Math" size="20.0" />
+               </font>
+            </Text>
+            <Text layoutX="510.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Duration:">
+               <font>
+                  <Font name="Cambria Math" size="20.0" />
+               </font>
+            </Text>
+            <TextField fx:id="VenueTextField" layoutX="509.0" layoutY="484.0" prefHeight="38.0" prefWidth="320.0" />
+            <Text layoutX="510.0" layoutY="475.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VenueRoom:">
+               <font>
+                  <Font name="Cambria Math" size="20.0" />
+               </font>
+            </Text>
+            <Text layoutX="512.0" layoutY="545.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:">
+               <font>
+                  <Font name="Cambria Math" size="20.0" />
+               </font>
+            </Text>
+            <TextField fx:id="DateTextField" layoutX="509.0" layoutY="553.0" prefHeight="38.0" prefWidth="320.0" />
          </children></AnchorPane>
    </center>
    <top>
@@ -45,12 +87,12 @@
                   <Font name="Cambria Math" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="270.0" layoutY="22.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Booking" textFill="WHITE">
+            <Button layoutX="270.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToBooking" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Booking" textFill="WHITE">
                <font>
                   <Font name="Cambria Math" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="435.0" layoutY="22.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #446d91;" text="Films" textFill="WHITE">
+            <Button layoutX="435.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToFilms" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #446d91;" text="Films" textFill="WHITE">
                <font>
                   <Font name="Cambria Math" size="20.0" />
                </font>
