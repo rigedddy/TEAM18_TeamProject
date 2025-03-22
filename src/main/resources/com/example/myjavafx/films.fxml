@@ -19,7 +19,7 @@
                   <Font name="Calibri Bold" size="63.0" />
                </font>
             </Text>
-            <AnchorPane layoutX="26.0" layoutY="68.0" prefHeight="540.0" prefWidth="482.0" style="-fx-background-color: #d8dfe6;">
+            <AnchorPane layoutX="26.0" layoutY="68.0" prefHeight="533.0" prefWidth="445.0" style="-fx-background-color: #d8dfe6;">
                <children>
                   <Text layoutX="18.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scheduled Films">
                      <font>
