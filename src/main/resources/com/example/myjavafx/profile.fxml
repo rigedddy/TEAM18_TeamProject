@@ -25,17 +25,17 @@
                         <Font name="Calibri" size="20.0" />
                      </font>
                   </Button>
-                  <Label layoutX="110.0" layoutY="130.0" prefHeight="45.0" prefWidth="390.0" style="-fx-background-color: #bcd1e3; -fx-background-radius: 10px; -fx-label-padding: 5px;" text="Employee ID:">
+                  <Label layoutX="110.0" layoutY="130.0" prefHeight="45.0" prefWidth="390.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-label-padding: 5px;" text="Employee ID:">
                      <font>
                         <Font name="Cambria Math" size="30.0" />
                      </font>
                   </Label>
-                  <Label layoutX="110.0" layoutY="200.0" prefHeight="45.0" prefWidth="390.0" style="-fx-background-color: #bcd1e3; -fx-background-radius: 10px; -fx-label-padding: 5px;" text="Name:">
+                  <Label layoutX="110.0" layoutY="200.0" prefHeight="45.0" prefWidth="390.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-label-padding: 5px;" text="Name:">
                      <font>
                         <Font name="Cambria Math" size="30.0" />
                      </font>
                   </Label>
-                  <Label layoutX="110.0" layoutY="270.0" prefHeight="45.0" prefWidth="390.0" style="-fx-background-color: #bcd1e3; -fx-background-radius: 10px; -fx-label-padding: 5px;" text="Email:">
+                  <Label layoutX="110.0" layoutY="270.0" prefHeight="45.0" prefWidth="390.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-label-padding: 5px;" text="Email:">
                      <font>
                         <Font name="Cambria Math" size="30.0" />
                      </font>
