@@ -20,26 +20,26 @@
                         <Image url="@images/profile.png" />
                      </image>
                   </ImageView>
-                  <Text layoutX="90.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
-                     <font>
-                        <Font name="Cambria Math" size="30.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="90.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:">
-                     <font>
-                        <Font name="Cambria Math" size="30.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="90.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee ID:">
-                     <font>
-                        <Font name="Cambria Math" size="30.0" />
-                     </font>
-                  </Text>
                   <Button layoutX="219.0" layoutY="412.0" mnemonicParsing="false" onAction="#signOut" prefHeight="43.0" prefWidth="165.0" style="-fx-background-color: #2e4a63;" text="SIGN OUT" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="20.0" />
                      </font>
                   </Button>
+                  <Label layoutX="110.0" layoutY="130.0" prefHeight="45.0" prefWidth="390.0" style="-fx-background-color: #bcd1e3; -fx-background-radius: 10px; -fx-label-padding: 5px;" text="Employee ID:">
+                     <font>
+                        <Font name="Cambria Math" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="110.0" layoutY="200.0" prefHeight="45.0" prefWidth="390.0" style="-fx-background-color: #bcd1e3; -fx-background-radius: 10px; -fx-label-padding: 5px;" text="Name:">
+                     <font>
+                        <Font name="Cambria Math" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="110.0" layoutY="270.0" prefHeight="45.0" prefWidth="390.0" style="-fx-background-color: #bcd1e3; -fx-background-radius: 10px; -fx-label-padding: 5px;" text="Email:">
+                     <font>
+                        <Font name="Cambria Math" size="30.0" />
+                     </font>
+                  </Label>
                </children></AnchorPane>
             <Text fill="#2e4a63" layoutX="26.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PROFILE">
                <font>

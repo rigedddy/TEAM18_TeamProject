@@ -37,8 +37,7 @@ public class FilmController {
     String duration;
     String venue;
     String date;
-
-
+    private ActionEvent event;
 
 
     //get the data that was inputted by user, we can export this to sql
@@ -62,7 +61,6 @@ public class FilmController {
 
     @FXML
     void goToProfile(MouseEvent event) throws IOException {
-
         LoginApplication.moveToProfile();
     }
 
@@ -80,4 +78,17 @@ public class FilmController {
     void goToBooking(ActionEvent event) throws IOException {
         LoginApplication.moveToBooking();
     }
+
+    @FXML
+    void goToCalendar(ActionEvent event) throws IOException {
+        this.event = event;
+        LoginApplication.moveToCalendar();
+    }
+
+    @FXML
+    void goToMarketing(ActionEvent event) throws IOException {
+        this.event = event;
+        LoginApplication.moveToMarketing();
+    }
+    
 }

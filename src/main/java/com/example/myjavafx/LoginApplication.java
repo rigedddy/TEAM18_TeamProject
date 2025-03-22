@@ -43,8 +43,21 @@ public class LoginApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stage.setScene(scene);
     }
+
     public static void moveToBooking() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("booking.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+        stage.setScene(scene);
+    }
+
+    public static void moveToCalendar() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("calendar.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
+        stage.setScene(scene);
+    }
+
+    public static void moveToMarketing() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("marketing.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stage.setScene(scene);
     }

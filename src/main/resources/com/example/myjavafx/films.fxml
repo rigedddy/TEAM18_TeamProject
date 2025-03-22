@@ -28,9 +28,9 @@
                   </Text>
                </children>
             </AnchorPane>
-            <Button layoutX="510.0" layoutY="68.0" mnemonicParsing="false" onAction="#createNewFilm" prefHeight="114.0" prefWidth="317.0" text="Schedule a New Film">
+            <Button layoutX="510.0" layoutY="68.0" mnemonicParsing="false" onAction="#createNewFilm" prefHeight="107.0" prefWidth="317.0" style="-fx-background-color: #2e4a63; -fx-background-radius: 20px;" text="Schedule a New Film" textFill="WHITE">
                <font>
-                  <Font name="Cambria Math" size="18.0" />
+                  <Font name="Calibri" size="23.0" />
                </font></Button>
             <TextField fx:id="filmIDTextField" layoutX="509.0" layoutY="209.0" prefHeight="38.0" prefWidth="320.0" />
             <TextField fx:id="TitleTextField" layoutX="509.0" layoutY="278.0" prefHeight="38.0" prefWidth="320.0" />
@@ -102,7 +102,7 @@
                   <Font name="Cambria Math" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="765.0" layoutY="22.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Calendar" textFill="WHITE">
+            <Button layoutX="765.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToCalendar" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Calendar" textFill="WHITE">
                <font>
                   <Font name="Cambria Math" size="20.0" />
                </font>
@@ -117,7 +117,7 @@
                   <Image url="@images/profile.png" />
                </image>
             </ImageView>
-            <Button layoutX="927.0" layoutY="22.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Marketing" textFill="WHITE">
+            <Button layoutX="927.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToMarketing" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Marketing" textFill="WHITE">
                <font>
                   <Font name="Cambria Math" size="20.0" />
                </font>

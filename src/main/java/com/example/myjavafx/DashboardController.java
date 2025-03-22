@@ -47,4 +47,17 @@ public class DashboardController {
         LoginApplication.moveToFilms();
     }
 
+    @FXML
+    void goToCalendar(ActionEvent event) throws IOException {
+        this.event = event;
+        LoginApplication.moveToCalendar();
+    }
+
+    @FXML
+    void goToMarketing(ActionEvent event) throws IOException {
+        this.event = event;
+        LoginApplication.moveToMarketing();
+    }
+
+
 }

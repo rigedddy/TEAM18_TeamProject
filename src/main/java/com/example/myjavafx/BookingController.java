@@ -41,9 +41,7 @@ public class BookingController implements Initializable {
     private ChoiceBox<String> InstitutionChoice;
     String InstitutionChoiceString;
     private final String[] insitutionChoices = {"Primary School", "Secondary School", "College", "University"};
-
-
-
+    private ActionEvent event;
 
 
     //get the data that was inputted by user, we can export this to sql
@@ -85,6 +83,17 @@ public class BookingController implements Initializable {
         LoginApplication.moveToBooking();
     }
 
+    @FXML
+    void goToCalendar(ActionEvent event) throws IOException {
+        this.event = event;
+        LoginApplication.moveToCalendar();
+    }
+
+    @FXML
+    void goToMarketing(ActionEvent event) throws IOException {
+        this.event = event;
+        LoginApplication.moveToMarketing();
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -16,6 +16,7 @@ public class ReportsController {
     @FXML
     private Label time;
     private ActionEvent event;
+
     @FXML
     void goToBooking(ActionEvent event) throws IOException {
         LoginApplication.moveToBooking();
@@ -42,6 +43,18 @@ public class ReportsController {
     void goToFilms(ActionEvent event) throws IOException {
         this.event = event;
         LoginApplication.moveToFilms();
+    }
+
+    @FXML
+    void goToCalendar(ActionEvent event) throws IOException {
+        this.event = event;
+        LoginApplication.moveToCalendar();
+    }
+
+    @FXML
+    void goToMarketing(ActionEvent event) throws IOException {
+        this.event = event;
+        LoginApplication.moveToMarketing();
     }
 
 }
