@@ -44,7 +44,7 @@
                   </Button>
                </children>
             </AnchorPane>
-            <Text fill="#2e4a63" layoutX="26.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CALENDER">
+            <Text fill="#2e4a63" layoutX="26.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CALENDAR">
                <font>
                   <Font name="Calibri Bold" size="63.0" />
                </font>
@@ -58,10 +58,10 @@
                   </Text>
                   <TableView layoutY="-4.0" prefHeight="477.0" prefWidth="567.0">
                     <columns>
-                      <TableColumn prefWidth="107.3333740234375" text="Time Slot" />
+                      <TableColumn prefWidth="107.3333740234375" text="EventID" />
                       <TableColumn prefWidth="203.33331298828125" text="Event Description" />
                         <TableColumn prefWidth="96.00006103515625" text="Room" />
-                        <TableColumn prefWidth="160.00006103515625" text="Status" />
+                        <TableColumn prefWidth="160.00006103515625" text="Time" />
                     </columns>
                   </TableView>
                </children>

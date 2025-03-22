@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -18,87 +18,90 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
          <children>
-            <Text fill="#2e4a63" layoutX="26.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MARKETING">
+            <Text fill="#2e4a63" layoutX="26.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Advertising">
                <font>
                   <Font name="Calibri Bold" size="63.0" />
                </font>
             </Text>
             <AnchorPane layoutX="31.0" layoutY="90.0" prefHeight="230.0" prefWidth="352.0" style="-fx-background-color: #d8dfe6;">
                <children>
-                  <Text layoutX="18.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tour Bookings">
+                  <Text layoutX="18.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Venue Tour Booking">
                      <font>
                         <Font size="22.0" />
                      </font>
                   </Text>
-                  <Text layoutX="26.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room ID" />
-                  <Text layoutX="26.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
-                  <Text layoutX="26.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Slot" />
-                  <TextField layoutX="155.0" layoutY="70.0" prefHeight="26.0" prefWidth="157.0" />
-                  <DatePicker layoutX="156.0" layoutY="114.0" prefHeight="26.0" prefWidth="155.0" />
-                  <ComboBox layoutX="157.0" layoutY="158.0" prefHeight="26.0" prefWidth="155.0" />
+                  <Text layoutX="26.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tour ID" />
+                  <Text layoutX="26.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
+                  <Text layoutX="26.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Slot" />
+                  <TextField layoutX="155.0" layoutY="70.0" prefHeight="26.0" prefWidth="150.0" />
+                  <DatePicker layoutX="155.0" layoutY="160.0" prefHeight="26.0" prefWidth="150.0" />
                   <Button layoutX="265.0" layoutY="200.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="75.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="12.0" />
                      </font>
                   </Button>
+                  <ChoiceBox layoutX="155.0" layoutY="114.0" prefHeight="25.0" prefWidth="150.0" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="895.0" layoutY="92.0" prefHeight="230.0" prefWidth="352.0" style="-fx-background-color: #d8dfe6;">
                <children>
-                  <Text layoutX="17.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Venue Booking">
+                  <Text layoutX="17.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Meeting Room Booking">
                      <font>
                         <Font size="22.0" />
                      </font>
                   </Text>
-                  <Text layoutX="35.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Venue ID" />
-                  <Text layoutX="35.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
-                  <Text layoutX="35.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Time Slots" />
-                  <TextField layoutX="174.0" layoutY="69.0" prefHeight="26.0" prefWidth="151.0" />
-                  <DatePicker layoutX="175.0" layoutY="111.0" prefHeight="26.0" prefWidth="149.0" />
-                  <ComboBox layoutX="174.0" layoutY="153.0" prefHeight="26.0" prefWidth="151.0" />
+                  <Text layoutX="35.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Meeting ID" />
+                  <Text layoutX="35.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
+                  <Text layoutX="35.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Time Slots" />
+                  <TextField layoutX="175.0" layoutY="69.0" prefHeight="25.0" prefWidth="150.0" />
+                  <DatePicker layoutX="175.0" layoutY="148.0" prefHeight="25.0" prefWidth="150.0" />
                   <Button layoutX="262.0" layoutY="200.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="75.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="12.0" />
                      </font>
                   </Button>
+                  <ChoiceBox layoutX="175.0" layoutY="108.0" prefHeight="25.0" prefWidth="150.0" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="465.0" layoutY="91.0" prefHeight="233.0" prefWidth="372.0" style="-fx-background-color: #d8dfe6;">
+            <AnchorPane layoutX="439.0" layoutY="91.0" prefHeight="233.0" prefWidth="412.0" style="-fx-background-color: #d8dfe6;">
                <children>
-                  <Text layoutX="17.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Friends of Lancaster's – Notification">
+                  <Text layoutX="17.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Friends of Lancaster's – Notifications">
                      <font>
                         <Font size="22.0" />
                      </font>
                   </Text>
-                  <Text layoutX="19.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upcoming Shows" />
+                  <Text layoutX="19.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upcoming Shows:" />
                   <Text layoutX="39.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                  <ComboBox layoutX="169.0" layoutY="69.0" prefHeight="26.0" prefWidth="159.0" />
-                  <Button layoutX="261.0" layoutY="200.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="75.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
+                  <Button layoutX="317.0" layoutY="200.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="75.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="12.0" />
                      </font>
                   </Button>
+                  <Text layoutX="19.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Year:" />
+                  <ChoiceBox layoutX="190.0" layoutY="70.0" prefHeight="25.0" prefWidth="150.0" />
+                  <ChoiceBox layoutX="190.0" layoutY="133.0" prefHeight="25.0" prefWidth="150.0" />
                </children>
             </AnchorPane>
             <TableView layoutX="31.0" layoutY="320.0" prefHeight="253.0" prefWidth="351.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="Room ID" />
+                <TableColumn prefWidth="75.0" text="Tour ID" />
                 <TableColumn prefWidth="139.0" text="Time" />
                   <TableColumn prefWidth="136.0" text="Date" />
               </columns>
             </TableView>
-            <TableView layoutX="465.0" layoutY="319.0" prefHeight="253.0" prefWidth="372.0">
+            <TableView layoutX="439.0" layoutY="320.0" prefHeight="253.0" prefWidth="412.0">
                <columns>
                   <TableColumn prefWidth="75.0" text="Name" />
-                  <TableColumn prefWidth="162.0" text="Email" />
-                  <TableColumn prefWidth="134.0" text="Show" />
+                  <TableColumn prefWidth="128.0" text="Email" />
+                  <TableColumn prefWidth="113.0" text="Show" />
+                  <TableColumn prefWidth="95.0" text="Year" />
                </columns>
             </TableView>
             <TableView layoutX="896.0" layoutY="322.0" prefHeight="250.0" prefWidth="351.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="Venue ID" />
-                  <TableColumn prefWidth="145.0" text="Time" />
-                  <TableColumn prefWidth="130.0" text="Date" />
+                  <TableColumn prefWidth="116.0" text="Meeting ID" />
+                  <TableColumn prefWidth="120.0" text="Time" />
+                  <TableColumn prefWidth="114.0" text="Date" />
                </columns>
             </TableView>
          </children></AnchorPane>
