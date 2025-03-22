@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.myjavafx.AdvertisingController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+         <children>
+            <Text fill="#2e4a63" layoutX="26.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MARKETING">
+               <font>
+                  <Font name="Calibri Bold" size="63.0" />
+               </font>
+            </Text>
+            <AnchorPane layoutX="31.0" layoutY="90.0" prefHeight="230.0" prefWidth="352.0" style="-fx-background-color: #d8dfe6;">
+               <children>
+                  <Text layoutX="18.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tour Bookings">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="26.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room ID" />
+                  <Text layoutX="26.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
+                  <Text layoutX="26.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Slot" />
+                  <TextField layoutX="155.0" layoutY="70.0" prefHeight="26.0" prefWidth="157.0" />
+                  <DatePicker layoutX="156.0" layoutY="114.0" prefHeight="26.0" prefWidth="155.0" />
+                  <ComboBox layoutX="157.0" layoutY="158.0" prefHeight="26.0" prefWidth="155.0" />
+                  <Button layoutX="265.0" layoutY="200.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="75.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
+                     <font>
+                        <Font name="Calibri" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="895.0" layoutY="92.0" prefHeight="230.0" prefWidth="352.0" style="-fx-background-color: #d8dfe6;">
+               <children>
+                  <Text layoutX="17.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Venue Booking">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="35.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Venue ID" />
+                  <Text layoutX="35.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date" />
+                  <Text layoutX="35.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Time Slots" />
+                  <TextField layoutX="174.0" layoutY="69.0" prefHeight="26.0" prefWidth="151.0" />
+                  <DatePicker layoutX="175.0" layoutY="111.0" prefHeight="26.0" prefWidth="149.0" />
+                  <ComboBox layoutX="174.0" layoutY="153.0" prefHeight="26.0" prefWidth="151.0" />
+                  <Button layoutX="262.0" layoutY="200.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="75.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
+                     <font>
+                        <Font name="Calibri" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="465.0" layoutY="91.0" prefHeight="233.0" prefWidth="372.0" style="-fx-background-color: #d8dfe6;">
+               <children>
+                  <Text layoutX="17.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Friends of Lancaster's – Notification">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="19.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upcoming Shows" />
+                  <Text layoutX="39.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+                  <ComboBox layoutX="169.0" layoutY="69.0" prefHeight="26.0" prefWidth="159.0" />
+                  <Button layoutX="261.0" layoutY="200.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="75.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
+                     <font>
+                        <Font name="Calibri" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <TableView layoutX="31.0" layoutY="320.0" prefHeight="253.0" prefWidth="351.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Room ID" />
+                <TableColumn prefWidth="139.0" text="Time" />
+                  <TableColumn prefWidth="136.0" text="Date" />
+              </columns>
+            </TableView>
+            <TableView layoutX="465.0" layoutY="319.0" prefHeight="253.0" prefWidth="372.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="Name" />
+                  <TableColumn prefWidth="162.0" text="Email" />
+                  <TableColumn prefWidth="134.0" text="Show" />
+               </columns>
+            </TableView>
+            <TableView layoutX="896.0" layoutY="322.0" prefHeight="250.0" prefWidth="351.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="Venue ID" />
+                  <TableColumn prefWidth="145.0" text="Time" />
+                  <TableColumn prefWidth="130.0" text="Date" />
+               </columns>
+            </TableView>
+         </children></AnchorPane>
+   </center>
+   <top>
+      <AnchorPane prefHeight="92.0" prefWidth="1280.0" style="-fx-background-color: #d5ebff;" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="105.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToDashboard" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Dashboard" textFill="WHITE">
+               <font>
+                  <Font name="Cambria Math" size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="270.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToBooking" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Booking" textFill="WHITE">
+               <font>
+                  <Font name="Cambria Math" size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="435.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToFilms" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Films" textFill="WHITE">
+               <font>
+                  <Font name="Cambria Math" size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="600.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToReports" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Reports" textFill="WHITE">
+               <font>
+                  <Font name="Cambria Math" size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="765.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToCalendar" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Calendar" textFill="WHITE">
+               <font>
+                  <Font name="Cambria Math" size="20.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="74.0" fitWidth="74.0" layoutX="14.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/LOGO.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="profileimg" fitHeight="65.0" fitWidth="50.0" layoutX="1203.0" layoutY="23.0" onMouseClicked="#goToProfile" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/profile.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="927.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToAdvertising" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #446d91;" text="Advertising" textFill="WHITE">
+               <font>
+                  <Font name="Cambria Math" size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </top>
+   <bottom>
+      <AnchorPane prefHeight="0.0" prefWidth="1280.0" style="-fx-background-color: #d5ebff;" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="time" layoutX="30.0" layoutY="4.0" text="17/03/2025" textFill="#2e4a63">
+               <font>
+                  <Font name="Cambria Math" size="20.0" />
+               </font>
+            </Label>
+            <Text fill="#2e4a63" layoutX="1164.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EncoreTech">
+               <font>
+                  <Font name="Cambria Math" size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </bottom>
+</BorderPane>
