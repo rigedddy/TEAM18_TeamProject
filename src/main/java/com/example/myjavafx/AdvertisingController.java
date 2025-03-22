@@ -8,7 +8,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
-public class MarketingController {
+public class AdvertisingController {
 
     @FXML
     private ImageView profileimg;
@@ -52,9 +52,9 @@ public class MarketingController {
     }
 
     @FXML
-    void goToMarketing(ActionEvent event) throws IOException {
+    void goToAdvertising(ActionEvent event) throws IOException {
         this.event = event;
-        LoginApplication.moveToMarketing();
+        LoginApplication.moveToAdvertising();
     }
 
 }

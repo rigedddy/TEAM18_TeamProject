@@ -48,6 +48,18 @@ public class ProfileController {
     }
 
     @FXML
+    void goToCalendar(ActionEvent event) throws IOException {
+        this.event = event;
+        LoginApplication.moveToCalendar();
+    }
+
+    @FXML
+    void goToAdvertising(ActionEvent event) throws IOException {
+        this.event = event;
+        LoginApplication.moveToAdvertising();
+    }
+
+    @FXML
     void signOut(ActionEvent event) {
 
     }

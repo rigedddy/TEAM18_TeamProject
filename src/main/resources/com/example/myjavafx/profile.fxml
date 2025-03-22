@@ -71,7 +71,7 @@
                   <Font name="Cambria Math" size="20.0" />
                </font>
             </Button>
-            <Button layoutX="765.0" layoutY="22.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Calendar" textFill="WHITE">
+            <Button layoutX="765.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToCalendar" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Calendar" textFill="WHITE">
                <font>
                   <Font name="Cambria Math" size="20.0" />
                </font>
@@ -86,7 +86,7 @@
                   <Image url="@images/profile.png" />
                </image>
             </ImageView>
-            <Button layoutX="927.0" layoutY="22.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Marketing" textFill="WHITE">
+            <Button layoutX="927.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToAdvertising" prefHeight="51.0" prefWidth="154.0" style="-fx-background-color: #2e4a63;" text="Advertising" textFill="WHITE">
                <font>
                   <Font name="Cambria Math" size="20.0" />
                </font>

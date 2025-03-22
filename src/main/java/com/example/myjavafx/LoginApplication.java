@@ -56,8 +56,8 @@ public class LoginApplication extends Application {
         stage.setScene(scene);
     }
 
-    public static void moveToMarketing() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("marketing.fxml"));
+    public static void moveToAdvertising() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("advertising.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stage.setScene(scene);
     }

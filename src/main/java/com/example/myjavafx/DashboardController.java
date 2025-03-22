@@ -54,9 +54,9 @@ public class DashboardController {
     }
 
     @FXML
-    void goToMarketing(ActionEvent event) throws IOException {
+    void goToAdvertising(ActionEvent event) throws IOException {
         this.event = event;
-        LoginApplication.moveToMarketing();
+        LoginApplication.moveToAdvertising();
     }
 
 
