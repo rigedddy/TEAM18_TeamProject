@@ -1,5 +1,6 @@
 package com.example.myjavafx;
 
+import javafx.animation.Animation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -40,18 +41,58 @@ public class FilmController {
     private ActionEvent event;
 
 
-    //get the data that was inputted by user, we can export this to sql
     @FXML
     void createNewFilm(ActionEvent event) {
+        boolean isValid = true;
 
-        registeredFilmID = filmIDTextField.getText();
-        filmTitle = TitleTextField.getText();
-        license = LicenseTextField.getText();
-        duration = DurationTextField.getText();
-        venue = VenueTextField.getText();
-        date = DateTextField.getText();
-        String[] data = {registeredFilmID, filmTitle, license, duration, venue, date};
-        System.out.println("the registered data: "+ Arrays.toString(data));
+        String registeredFilmID = filmIDTextField.getText().trim();
+        String filmTitle = TitleTextField.getText().trim();
+        String license = LicenseTextField.getText().trim();
+        String duration = DurationTextField.getText().trim();
+        String venue = VenueTextField.getText().trim();
+        String date = DateTextField.getText().trim();
+
+
+        filmIDTextField.setStyle("");
+        TitleTextField.setStyle("");
+        LicenseTextField.setStyle("");
+        DurationTextField.setStyle("");
+        VenueTextField.setStyle("");
+        DateTextField.setStyle("");
+
+        // Validate each field
+        if (registeredFilmID.isEmpty()) {
+            filmIDTextField.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (filmTitle.isEmpty()) {
+            TitleTextField.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (license.isEmpty()) {
+            LicenseTextField.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (duration.isEmpty()) {
+            DurationTextField.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (venue.isEmpty()) {
+            VenueTextField.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (date.isEmpty()) {
+            DateTextField.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+
+
+        if (isValid) {
+            String[] data = {registeredFilmID, filmTitle, license, duration, venue, date};
+            System.out.println("The registered data: " + Arrays.toString(data));
+        } else {
+            System.out.println("Error: Please fill in all required fields.");
+        }
     }
 
     @FXML

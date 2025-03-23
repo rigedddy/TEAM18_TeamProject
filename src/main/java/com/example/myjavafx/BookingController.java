@@ -29,33 +29,68 @@ public class BookingController implements Initializable {
     private TextField Name;
     @FXML
     private TextField Email;
-    String BookingIDString;
-    String NumOfPeopleString;
-    String NameString;
-    String EmailString;
     @FXML
     private ChoiceBox<String> BookingChoiceBox;
-    private final String[] bookingChoices = {"Friend of Lancaster", "Regular GroupBooking"};
-    String bookingChoice;
     @FXML
     private ChoiceBox<String> InstitutionChoice;
-    String InstitutionChoiceString;
-    private final String[] insitutionChoices = {"Primary School", "Secondary School", "College", "University"};
+
+    private final String[] bookingChoices = {"Friend of Lancaster", "Regular GroupBooking"};
+    private final String[] institutionChoices = {"Primary School", "Secondary School", "College", "University"};
     private ActionEvent event;
 
-
-    //get the data that was inputted by user, we can export this to sql
+    // Get the data that was inputted by the user and ensure validation
     @FXML
     void createNewBooking(ActionEvent event) {
-        BookingIDString = BookingID.getText();
-        NumOfPeopleString = NumOfPeople.getText();
-        NameString = Name.getText();
-        EmailString = Email.getText();
-        bookingChoice = BookingChoiceBox.getValue();
-        InstitutionChoiceString = InstitutionChoice.getValue();
-        String[] data = {BookingIDString, NumOfPeopleString, NameString, EmailString, InstitutionChoiceString, bookingChoice};
-        System.out.println("Data registered: "+ Arrays.toString(data));
+        boolean isValid = true;
 
+        String bookingIDString = BookingID.getText().trim();
+        String numOfPeopleString = NumOfPeople.getText().trim();
+        String nameString = Name.getText().trim();
+        String emailString = Email.getText().trim();
+        String bookingChoice = BookingChoiceBox.getValue();
+        String institutionChoiceString = InstitutionChoice.getValue();
+
+        // Reset border color for all fields
+        BookingID.setStyle("");
+        NumOfPeople.setStyle("");
+        Name.setStyle("");
+        Email.setStyle("");
+        BookingChoiceBox.setStyle("");
+        InstitutionChoice.setStyle("");
+
+        // Validate each field
+        if (bookingIDString.isEmpty()) {
+            BookingID.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (numOfPeopleString.isEmpty()) {
+            NumOfPeople.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (nameString.isEmpty()) {
+            Name.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (emailString.isEmpty()) {
+            Email.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (bookingChoice == null) {
+            BookingChoiceBox.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+        if (institutionChoiceString == null) {
+            InstitutionChoice.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+            isValid = false;
+        }
+
+        // Only create data if all fields are filled
+        if (isValid) {
+            String[] data = {bookingIDString, numOfPeopleString, nameString, emailString, institutionChoiceString, bookingChoice};
+            System.out.println("Data registered: " + Arrays.toString(data));
+        } else {
+            System.out.println("Error: Please fill in all required fields.");
+        }
     }
 
     @FXML
@@ -65,7 +100,6 @@ public class BookingController implements Initializable {
 
     @FXML
     void goToProfile(MouseEvent event) throws IOException {
-
         LoginApplication.moveToProfile();
     }
 
@@ -78,6 +112,7 @@ public class BookingController implements Initializable {
     void goToFilms(ActionEvent event) throws IOException {
         LoginApplication.moveToFilms();
     }
+
     @FXML
     void goToBooking(ActionEvent event) throws IOException {
         LoginApplication.moveToBooking();
@@ -98,9 +133,6 @@ public class BookingController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         BookingChoiceBox.getItems().addAll(bookingChoices);
-        InstitutionChoice.getItems().addAll(insitutionChoices);
-
-
+        InstitutionChoice.getItems().addAll(institutionChoices);
     }
-
 }
