@@ -9,15 +9,23 @@ public class DatabaseConnection {
     private static final String USER = "in2033t18_a";
     private static final String PASSWORD = "V89p57AXf8M";
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+    public static Connection getConnection() {
+        try {
+            // Try to establish a connection within 3 seconds
+            DriverManager.setLoginTimeout(3);
+            return DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (SQLException e) {
+            System.out.println("Database connection failed. Ensure VPN is active.");
+            return null;
+        }
     }
 
     public static void main(String[] args) {
-        try (Connection conn = getConnection()) {
+        Connection conn = getConnection();
+        if (conn != null) {
             System.out.println("Connected to the database successfully!");
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } else {
+            System.out.println("Failed to connect. Check VPN.");
         }
     }
 }
