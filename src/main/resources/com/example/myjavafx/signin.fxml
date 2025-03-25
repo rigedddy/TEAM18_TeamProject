@@ -23,9 +23,9 @@
                         <Font name="Calibri" size="21.0" />
                      </font>
                   </Text>
-                  <TextField layoutX="43.0" layoutY="75.0" prefHeight="42.0" prefWidth="284.0" style="-fx-background-color: #FFFFFF;" />
+                  <TextField fx:id="username" layoutX="43.0" layoutY="75.0" prefHeight="42.0" prefWidth="284.0" style="-fx-background-color: #FFFFFF;" />
                   <TextField layoutX="43.0" layoutY="163.0" prefHeight="42.0" prefWidth="284.0" style="-fx-background-color: #FFFFFF;" />
-                  <TextField layoutX="43.0" layoutY="256.0" prefHeight="42.0" prefWidth="284.0" style="-fx-background-color: #FFFFFF;" />
+                  <TextField fx:id="password" layoutX="43.0" layoutY="256.0" prefHeight="42.0" prefWidth="284.0" style="-fx-background-color: #FFFFFF;" />
                   <Text layoutX="43.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NAME">
                      <font>
                         <Font name="Calibri" size="15.0" />
