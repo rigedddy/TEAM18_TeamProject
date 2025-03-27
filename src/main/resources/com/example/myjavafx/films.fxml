@@ -36,7 +36,7 @@
             <TextField fx:id="TitleTextField" layoutX="490.0" layoutY="278.0" prefHeight="38.0" prefWidth="320.0" />
             <TextField fx:id="LicenseTextField" layoutX="490.0" layoutY="346.0" prefHeight="38.0" prefWidth="320.0" />
             <TextField fx:id="DurationTextField" layoutX="490.0" layoutY="416.0" prefHeight="38.0" prefWidth="320.0" />
-            <Text layoutX="490.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FilmID:">
+            <Text layoutX="490.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FilmName:">
                <font>
                   <Font name="Cambria Math" size="20.0" />
                </font>
