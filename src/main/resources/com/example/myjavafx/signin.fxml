@@ -11,14 +11,14 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
          <children>
-            <Text layoutX="406.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create New Account">
+            <Text layoutX="554.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LOG IN">
                <font>
                   <Font name="Calibri Bold" size="55.0" />
                </font>
             </Text>
             <AnchorPane layoutX="452.0" layoutY="91.0" prefHeight="410.0" prefWidth="376.0" style="-fx-background-color: #c3d6e8; -fx-background-radius: 20px;">
                <children>
-                  <Text layoutX="77.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already Registred? Login " wrappingWidth="215.5576171875">
+                  <Text layoutX="77.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log in with user details:" wrappingWidth="215.5576171875">
                      <font>
                         <Font name="Calibri" size="21.0" />
                      </font>
