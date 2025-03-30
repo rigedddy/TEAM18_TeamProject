@@ -29,12 +29,11 @@ public class BookingController implements Initializable {
     private TextField Name;
     @FXML
     private TextField Email;
-    @FXML
-    private ChoiceBox<String> BookingChoiceBox;
+
     @FXML
     private ChoiceBox<String> InstitutionChoice;
 
-    private final String[] bookingChoices = {"Friend of Lancaster", "Regular GroupBooking"};
+    private final String[] bookingChoices = {"Regular GroupBooking"};
     private final String[] institutionChoices = {"Primary School", "Secondary School", "College", "University"};
     private ActionEvent event;
 
@@ -47,7 +46,7 @@ public class BookingController implements Initializable {
         String numOfPeopleString = NumOfPeople.getText().trim();
         String nameString = Name.getText().trim();
         String emailString = Email.getText().trim();
-        String bookingChoice = BookingChoiceBox.getValue();
+
         String institutionChoiceString = InstitutionChoice.getValue();
 
         // Reset border color for all fields
@@ -55,7 +54,7 @@ public class BookingController implements Initializable {
         NumOfPeople.setStyle("");
         Name.setStyle("");
         Email.setStyle("");
-        BookingChoiceBox.setStyle("");
+
         InstitutionChoice.setStyle("");
 
         // Validate each field
@@ -75,10 +74,7 @@ public class BookingController implements Initializable {
             Email.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             isValid = false;
         }
-        if (bookingChoice == null) {
-            BookingChoiceBox.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
-            isValid = false;
-        }
+
         if (institutionChoiceString == null) {
             InstitutionChoice.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             isValid = false;
@@ -86,7 +82,7 @@ public class BookingController implements Initializable {
 
         // Only create data if all fields are filled
         if (isValid) {
-            String[] data = {bookingIDString, numOfPeopleString, nameString, emailString, institutionChoiceString, bookingChoice};
+            String[] data = {bookingIDString, numOfPeopleString, nameString, emailString, institutionChoiceString};
             System.out.println("Data registered: " + Arrays.toString(data));
         } else {
             System.out.println("Error: Please fill in all required fields.");
@@ -132,7 +128,7 @@ public class BookingController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        BookingChoiceBox.getItems().addAll(bookingChoices);
+
         InstitutionChoice.getItems().addAll(institutionChoices);
     }
 }

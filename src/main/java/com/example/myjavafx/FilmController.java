@@ -29,8 +29,7 @@ public class FilmController {
     private TextField LicenseTextField;
     @FXML
     private TextField DurationTextField;
-    @FXML
-    private TextField VenueTextField;
+
     @FXML
     private TextField DateTextField;
 
@@ -49,7 +48,7 @@ public class FilmController {
         String filmTitle = TitleTextField.getText().trim();
         String license = LicenseTextField.getText().trim();
         String duration = DurationTextField.getText().trim();
-        String venue = VenueTextField.getText().trim();
+
         String date = DateTextField.getText().trim();
 
 
@@ -57,7 +56,7 @@ public class FilmController {
         TitleTextField.setStyle("");
         LicenseTextField.setStyle("");
         DurationTextField.setStyle("");
-        VenueTextField.setStyle("");
+
         DateTextField.setStyle("");
 
         // Validate each field
@@ -77,10 +76,7 @@ public class FilmController {
             DurationTextField.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             isValid = false;
         }
-        if (venue.isEmpty()) {
-            VenueTextField.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
-            isValid = false;
-        }
+
         if (date.isEmpty()) {
             DateTextField.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             isValid = false;
