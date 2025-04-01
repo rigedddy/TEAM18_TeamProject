@@ -20,34 +20,64 @@
                         <Image url="@images/profile.png" />
                      </image>
                   </ImageView>
+
+                  <!-- SIGN OUT Button -->
                   <Button layoutX="219.0" layoutY="412.0" mnemonicParsing="false" onAction="#signOut" prefHeight="43.0" prefWidth="165.0" style="-fx-background-color: #2e4a63;" text="SIGN OUT" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="20.0" />
                      </font>
                   </Button>
-                  <Label layoutX="110.0" layoutY="130.0" prefHeight="45.0" prefWidth="390.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-label-padding: 5px;" text="Employee ID:">
+
+                  <!-- Employee ID Row -->
+                  <Label layoutX="110.0" layoutY="130.0" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-label-padding: 5px;">
+                     <font>
+                        <Font name="Cambria Math" size="30.0" />
+                     </font>
+                     <text>Employee ID:</text>
+                  </Label>
+                  <Label fx:id="employeeIdLabel" layoutX="330.0" layoutY="130.0" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: transparent;">
                      <font>
                         <Font name="Cambria Math" size="30.0" />
                      </font>
                   </Label>
-                  <Label layoutX="110.0" layoutY="200.0" prefHeight="45.0" prefWidth="390.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-label-padding: 5px;" text="Name:">
+
+                  <!-- Name Row -->
+                  <Label layoutX="110.0" layoutY="200.0" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-label-padding: 5px;">
+                     <font>
+                        <Font name="Cambria Math" size="30.0" />
+                     </font>
+                     <text>Name:</text>
+                  </Label>
+                  <Label fx:id="nameLabel" layoutX="330.0" layoutY="200.0" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: transparent;">
                      <font>
                         <Font name="Cambria Math" size="30.0" />
                      </font>
                   </Label>
-                  <Label layoutX="110.0" layoutY="270.0" prefHeight="45.0" prefWidth="390.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-label-padding: 5px;" text="Email:">
+
+                  <!-- Email Row -->
+                  <Label layoutX="110.0" layoutY="270.0" prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 10px; -fx-label-padding: 5px;">
                      <font>
                         <Font name="Cambria Math" size="30.0" />
                      </font>
+                     <text>Email:</text>
                   </Label>
-               </children></AnchorPane>
+                  <Label fx:id="emailLabel" layoutX="330.0" layoutY="270.0" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: transparent;">
+                     <font>
+                        <Font name="Cambria Math" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+
             <Text fill="#2e4a63" layoutX="26.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PROFILE">
                <font>
                   <Font name="Calibri Bold" size="63.0" />
                </font>
             </Text>
-         </children></AnchorPane>
+         </children>
+      </AnchorPane>
    </center>
+
    <top>
       <AnchorPane prefHeight="92.0" prefWidth="1280.0" style="-fx-background-color: #d5ebff;" BorderPane.alignment="CENTER">
          <children>
@@ -94,6 +124,7 @@
          </children>
       </AnchorPane>
    </top>
+
    <bottom>
       <AnchorPane prefHeight="0.0" prefWidth="1280.0" style="-fx-background-color: #d5ebff;" BorderPane.alignment="CENTER">
          <children>

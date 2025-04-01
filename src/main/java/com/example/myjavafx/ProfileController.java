@@ -7,8 +7,22 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ProfileController {
+
+    @FXML
+    private Label employeeIdLabel;
+
+    @FXML
+    private Label nameLabel;
+
+    @FXML
+    private Label emailLabel;
+
 
     @FXML
     private ImageView profileimg;
@@ -19,6 +33,32 @@ public class ProfileController {
     @FXML
     private Label time;
     private ActionEvent event;
+
+    @FXML
+    public void initialize() {
+        loadProfileData(Session.currentUsername);
+    }
+
+    private void loadProfileData(String username) {
+        String query = "SELECT id, username, email FROM LoginDetails WHERE username = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                employeeIdLabel.setText(rs.getString("id"));
+                nameLabel.setText(rs.getString("username"));
+                emailLabel.setText(rs.getString("email"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error loading profile: " + e.getMessage());
+        }
+    }
+
 
     @FXML
     void goToDashboard(ActionEvent event) throws IOException {

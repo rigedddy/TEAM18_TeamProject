@@ -25,6 +25,7 @@ public class LoginController {
 
         if (userExists(enteredUserName, enteredPassword)) {
             System.out.println("Login successful!"); // Debugging message
+            Session.currentUsername = enteredUserName;
             LoginApplication.moveToDashboard(); // Change screen
         }
         else {
