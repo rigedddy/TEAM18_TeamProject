@@ -28,13 +28,12 @@
                         <Font name="Cambria Math" size="20.0" />
                      </font>
                   </Text>
-                  <TableView editable="true" layoutX="14.0" layoutY="38.0" prefHeight="477.0" prefWidth="403.0">
+                  <TableView fx:id="tableView" editable="true" layoutX="14.0" layoutY="38.0" prefHeight="477.0" prefWidth="403.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="FilmName" />
-                      <TableColumn prefWidth="75.0" text="StartTime" />
-                        <TableColumn prefWidth="75.0" text="LicenseDuration" />
-                        <TableColumn prefWidth="75.0" text="EndTime:" />
-                        <TableColumn prefWidth="75.0" text="Date" />
+                      <TableColumn fx:id="FilmName" prefWidth="75.0" text="FilmName" />
+                      <TableColumn fx:id="StartTime" prefWidth="75.0" text="StartTime" />
+                        <TableColumn fx:id="EndTime" prefWidth="75.0" text="EndTime:" />
+                        <TableColumn fx:id="Date" prefWidth="75.0" text="Date" />
                     </columns>
                   </TableView>
                </children>
@@ -43,10 +42,10 @@
                <font>
                   <Font name="Calibri" size="23.0" />
                </font></Button>
-            <TextField fx:id="filmIDTextField" layoutX="490.0" layoutY="209.0" prefHeight="38.0" prefWidth="320.0" />
-            <TextField fx:id="TitleTextField" layoutX="490.0" layoutY="278.0" prefHeight="38.0" prefWidth="320.0" />
+            <TextField fx:id="filmNameTextField" layoutX="490.0" layoutY="209.0" prefHeight="38.0" prefWidth="320.0" />
+            <TextField fx:id="StartTimeField" layoutX="490.0" layoutY="278.0" prefHeight="38.0" prefWidth="320.0" />
             <TextField fx:id="LicenseTextField" layoutX="490.0" layoutY="346.0" prefHeight="38.0" prefWidth="320.0" />
-            <TextField fx:id="DurationTextField" layoutX="490.0" layoutY="416.0" prefHeight="38.0" prefWidth="320.0" />
+            <TextField fx:id="EndTimeField" layoutX="490.0" layoutY="416.0" prefHeight="38.0" prefWidth="320.0" />
             <Text layoutX="490.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FilmName:">
                <font>
                   <Font name="Cambria Math" size="20.0" />
