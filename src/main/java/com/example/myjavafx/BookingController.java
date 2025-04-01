@@ -33,7 +33,6 @@ public class BookingController implements Initializable {
     @FXML
     private ChoiceBox<String> InstitutionChoice;
 
-    private final String[] bookingChoices = {"Regular GroupBooking"};
     private final String[] institutionChoices = {"Primary School", "Secondary School", "College", "University"};
     private ActionEvent event;
 
@@ -88,6 +87,8 @@ public class BookingController implements Initializable {
             System.out.println("Error: Please fill in all required fields.");
         }
     }
+
+
 
     @FXML
     void goToDashboard(ActionEvent event) throws IOException {

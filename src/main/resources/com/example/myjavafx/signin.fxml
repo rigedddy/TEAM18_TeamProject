@@ -41,7 +41,7 @@
                         <Font name="Calibri" size="15.0" />
                      </font>
                   </Text>
-                  <Button layoutX="102.0" layoutY="325.0" mnemonicParsing="false" onAction="#signIn" prefHeight="43.0" prefWidth="165.0" style="-fx-background-color: #2e4a63;" text="SIGN UP" textFill="WHITE">
+                  <Button layoutX="102.0" layoutY="325.0" mnemonicParsing="false" onAction="#signIn" prefHeight="43.0" prefWidth="165.0" style="-fx-background-color: #2e4a63;" text="Log In" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="20.0" />
                      </font>
