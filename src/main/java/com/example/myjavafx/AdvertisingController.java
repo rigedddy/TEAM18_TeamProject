@@ -2,6 +2,7 @@ package com.example.myjavafx;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -13,6 +14,11 @@ public class AdvertisingController {
     @FXML
     private ImageView profileimg;
 
+    @FXML
+    private ChoiceBox<?> InstitutionChoice;
+
+    private final String[] institutionChoices = {"Primary School", "Secondary School", "College", "University"};
+//
     @FXML
     private Label time;
     private ActionEvent event;
@@ -56,6 +62,9 @@ public class AdvertisingController {
         this.event = event;
         LoginApplication.moveToAdvertising();
     }
+
+
+
 
 }
 

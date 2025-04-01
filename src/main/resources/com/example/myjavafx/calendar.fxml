@@ -16,7 +16,7 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane layoutX="22.0" layoutY="93.0" prefHeight="470.0" prefWidth="556.0" style="-fx-background-color: #d8dfe6;">
+            <AnchorPane layoutX="22.0" layoutY="93.0" prefHeight="186.0" prefWidth="444.0" style="-fx-background-color: #d8dfe6;">
                <children>
                   <Text layoutX="12.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0">
                      <font>
@@ -29,15 +29,7 @@
                      </font>
                   </Text>
                   <DatePicker layoutX="158.0" layoutY="26.0" prefHeight="34.0" prefWidth="248.0" />
-                  <TableView layoutY="209.0" prefHeight="260.0" prefWidth="555.0">
-                    <columns>
-                      <TableColumn prefWidth="116.66665077209473" text="Date" />
-                      <TableColumn prefWidth="93.33334350585938" text="Time" />
-                        <TableColumn prefWidth="146.00001525878906" text="Event" />
-                        <TableColumn prefWidth="197.33328247070312" text="Responsible Team" />
-                    </columns>
-                  </TableView>
-                  <Button layoutX="379.0" layoutY="137.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="148.0" style="-fx-background-color: #2e4a63; -fx-background-radius: 15px;" text="VIEW SCHEDULE" textFill="WHITE">
+                  <Button layoutX="256.0" layoutY="108.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="148.0" style="-fx-background-color: #2e4a63; -fx-background-radius: 15px;" text="VIEW SCHEDULE" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="15.0" />
                      </font>
@@ -56,17 +48,29 @@
                         <Font name="Cambria Math" size="20.0" />
                      </font>
                   </Text>
-                  <TableView layoutY="-4.0" prefHeight="477.0" prefWidth="567.0">
+                  <TableView layoutX="-155.0" layoutY="-4.0" prefHeight="477.0" prefWidth="722.0">
                     <columns>
-                      <TableColumn prefWidth="107.3333740234375" text="EventID" />
-                      <TableColumn prefWidth="203.33331298828125" text="Event Description" />
-                        <TableColumn prefWidth="96.00006103515625" text="Room" />
-                        <TableColumn prefWidth="160.00006103515625" text="Time" />
+                      <TableColumn prefWidth="86.44448852539062" text="Monday" />
+                      <TableColumn prefWidth="96.888916015625" text="Tuesday" />
+                        <TableColumn prefWidth="105.11102294921875" text="Wednesday" />
+                        <TableColumn prefWidth="117.55560302734375" text="Thursday" />
+                        <TableColumn prefWidth="106.22216796875" text="Friday" />
+                        <TableColumn prefWidth="102.44451904296875" text="Saturday" />
+                        <TableColumn prefWidth="108.22216796875" text="Sunday" />
                     </columns>
                   </TableView>
                </children>
             </AnchorPane>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <TableView layoutX="23.0" layoutY="279.0" prefHeight="200.0" prefWidth="443.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Date" />
+                <TableColumn prefWidth="75.0" text="Start Time" />
+                  <TableColumn prefWidth="75.0" text="End Time" />
+                  <TableColumn prefWidth="114.00001525878906" text="Event" />
+                  <TableColumn minWidth="0.0" prefWidth="102.0" text="Venue" />
+              </columns>
+            </TableView>
          </children></AnchorPane>
    </center>
    <top>
