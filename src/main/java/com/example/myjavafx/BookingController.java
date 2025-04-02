@@ -19,6 +19,7 @@ public class BookingController implements Initializable {
     @FXML
     private ImageView profileimg;
 
+    // group meeting
     @FXML
     private Label time;
     @FXML
@@ -29,6 +30,14 @@ public class BookingController implements Initializable {
     private TextField Name;
     @FXML
     private TextField Email;
+
+    // meeting room
+    @FXML
+    private TextField StartTimeMeeting;
+    @FXML
+    private TextField EndTimeMeeting;
+    @FXML
+    private TextField MeetingPrice;
 
     @FXML
     private ChoiceBox<String> InstitutionChoice;

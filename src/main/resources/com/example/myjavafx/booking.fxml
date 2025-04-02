@@ -132,12 +132,12 @@
                   </Button>
                   <ChoiceBox layoutX="170.0" layoutY="50.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
                   <Text layoutX="26.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End Time:" />
-                  <TextField layoutX="170.0" layoutY="185.0" prefHeight="25.0" prefWidth="150.0" />
-                  <TextField layoutX="170.0" layoutY="230.0" prefHeight="25.0" prefWidth="150.0" />
+                  <TextField fx:id="StartTimeMeeting" layoutX="170.0" layoutY="185.0" prefHeight="25.0" prefWidth="150.0" />
+                  <TextField fx:id="EndTimeMeeting" layoutX="170.0" layoutY="230.0" prefHeight="25.0" prefWidth="150.0" />
                   <Text layoutX="26.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" />
                   <ChoiceBox layoutX="170.0" layoutY="95.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
                   <Text layoutX="26.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" />
-                  <TextField layoutX="170.0" layoutY="278.0" prefHeight="25.0" prefWidth="150.0" />
+                  <TextField fx:id="MeetingPrice" layoutX="170.0" layoutY="278.0" prefHeight="25.0" prefWidth="150.0" />
                </children>
             </AnchorPane>
          </children></AnchorPane>
