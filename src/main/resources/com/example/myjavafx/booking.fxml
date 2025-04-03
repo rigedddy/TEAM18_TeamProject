@@ -98,7 +98,7 @@
                   <Text layoutX="26.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Event Name:" />
                   <Text layoutX="26.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Primary Contanct Name:" />
                   <Text layoutX="26.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of People:" />
-                  <DatePicker layoutX="170.0" layoutY="95.0" prefHeight="25.0" prefWidth="150.0" />
+                  <DatePicker fx:id="DateGroupBooking" layoutX="170.0" layoutY="95.0" prefHeight="25.0" prefWidth="150.0" />
                   <Button layoutX="196.0" layoutY="340.0" mnemonicParsing="false" onAction="#createNewBooking" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="12.0" />
@@ -122,22 +122,20 @@
                      </font>
                   </Text>
                   <Text layoutX="26.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Name:" />
-                  <Text layoutX="26.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Time:" />
                   <Text layoutX="26.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Client Name:" />
-                  <DatePicker layoutX="170.0" layoutY="140.0" prefHeight="25.0" prefWidth="150.0" />
-                  <Button layoutX="196.0" layoutY="340.0" mnemonicParsing="false" onAction="#createNewBooking" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
+                  <DatePicker fx:id="Date" layoutX="170.0" layoutY="140.0" prefHeight="25.0" prefWidth="150.0" />
+                  <Button layoutX="196.0" layoutY="340.0" mnemonicParsing="false" onAction="#createNewMeetingRoomBooking" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="12.0" />
                      </font>
                   </Button>
-                  <ChoiceBox layoutX="170.0" layoutY="50.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
-                  <Text layoutX="26.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="End Time:" />
-                  <TextField fx:id="StartTimeMeeting" layoutX="170.0" layoutY="185.0" prefHeight="25.0" prefWidth="150.0" />
-                  <TextField fx:id="EndTimeMeeting" layoutX="170.0" layoutY="230.0" prefHeight="25.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="RoomName" layoutX="170.0" layoutY="50.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
                   <Text layoutX="26.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" />
-                  <ChoiceBox layoutX="170.0" layoutY="95.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
-                  <Text layoutX="26.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" />
-                  <TextField fx:id="MeetingPrice" layoutX="170.0" layoutY="278.0" prefHeight="25.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="ClientName" layoutX="170.0" layoutY="95.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
+                  <Text layoutX="26.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price(Auto-Filled):" />
+                  <TextField fx:id="MeetingPrice" layoutX="170.0" layoutY="228.0" prefHeight="25.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="TimeSlot" layoutX="170.0" layoutY="185.0" prefWidth="150.0" />
+                  <Text layoutX="26.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PickTimeSlot:" />
                </children>
             </AnchorPane>
          </children></AnchorPane>
