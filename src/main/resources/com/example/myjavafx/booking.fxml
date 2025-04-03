@@ -135,7 +135,7 @@
                   <Text layoutX="26.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price(Auto-Filled):" />
                   <TextField fx:id="MeetingPrice" layoutX="170.0" layoutY="228.0" prefHeight="25.0" prefWidth="150.0" />
                   <ChoiceBox fx:id="TimeSlot" layoutX="170.0" layoutY="185.0" prefWidth="150.0" />
-                  <Text layoutX="26.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PickTimeSlot:" />
+                  <Text layoutX="26.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PickLengthOfBooking:" />
                </children>
             </AnchorPane>
          </children></AnchorPane>
