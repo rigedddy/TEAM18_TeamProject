@@ -2,6 +2,7 @@ package com.example.myjavafx;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -12,6 +13,9 @@ public class ReportsController {
 
     @FXML
     private ImageView profileimg;
+
+    @FXML
+    private ChoiceBox<?> FoLYear;
 
     @FXML
     private Label time;

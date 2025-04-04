@@ -78,7 +78,7 @@
    <center>
       <AnchorPane prefHeight="600.0" prefWidth="1314.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
          <children>
-            <Text fill="#2e4a63" layoutX="26.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Advertising">
+            <Text fill="#2e4a63" layoutX="26.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADVERTISING">
                <font>
                   <Font name="Calibri Bold" size="63.0" />
                </font>

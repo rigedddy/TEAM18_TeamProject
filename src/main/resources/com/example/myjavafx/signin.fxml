@@ -23,9 +23,9 @@
                         <Font name="Calibri" size="21.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="username" layoutX="43.0" layoutY="75.0" prefHeight="42.0" prefWidth="284.0" style="-fx-background-color: #FFFFFF;" />
-                  <TextField layoutX="43.0" layoutY="163.0" prefHeight="42.0" prefWidth="284.0" style="-fx-background-color: #FFFFFF;" />
-                  <TextField fx:id="password" layoutX="43.0" layoutY="256.0" prefHeight="42.0" prefWidth="284.0" style="-fx-background-color: #FFFFFF;" />
+                  <TextField fx:id="username" layoutX="43.0" layoutY="75.0" prefHeight="42.0" prefWidth="284.0" promptText="Enter name.." style="-fx-background-color: #FFFFFF;" />
+                  <TextField layoutX="43.0" layoutY="163.0" prefHeight="42.0" prefWidth="284.0" promptText="Enter email..." style="-fx-background-color: #FFFFFF;" />
+                  <TextField fx:id="password" layoutX="43.0" layoutY="256.0" prefHeight="42.0" prefWidth="284.0" promptText="Enter password..." style="-fx-background-color: #FFFFFF;" />
                   <Text layoutX="43.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NAME">
                      <font>
                         <Font name="Calibri" size="15.0" />
@@ -41,7 +41,7 @@
                         <Font name="Calibri" size="15.0" />
                      </font>
                   </Text>
-                  <Button layoutX="102.0" layoutY="325.0" mnemonicParsing="false" onAction="#signIn" prefHeight="43.0" prefWidth="165.0" style="-fx-background-color: #2e4a63;" text="Log In" textFill="WHITE">
+                  <Button layoutX="102.0" layoutY="325.0" mnemonicParsing="false" onAction="#signIn" prefHeight="43.0" prefWidth="165.0" style="-fx-background-color: #2e4a63;" text="Sign In" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="20.0" />
                      </font>
