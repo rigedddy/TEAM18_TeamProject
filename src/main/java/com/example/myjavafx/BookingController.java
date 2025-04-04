@@ -151,48 +151,48 @@ public class BookingController implements Initializable {
         }
     }
     @FXML
-    void createNewMeetingRoomBooking(ActionEvent event){
-        String SQLSearch = null;
+    void createNewMeetingRoomBooking(ActionEvent event) {
+    try{
         String Client = ClientName.getValue().strip();
         String Room = RoomName.getValue().strip();
         String date = Date.getValue().toString();
         String timeSlot = TimeSlot.getValue().strip();
+        if (Client != null && !Client.isEmpty() && Room != null && !Room.isEmpty() && date != null && !date.isEmpty() && timeSlot != null && !timeSlot.isEmpty()) {
 
 
-        SQLSearch = switch (timeSlot) {
-            case "1Hour" -> "RateFor1Hour";
-            case "MorningAndAfternoon" -> "RateForMorningAndAfternoon";
-            case "AllDay" -> "AllDayRate";
-            case "AllWeek" -> "WeekRate";
-            default -> SQLSearch;
-        };
+            String SQLSearch = switch (timeSlot) {
+                case "1Hour" -> "RateFor1Hour";
+                case "MorningAndAfternoon" -> "RateForMorningAndAfternoon";
+                case "AllDay" -> "AllDayRate";
+                case "AllWeek" -> "WeekRate";
+                default -> "RateFor1Hour";
+            };
+            String query = "SELECT " + SQLSearch + " FROM MeetingRooms WHERE RoomName = ?";
+            try (Connection conn = DatabaseConnection.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(query)) {
 
+                stmt.setString(1, Room);
+                ResultSet rs = stmt.executeQuery();
 
-        String query = "SELECT " + SQLSearch + " FROM MeetingRooms WHERE RoomName = ?";
+                if (rs.next()) {
+                    String price = rs.getString(SQLSearch);
 
-        // Execute the query (example with PreparedStatement for security)
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+                    MeetingPrice.setText(price);
+                }
 
-            stmt.setString(1, Room);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-
-                String price = rs.getString(SQLSearch);
-                MeetingPrice.setText(price);
-
-
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+        } else {
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Please make sure all fields are filled out correctly.");
         }
-    }
+    } catch (Exception e) {
+        System.out.println("Please fill in all required fields.");
+    }}
 
 
-
-    @FXML
+        @FXML
     void goToDashboard(ActionEvent event) throws IOException {
         LoginApplication.moveToDashboard();
     }
