@@ -61,7 +61,7 @@
                         <Font name="Calibri Bold" size="17.0" />
                      </font>
                   </Text>
-                  <LineChart layoutX="21.0" layoutY="27.0" prefHeight="192.0" prefWidth="336.0">
+                  <LineChart fx:id="FOLGraph" layoutX="21.0" layoutY="27.0" prefHeight="192.0" prefWidth="336.0">
                      <xAxis>
                         <CategoryAxis side="BOTTOM" />
                      </xAxis>
@@ -69,17 +69,17 @@
                         <NumberAxis side="LEFT" />
                      </yAxis>
                   </LineChart>
-                  <Text layoutX="47.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Subscribers:" wrappingWidth="105.152099609375">
-                     <font>
-                        <Font name="Calibri Bold" size="12.0" />
-                     </font>
-                  </Text>
                   <Text layoutX="247.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Year:" wrappingWidth="95.81884765625">
                      <font>
                         <Font name="Calibri Bold" size="12.0" />
                      </font>
                   </Text>
                   <ChoiceBox fx:id="FoLYear" layoutX="247.0" layoutY="223.0" prefHeight="10.0" prefWidth="107.0" />
+                  <Label fx:id="TotalFOL" layoutX="50.0" layoutY="218.0" text="Total Subscribers:">
+                     <font>
+                        <Font name="Calibri Bold" size="12.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
             <AnchorPane layoutX="210.0" layoutY="335.0" prefHeight="257.0" prefWidth="395.0" style="-fx-background-color: #d8dfe6;">
@@ -104,7 +104,7 @@
             </AnchorPane>
             <AnchorPane layoutX="750.0" layoutY="335.0" prefHeight="257.0" prefWidth="395.0" style="-fx-background-color: #d8dfe6;">
                <children>
-                  <Text layoutX="19.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Film Cost vs Ticket Sales">
+                  <Text layoutX="19.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Films vs Ticket Sales">
                      <font>
                         <Font name="Calibri Bold" size="17.0" />
                      </font>
@@ -122,7 +122,7 @@
                         <Font name="Calibri Bold" size="12.0" />
                      </font>
                   </Text>
-                  <Text layoutX="44.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Revenue from Tickets" wrappingWidth="143.152099609375">
+                  <Text layoutX="44.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Revenue from Tickets:" wrappingWidth="143.152099609375">
                      <font>
                         <Font name="Calibri Bold" size="12.0" />
                      </font>
