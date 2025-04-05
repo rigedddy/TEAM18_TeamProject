@@ -448,4 +448,269 @@ public class Reports {
 
         return totalRevenue;
     }
+
+    // New Methods for Marketing General Metrics
+
+    // Method to fetch distinct years for the general metrics (based on TicketSales, MeetingRoomBooking, etc.)
+    public List<String> getGeneralMetricYears() {
+        List<String> years = new ArrayList<>();
+        String query = "SELECT DISTINCT YEAR(PurchaseDateTime) as year FROM TicketSales " +
+                "UNION " +
+                "SELECT DISTINCT YEAR(Date) as year FROM MeetingRoomBooking " +
+                "UNION " +
+                "SELECT DISTINCT YEAR(JoinYear) as year FROM FriendsOfLancaster " +
+                "ORDER BY year DESC";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int year = rs.getInt("year");
+                years.add(String.valueOf(year));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error fetching general metric years: " + e.getMessage());
+        }
+
+        return years;
+    }
+
+    // Method to calculate total revenue by year
+    private Map<String, Double> getTotalRevenueByYear() {
+        Map<String, Double> revenueByYear = new TreeMap<>();
+
+        // Initialize years with 0 revenue
+        for (String year : getGeneralMetricYears()) {
+            revenueByYear.put(year, 0.0);
+        }
+
+        // 1. Ticket Sales Revenue
+        String ticketSalesQuery = "SELECT YEAR(PurchaseDateTime) as year, SUM(TicketPrice) as total " +
+                "FROM TicketSales GROUP BY YEAR(PurchaseDateTime)";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(ticketSalesQuery);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String year = String.valueOf(rs.getInt("year"));
+                double revenue = rs.getDouble("total");
+                revenueByYear.put(year, revenueByYear.getOrDefault(year, 0.0) + revenue);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching ticket sales revenue by year: " + e.getMessage());
+        }
+
+        // 2. Meeting Room Booking Revenue
+        String meetingRoomQuery = "SELECT YEAR(mrb.Date) as year, mrb.StartTime, mrb.EndTime, mr.RateFor1Hour " +
+                "FROM MeetingRoomBooking mrb " +
+                "JOIN MeetingRooms mr ON mrb.RoomID = mr.RoomID";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(meetingRoomQuery);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String year = String.valueOf(rs.getInt("year"));
+                String startTime = rs.getString("StartTime");
+                String endTime = rs.getString("EndTime");
+                String rateStr = rs.getString("RateFor1Hour").replace("£", "");
+                double ratePerHour = Double.parseDouble(rateStr);
+
+                // Calculate duration in hours
+                String[] startParts = startTime.split(":");
+                String[] endParts = endTime.split(":");
+                double startHours = Double.parseDouble(startParts[0]) + Double.parseDouble(startParts[1]) / 60.0;
+                double endHours = Double.parseDouble(endParts[0]) + Double.parseDouble(endParts[1]) / 60.0;
+                double duration = endHours - startHours;
+
+                // Calculate revenue for this booking
+                double bookingRevenue = duration * ratePerHour;
+                revenueByYear.put(year, revenueByYear.getOrDefault(year, 0.0) + bookingRevenue);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching meeting room revenue by year: " + e.getMessage());
+        }
+
+        // 3. Friends of Lancaster Subscription Revenue (Assume $50 per active subscriber)
+        String subscriptionQuery = "SELECT YEAR(JoinYear) as year, COUNT(*) as count " +
+                "FROM FriendsOfLancaster " +
+                "WHERE SubscriptionStatus = 1 " +
+                "GROUP BY YEAR(JoinYear)";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(subscriptionQuery);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String year = String.valueOf(rs.getInt("year"));
+                int activeSubscribers = rs.getInt("count");
+                double subscriptionRevenue = activeSubscribers * 50.0; // $50 per subscriber
+                revenueByYear.put(year, revenueByYear.getOrDefault(year, 0.0) + subscriptionRevenue);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching subscription revenue by year: " + e.getMessage());
+        }
+
+        return revenueByYear;
+    }
+
+    // Method to calculate total costs by year
+    private Map<String, Double> getTotalCostsByYear() {
+        Map<String, Double> costsByYear = new TreeMap<>();
+
+        // Initialize years with 0 costs
+        for (String year : getGeneralMetricYears()) {
+            costsByYear.put(year, 0.0);
+        }
+
+        // 1. Film License Costs
+        String filmCostQuery = "SELECT YEAR(Date) as year, SUM(LicenseCost) as total " +
+                "FROM Film GROUP BY YEAR(Date)";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(filmCostQuery);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String year = String.valueOf(rs.getInt("year"));
+                double cost = rs.getDouble("total");
+                costsByYear.put(year, costsByYear.getOrDefault(year, 0.0) + cost);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching film license costs by year: " + e.getMessage());
+        }
+
+        // 2. Marketing Campaign Costs (Assume $500 per campaign)
+        String marketingCostQuery = "SELECT YEAR(StartDate) as year, COUNT(*) as count " +
+                "FROM MarketingCampaign GROUP BY YEAR(StartDate)";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(marketingCostQuery);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String year = String.valueOf(rs.getInt("year"));
+                int campaignCount = rs.getInt("count");
+                double marketingCost = campaignCount * 500.0; // $500 per campaign
+                costsByYear.put(year, costsByYear.getOrDefault(year, 0.0) + marketingCost);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching marketing campaign costs by year: " + e.getMessage());
+        }
+
+        // 3. Event Costs (Assume $200 per event)
+        String eventCostQuery = "SELECT YEAR(EventDate) as year, COUNT(*) as count " +
+                "FROM Events GROUP BY YEAR(EventDate)";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(eventCostQuery);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                String year = String.valueOf(rs.getInt("year"));
+                int eventCount = rs.getInt("count");
+                double eventCost = eventCount * 200.0; // $200 per event
+                costsByYear.put(year, costsByYear.getOrDefault(year, 0.0) + eventCost);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching event costs by year: " + e.getMessage());
+        }
+
+        return costsByYear;
+    }
+
+    // Method to calculate total profits by year
+    private Map<String, Double> getTotalProfitsByYear() {
+        Map<String, Double> revenueByYear = getTotalRevenueByYear();
+        Map<String, Double> costsByYear = getTotalCostsByYear();
+        Map<String, Double> profitsByYear = new TreeMap<>();
+
+        for (String year : revenueByYear.keySet()) {
+            double revenue = revenueByYear.getOrDefault(year, 0.0);
+            double costs = costsByYear.getOrDefault(year, 0.0);
+            profitsByYear.put(year, revenue - costs);
+        }
+
+        return profitsByYear;
+    }
+
+    // Method to calculate total revenue (for the labels, all years combined)
+    public double getTotalRevenue() {
+        return getTotalRevenueByYear().values().stream().mapToDouble(Double::doubleValue).sum();
+    }
+
+    // Method to calculate total costs (for the labels, all years combined)
+    public double getTotalCosts() {
+        return getTotalCostsByYear().values().stream().mapToDouble(Double::doubleValue).sum();
+    }
+
+    // Method to calculate total profits (for the labels, all years combined)
+    public double getTotalProfits() {
+        return getTotalProfitsByYear().values().stream().mapToDouble(Double::doubleValue).sum();
+    }
+
+    // Method to populate the generalGraph with revenue, costs, and profits by year
+    public void populateGeneralGraph(LineChart<String, Number> lineChart) {
+        Map<String, Double> revenueByYear = getTotalRevenueByYear();
+        Map<String, Double> costsByYear = getTotalCostsByYear();
+        Map<String, Double> profitsByYear = getTotalProfitsByYear();
+
+        // Clear existing data
+        lineChart.getData().clear();
+
+        // Create series for revenue
+        XYChart.Series<String, Number> revenueSeries = new XYChart.Series<>();
+        revenueSeries.setName("Total Revenue");
+
+        // Create series for costs
+        XYChart.Series<String, Number> costsSeries = new XYChart.Series<>();
+        costsSeries.setName("Total Costs");
+
+        // Create series for profits
+        XYChart.Series<String, Number> profitsSeries = new XYChart.Series<>();
+        profitsSeries.setName("Total Profits");
+
+        // Add data points for each year
+        for (String year : revenueByYear.keySet()) {
+            revenueSeries.getData().add(new XYChart.Data<>(year, revenueByYear.get(year)));
+            costsSeries.getData().add(new XYChart.Data<>(year, costsByYear.get(year)));
+            profitsSeries.getData().add(new XYChart.Data<>(year, profitsByYear.get(year)));
+        }
+
+        // Add the series to the chart
+        lineChart.getData().addAll(revenueSeries, costsSeries, profitsSeries);
+
+        // Style the lines and add tooltips
+        Platform.runLater(() -> {
+            for (XYChart.Series<String, Number> series : lineChart.getData()) {
+                for (XYChart.Data<String, Number> data : series.getData()) {
+                    // Add tooltip
+                    javafx.scene.control.Tooltip tooltip = new javafx.scene.control.Tooltip(
+                            "Year: " + data.getXValue() + "\n" +
+                                    series.getName() + ": $" + String.format("%.2f", data.getYValue())
+                    );
+                    javafx.scene.control.Tooltip.install(data.getNode(), tooltip);
+
+                    // Style the data points
+                    String color = series.getName().equals("Total Revenue") ? "#00FF00" :
+                            series.getName().equals("Total Costs") ? "#FF0000" :
+                                    "#0000FF"; // Green for revenue, Red for costs, Blue for profits
+                    data.getNode().setStyle("-fx-background-color: " + color + ";");
+                }
+                // Style the lines
+                if (series.getName().equals("Total Revenue")) {
+                    series.getNode().setStyle("-fx-stroke: #00FF00; -fx-stroke-width: 2px;");
+                } else if (series.getName().equals("Total Costs")) {
+                    series.getNode().setStyle("-fx-stroke: #FF0000; -fx-stroke-width: 2px;");
+                } else if (series.getName().equals("Total Profits")) {
+                    series.getNode().setStyle("-fx-stroke: #0000FF; -fx-stroke-width: 2px;");
+                }
+            }
+        });
+
+        // Set the chart title
+        lineChart.setTitle("Marketing General Metrics by Year");
+
+        // Adjust y-axis scale dynamically
+        double maxValue = Math.max(
+                revenueByYear.values().stream().mapToDouble(Double::doubleValue).max().orElse(0.0),
+                costsByYear.values().stream().mapToDouble(Double::doubleValue).max().orElse(0.0)
+        );
+        double minValue = profitsByYear.values().stream().mapToDouble(Double::doubleValue).min().orElse(0.0);
+        minValue = Math.min(minValue, 0); // Ensure the y-axis goes below 0 if profits are negative
+        ((javafx.scene.chart.NumberAxis) lineChart.getYAxis()).setLowerBound(Math.floor(minValue / 1000) * 1000);
+        ((javafx.scene.chart.NumberAxis) lineChart.getYAxis()).setUpperBound(Math.ceil(maxValue / 1000) * 1000);
+        ((javafx.scene.chart.NumberAxis) lineChart.getYAxis()).setTickUnit(Math.ceil(maxValue / 5000) * 1000);
+    }
 }

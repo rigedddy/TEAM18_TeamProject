@@ -51,6 +51,18 @@ public class ReportsController implements Initializable {
     private Label revenueTickets;
 
     @FXML
+    private LineChart<String, Number> generalGraph; // Updated to specify types
+
+    @FXML
+    private Label totalCostsLabel;
+
+    @FXML
+    private Label totalProfitsLabel;
+
+    @FXML
+    private Label totalRevenueLabel;
+
+    @FXML
     private Label time;
     private ActionEvent event;
 
@@ -61,6 +73,9 @@ public class ReportsController implements Initializable {
         // Initialize the Reports class
         reports = new Reports();
 
+        // Load the marketing general metrics (labels and graph)
+        loadMarketingGeneralMetrics();
+
         // Load the pie chart and update labels
         loadInstitutionsPieChart();
 
@@ -69,6 +84,20 @@ public class ReportsController implements Initializable {
 
         // Load the Film Costs vs Ticket Sales section
         loadFilmTicketSection();
+    }
+
+    private void loadMarketingGeneralMetrics() {
+        // Update the labels
+        double totalRevenue = reports.getTotalRevenue();
+        double totalCosts = reports.getTotalCosts();
+        double totalProfits = reports.getTotalProfits();
+
+        totalRevenueLabel.setText("Total Revenue: $" + String.format("%.2f", totalRevenue));
+        totalCostsLabel.setText("Total Costs: $" + String.format("%.2f", totalCosts));
+        totalProfitsLabel.setText("Total Profits: $" + String.format("%.2f", totalProfits));
+
+        // Populate the general graph
+        reports.populateGeneralGraph(generalGraph);
     }
 
     private void loadInstitutionsPieChart() {
