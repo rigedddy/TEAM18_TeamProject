@@ -32,6 +32,9 @@ public class Reports {
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     };
 
+    // Exchange rate for GBP to USD (as of early 2025, approximate)
+    private static final double GBP_TO_USD = 1.3;
+
     // Method to fetch institution counts from both VenueTour and GroupBookings
     public Map<String, Integer> getInstitutionTourCounts() {
         Map<String, Integer> institutionCounts = new HashMap<>();
@@ -449,7 +452,7 @@ public class Reports {
         return totalRevenue;
     }
 
-    // New Methods for Marketing General Metrics
+    // Methods for Marketing General Metrics
 
     // Method to fetch distinct years for the general metrics (based on TicketSales, MeetingRoomBooking, etc.)
     public List<String> getGeneralMetricYears() {
@@ -502,29 +505,17 @@ public class Reports {
         }
 
         // 2. Meeting Room Booking Revenue
-        String meetingRoomQuery = "SELECT YEAR(Date) as year, mr.RateFor1Hour " +
-                "FROM MeetingRoomBooking mrb " +
-                "JOIN MeetingRooms mr ON mrb.RoomID = mr.RoomID";
+        String meetingRoomQuery = "SELECT YEAR(BookingDate) as year, Price " +
+                "FROM MeetingRoomBooking";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(meetingRoomQuery);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 String year = String.valueOf(rs.getInt("year"));
-                String startTime = rs.getString("StartTime");
-                String endTime = rs.getString("EndTime");
-                String rateStr = rs.getString("RateFor1Hour").replace("£", "");
-                double ratePerHour = Double.parseDouble(rateStr);
-
-                // Calculate duration in hours
-                String[] startParts = startTime.split(":");
-                String[] endParts = endTime.split(":");
-                double startHours = Double.parseDouble(startParts[0]) + Double.parseDouble(startParts[1]) / 60.0;
-                double endHours = Double.parseDouble(endParts[0]) + Double.parseDouble(endParts[1]) / 60.0;
-                double duration = endHours - startHours;
-
-                // Calculate revenue for this booking
-                double bookingRevenue = duration * ratePerHour;
-                revenueByYear.put(year, revenueByYear.getOrDefault(year, 0.0) + bookingRevenue);
+                String priceStr = rs.getString("Price").replace("£", "");
+                double priceInGBP = Double.parseDouble(priceStr);
+                double priceInUSD = priceInGBP * GBP_TO_USD; // Convert to USD
+                revenueByYear.put(year, revenueByYear.getOrDefault(year, 0.0) + priceInUSD);
             }
         } catch (SQLException e) {
             System.out.println("Error fetching meeting room revenue by year: " + e.getMessage());
@@ -616,7 +607,7 @@ public class Reports {
         Map<String, Double> costsByYear = getTotalCostsByYear();
         Map<String, Double> profitsByYear = new TreeMap<>();
 
-        for (String year : revenueByYear.keySet()) {
+        for (String year : getGeneralMetricYears()) {
             double revenue = revenueByYear.getOrDefault(year, 0.0);
             double costs = costsByYear.getOrDefault(year, 0.0);
             profitsByYear.put(year, revenue - costs);
@@ -661,11 +652,19 @@ public class Reports {
         XYChart.Series<String, Number> profitsSeries = new XYChart.Series<>();
         profitsSeries.setName("Total Profits");
 
+        // Get the years and reverse them to plot in ascending order (2020 to 2025)
+        List<String> years = getGeneralMetricYears();
+        Collections.reverse(years); // Reverse the list to go from oldest to newest
+
         // Add data points for each year
-        for (String year : revenueByYear.keySet()) {
-            revenueSeries.getData().add(new XYChart.Data<>(year, revenueByYear.get(year)));
-            costsSeries.getData().add(new XYChart.Data<>(year, costsByYear.get(year)));
-            profitsSeries.getData().add(new XYChart.Data<>(year, profitsByYear.get(year)));
+        for (String year : years) {
+            Double revenue = revenueByYear.getOrDefault(year, 0.0);
+            Double costs = costsByYear.getOrDefault(year, 0.0);
+            Double profits = profitsByYear.getOrDefault(year, 0.0);
+
+            revenueSeries.getData().add(new XYChart.Data<>(year, revenue));
+            costsSeries.getData().add(new XYChart.Data<>(year, costs));
+            profitsSeries.getData().add(new XYChart.Data<>(year, profits));
         }
 
         // Add the series to the chart
