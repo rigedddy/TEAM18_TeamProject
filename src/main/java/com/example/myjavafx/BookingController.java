@@ -178,7 +178,31 @@ public class BookingController implements Initializable {
                     String price = rs.getString(SQLSearch);
 
                     MeetingPrice.setText(price);
+                    String[] data = {Client, Room, date, timeSlot, price};
+                    System.out.println("Data registered: " + Arrays.toString(data));
+                    String insertQuery = "INSERT INTO MeetingRoomBooking (RoomName, ClientName, BookingDate, LengthOfBooking, Price) VALUES (?, ?, ?, ?, ?)";
+
+                    try (PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
+                        pstmt.setString(1, Room);
+                        pstmt.setString(2, Client);
+                        pstmt.setString(3, date);
+                        pstmt.setString(4, timeSlot);
+                        pstmt.setString(5, price);
+
+                        int rowsInserted = pstmt.executeUpdate();
+                        if (rowsInserted > 0) {
+                            System.out.println("Booking inserted successfully!");
+                        } else {
+                            System.out.println("No booking was inserted.");
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+
+
                 }
+
 
             } catch (SQLException e) {
                 e.printStackTrace();
