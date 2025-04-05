@@ -89,17 +89,17 @@
                         <Font name="Calibri Bold" size="17.0" />
                      </font>
                   </Text>
-                  <Text layoutX="48.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Institutions:" wrappingWidth="94.48544311523438">
+                  <PieChart fx:id="InstitutionsPie" layoutX="18.0" layoutY="37.0" prefHeight="172.0" prefWidth="357.0" style="-fx-background-color: #FFFFFF;" />
+                  <Label fx:id="totalInstitutionsLabel" layoutX="50.0" layoutY="220.0" text="Total Institutions:">
                      <font>
                         <Font name="Calibri Bold" size="12.0" />
                      </font>
-                  </Text>
-                  <Text layoutX="247.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Tours:" wrappingWidth="77.152099609375">
+                  </Label>
+                  <Label fx:id="totalToursLabel" layoutX="245.0" layoutY="220.0" text="Total Tours:">
                      <font>
                         <Font name="Calibri Bold" size="12.0" />
                      </font>
-                  </Text>
-                  <PieChart layoutX="75.0" layoutY="37.0" prefHeight="172.0" prefWidth="221.0" style="-fx-background-color: #FFFFFF;" />
+                  </Label>
                </children>
             </AnchorPane>
             <AnchorPane layoutX="750.0" layoutY="335.0" prefHeight="257.0" prefWidth="395.0" style="-fx-background-color: #d8dfe6;">
@@ -123,11 +123,6 @@
                      </font>
                   </Text>
                   <Text layoutX="44.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Revenue from Tickets" wrappingWidth="143.152099609375">
-                     <font>
-                        <Font name="Calibri Bold" size="12.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="247.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Cost of Film Rentals:" wrappingWidth="77.152099609375">
                      <font>
                         <Font name="Calibri Bold" size="12.0" />
                      </font>

@@ -32,8 +32,9 @@
                     <columns>
                       <TableColumn fx:id="FilmName" prefWidth="75.0" text="FilmName" />
                       <TableColumn fx:id="StartTime" prefWidth="75.0" text="StartTime" />
-                        <TableColumn fx:id="EndTime" prefWidth="75.0" text="EndTime:" />
+                        <TableColumn fx:id="EndTime" prefWidth="75.0" text="EndTime" />
                         <TableColumn fx:id="Date" prefWidth="75.0" text="Date" />
+                        <TableColumn prefWidth="100.00006103515625" text="LicenseDuration" />
                     </columns>
                   </TableView>
                </children>
