@@ -456,7 +456,7 @@ public class Reports {
         List<String> years = new ArrayList<>();
         String query = "SELECT DISTINCT YEAR(PurchaseDateTime) as year FROM TicketSales " +
                 "UNION " +
-                "SELECT DISTINCT YEAR(Date) as year FROM MeetingRoomBooking " +
+                "SELECT DISTINCT YEAR(BookingDate) as year FROM MeetingRoomBooking " +
                 "UNION " +
                 "SELECT DISTINCT YEAR(JoinYear) as year FROM FriendsOfLancaster " +
                 "ORDER BY year DESC";
@@ -502,7 +502,7 @@ public class Reports {
         }
 
         // 2. Meeting Room Booking Revenue
-        String meetingRoomQuery = "SELECT YEAR(mrb.Date) as year, mrb.StartTime, mrb.EndTime, mr.RateFor1Hour " +
+        String meetingRoomQuery = "SELECT YEAR(Date) as year, mr.RateFor1Hour " +
                 "FROM MeetingRoomBooking mrb " +
                 "JOIN MeetingRooms mr ON mrb.RoomID = mr.RoomID";
         try (Connection conn = DatabaseConnection.getConnection();
