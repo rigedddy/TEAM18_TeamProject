@@ -256,4 +256,196 @@ public class Reports {
 
         return totalSubscribers;
     }
+
+    // Method to fetch years for the FilmTicketYear ChoiceBox (hardcoded 2023-2024)
+    public List<String> getFilmTicketYears() {
+        return Arrays.asList("2024", "2023");
+    }
+
+    // Method to fetch films and their license costs for a given year
+    private Map<String, Double> getFilmLicenseCosts(String year) {
+        Map<String, Double> filmLicenseCosts = new LinkedHashMap<>();
+
+        String query = "SELECT FilmID, Title, LicenseCost " +
+                "FROM Film " +
+                "WHERE YEAR(Date) = ? " +
+                "ORDER BY FilmID";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, Integer.parseInt(year));
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int filmId = rs.getInt("FilmID");
+                double licenseCost = rs.getDouble("LicenseCost");
+                filmLicenseCosts.put(String.valueOf(filmId), licenseCost);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error fetching film license costs: " + e.getMessage());
+        }
+
+        return filmLicenseCosts;
+    }
+
+    // Method to fetch ticket sales revenue for each film in a given year
+    private Map<String, Double> getFilmTicketSales(String year) {
+        Map<String, Double> filmTicketSales = new LinkedHashMap<>();
+
+        // First, get the films shown in the selected year to initialize the map
+        String filmQuery = "SELECT FilmID " +
+                "FROM Film " +
+                "WHERE YEAR(Date) = ? " +
+                "ORDER BY FilmID";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(filmQuery)) {
+
+            stmt.setInt(1, Integer.parseInt(year));
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int filmId = rs.getInt("FilmID");
+                filmTicketSales.put(String.valueOf(filmId), 0.0); // Initialize to 0
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error fetching films for ticket sales: " + e.getMessage());
+        }
+
+        // Now, fetch ticket sales revenue for these films
+        String query = "SELECT ts.FilmID, SUM(ts.TicketPrice) as totalRevenue " +
+                "FROM TicketSales ts " +
+                "WHERE YEAR(ts.PurchaseDateTime) = ? AND ts.FilmID IS NOT NULL " +
+                "GROUP BY ts.FilmID " +
+                "ORDER BY ts.FilmID";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, Integer.parseInt(year));
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int filmId = rs.getInt("FilmID");
+                double totalRevenue = rs.getDouble("totalRevenue");
+                filmTicketSales.put(String.valueOf(filmId), totalRevenue);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error fetching ticket sales revenue: " + e.getMessage());
+        }
+
+        return filmTicketSales;
+    }
+
+    // Method to populate the LineChart with film license costs and ticket sales revenue
+    public void populateFilmTicketGraph(LineChart<String, Number> lineChart, String year) {
+        Map<String, Double> licenseCosts = getFilmLicenseCosts(year);
+        Map<String, Double> ticketSales = getFilmTicketSales(year);
+
+        // Clear existing data
+        lineChart.getData().clear();
+
+        // Create series for license costs
+        XYChart.Series<String, Number> licenseSeries = new XYChart.Series<>();
+        licenseSeries.setName("License Costs");
+
+        // Create series for ticket sales revenue
+        XYChart.Series<String, Number> salesSeries = new XYChart.Series<>();
+        salesSeries.setName("Ticket Sales Revenue");
+
+        // Add data points for each film
+        for (String filmId : licenseCosts.keySet()) {
+            licenseSeries.getData().add(new XYChart.Data<>(filmId, licenseCosts.get(filmId)));
+            salesSeries.getData().add(new XYChart.Data<>(filmId, ticketSales.getOrDefault(filmId, 0.0)));
+        }
+
+        // Add the series to the chart
+        lineChart.getData().addAll(licenseSeries, salesSeries);
+
+        // Style the lines and add tooltips
+        Platform.runLater(() -> {
+            for (XYChart.Series<String, Number> series : lineChart.getData()) {
+                for (XYChart.Data<String, Number> data : series.getData()) {
+                    // Add tooltip
+                    javafx.scene.control.Tooltip tooltip = new javafx.scene.control.Tooltip(
+                            "Film ID: " + data.getXValue() + "\n" +
+                                    series.getName() + ": $" + String.format("%.2f", data.getYValue())
+                    );
+                    javafx.scene.control.Tooltip.install(data.getNode(), tooltip);
+
+                    // Style the data points
+                    data.getNode().setStyle("-fx-background-color: " +
+                            (series.getName().equals("License Costs") ? "#FF0000" : "#00FF00") + ";");
+                }
+                // Style the lines
+                if (series.getName().equals("License Costs")) {
+                    series.getNode().setStyle("-fx-stroke: #FF0000; -fx-stroke-width: 2px;");
+                } else if (series.getName().equals("Ticket Sales Revenue")) {
+                    series.getNode().setStyle("-fx-stroke: #00FF00; -fx-stroke-width: 2px;");
+                }
+            }
+        });
+
+        // Set the chart title
+        lineChart.setTitle("Film Costs vs Ticket Sales (" + year + ")");
+
+        // Rotate x-axis labels to avoid overlap
+        lineChart.getXAxis().setTickLabelRotation(45);
+
+        // Adjust y-axis scale dynamically
+        double maxValue = Math.max(
+                licenseCosts.values().stream().mapToDouble(Double::doubleValue).max().orElse(0.0),
+                ticketSales.values().stream().mapToDouble(Double::doubleValue).max().orElse(0.0)
+        );
+        ((javafx.scene.chart.NumberAxis) lineChart.getYAxis()).setUpperBound(Math.ceil(maxValue / 1000) * 1000);
+        ((javafx.scene.chart.NumberAxis) lineChart.getYAxis()).setTickUnit(Math.ceil(maxValue / 5000) * 1000);
+    }
+
+    // Method to get the total number of films shown in a given year
+    public int getTotalFilms(String year) {
+        int totalFilms = 0;
+        String query = "SELECT COUNT(*) as count FROM Film WHERE YEAR(Date) = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, Integer.parseInt(year));
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                totalFilms = rs.getInt("count");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error fetching total films: " + e.getMessage());
+        }
+
+        return totalFilms;
+    }
+
+    // Method to get the total revenue from ticket sales in a given year
+    public double getTotalTicketRevenue(String year) {
+        double totalRevenue = 0.0;
+        String query = "SELECT SUM(TicketPrice) as total FROM TicketSales WHERE YEAR(PurchaseDateTime) = ? AND FilmID IS NOT NULL";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, Integer.parseInt(year));
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                totalRevenue = rs.getDouble("total");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error fetching total ticket revenue: " + e.getMessage());
+        }
+
+        return totalRevenue;
+    }
 }

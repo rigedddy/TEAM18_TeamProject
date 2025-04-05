@@ -39,6 +39,18 @@ public class ReportsController implements Initializable {
     private Label totalToursLabel;
 
     @FXML
+    private LineChart<String, Number> FilmTicketGraph;
+
+    @FXML
+    private ChoiceBox<String> FilmTicketYear;
+
+    @FXML
+    private Label totalFilms;
+
+    @FXML
+    private Label revenueTickets;
+
+    @FXML
     private Label time;
     private ActionEvent event;
 
@@ -54,6 +66,9 @@ public class ReportsController implements Initializable {
 
         // Load the Friends of Lancaster's section
         loadFOLSection();
+
+        // Load the Film Costs vs Ticket Sales section
+        loadFilmTicketSection();
     }
 
     private void loadInstitutionsPieChart() {
@@ -91,6 +106,36 @@ public class ReportsController implements Initializable {
         // Update the total subscribers label
         int totalSubscribers = reports.getTotalSubscribers(year);
         TotalFOL.setText("Total Subscribers: " + totalSubscribers);
+    }
+
+    private void loadFilmTicketSection() {
+        // Populate the ChoiceBox with years
+        List<String> years = reports.getFilmTicketYears();
+        FilmTicketYear.getItems().addAll(years);
+
+        // Set the default year to the most recent (2024)
+        if (!years.isEmpty()) {
+            FilmTicketYear.setValue("2024");
+            updateFilmTicketGraph("2024");
+        }
+
+        // Add a listener to update the graph and labels when the year changes
+        FilmTicketYear.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                updateFilmTicketGraph(newValue);
+            }
+        });
+    }
+
+    private void updateFilmTicketGraph(String year) {
+        // Update the line chart
+        reports.populateFilmTicketGraph(FilmTicketGraph, year);
+
+        // Update the labels
+        int totalFilmsCount = reports.getTotalFilms(year);
+        double totalRevenue = reports.getTotalTicketRevenue(year);
+        totalFilms.setText("Total Films Shown: " + totalFilmsCount);
+        revenueTickets.setText("Total Revenue from Tickets: $" + String.format("%.2f", totalRevenue));
     }
 
     @FXML
