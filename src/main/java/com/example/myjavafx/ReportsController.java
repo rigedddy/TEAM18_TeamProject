@@ -92,9 +92,9 @@ public class ReportsController implements Initializable {
         double totalCosts = reports.getTotalCosts();
         double totalProfits = reports.getTotalProfits();
 
-        totalRevenueLabel.setText("Total Revenue: $" + String.format("%.2f", totalRevenue));
-        totalCostsLabel.setText("Total Costs: $" + String.format("%.2f", totalCosts));
-        totalProfitsLabel.setText("Total Profits: $" + String.format("%.2f", totalProfits));
+        totalRevenueLabel.setText("Total Revenue: £" + String.format("%.2f", totalRevenue));
+        totalCostsLabel.setText("Total Costs: £" + String.format("%.2f", totalCosts));
+        totalProfitsLabel.setText("Total Profits: £" + String.format("%.2f", totalProfits));
 
         // Populate the general graph
         reports.populateGeneralGraph(generalGraph);
@@ -164,7 +164,7 @@ public class ReportsController implements Initializable {
         int totalFilmsCount = reports.getTotalFilms(year);
         double totalRevenue = reports.getTotalTicketRevenue(year);
         totalFilms.setText("Total Films Shown: " + totalFilmsCount);
-        revenueTickets.setText("Total Revenue from Tickets: $" + String.format("%.2f", totalRevenue));
+        revenueTickets.setText("Total Revenue from Tickets: £" + String.format("%.2f", totalRevenue));
     }
 
     @FXML
