@@ -91,14 +91,40 @@ public class MeetingRoom {
     // Method to create a new meeting room booking
     public void createNewMeetingRoomBooking() {
         try {
+            // Get and validate input values
             String client = clientName.getValue() != null ? clientName.getValue().strip() : null;
             String room = roomName.getValue() != null ? roomName.getValue().strip() : null;
             String dateValue = date.getValue() != null ? date.getValue().toString() : null;
             String timeSlotValue = timeSlot.getValue() != null ? timeSlot.getValue().strip() : null;
 
-            if (client != null && !client.isEmpty() && room != null && !room.isEmpty() &&
-                    dateValue != null && !dateValue.isEmpty() && timeSlotValue != null && !timeSlotValue.isEmpty()) {
+            // Reset border styles for validation feedback
+            roomName.setStyle("");
+            clientName.setStyle("");
+            timeSlot.setStyle("");
+            date.setStyle("");
 
+            // Validate inputs
+            boolean isValid = true;
+
+            if (room == null || room.isEmpty()) {
+                roomName.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                isValid = false;
+            }
+            if (client == null || client.isEmpty()) {
+                clientName.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                isValid = false;
+            }
+            if (timeSlotValue == null || timeSlotValue.isEmpty()) {
+                timeSlot.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                isValid = false;
+            }
+            if (dateValue == null) {
+                date.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+                isValid = false;
+            }
+
+            // If all fields are valid, proceed with booking
+            if (isValid) {
                 // Determine the correct rate column based on the time slot
                 String SQLSearch = switch (timeSlotValue) {
                     case "1Hour" -> "RateFor1Hour";
@@ -122,7 +148,7 @@ public class MeetingRoom {
 
                         // Log the data
                         String[] data = {client, room, dateValue, timeSlotValue, price};
-                        System.out.println("Data registered: " + java.util.Arrays.toString(data));
+                        System.out.println("Meeting Room Booking Data registered: " + java.util.Arrays.toString(data));
 
                         // Insert the booking into the database
                         String insertQuery = "INSERT INTO MeetingRoomBooking (RoomName, ClientName, BookingDate, LengthOfBooking, Price) VALUES (?, ?, ?, ?, ?)";
@@ -135,23 +161,25 @@ public class MeetingRoom {
 
                             int rowsInserted = pstmt.executeUpdate();
                             if (rowsInserted > 0) {
-                                System.out.println("Booking inserted successfully!");
+                                System.out.println("Meeting room booking inserted successfully!");
                             } else {
-                                System.out.println("No booking was inserted.");
+                                System.out.println("No meeting room booking was inserted.");
                             }
                         } catch (SQLException e) {
                             e.printStackTrace();
+                            System.out.println("Error inserting meeting room booking: " + e.getMessage());
                         }
                     }
 
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    System.out.println("Error fetching price for meeting room: " + e.getMessage());
                 }
             } else {
-                System.out.println("Please make sure all fields are filled out correctly.");
+                System.out.println("Please fill in all required fields for Meeting Room Booking.");
             }
         } catch (Exception e) {
-            System.out.println("Please fill in all required fields.");
+            System.out.println("An unexpected error occurred: " + e.getMessage());
         }
     }
 }

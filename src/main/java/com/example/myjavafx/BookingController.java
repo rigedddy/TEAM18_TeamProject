@@ -12,20 +12,16 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class BookingController implements Initializable {
 
     @FXML
     private ImageView profileimg;
-
-    // Group meeting fields
     @FXML
     private Label time;
-    @FXML
-    private TextField BookingID;
+
+    // Group meeting fields
     @FXML
     private TextField NumOfPeople;
     @FXML
@@ -35,7 +31,7 @@ public class BookingController implements Initializable {
     @FXML
     private ChoiceBox<String> InstitutionChoice;
     @FXML
-    private DatePicker DateGroupBooking;
+    private ChoiceBox<String> groupEvent; // Updated to ChoiceBox<String>
 
     // Meeting room fields (to be passed to MeetingRoom class)
     @FXML
@@ -49,58 +45,37 @@ public class BookingController implements Initializable {
     @FXML
     private DatePicker Date;
 
-    private final String[] institutionChoices = {"Primary School", "Secondary School", "College", "University"};
+    // Venue tour fields (to be passed to VenueTour class)
+    @FXML
+    private ChoiceBox<String> institutionTour;
+    @FXML
+    private TextField studentsTour;
+    @FXML
+    private TextField timeTour;
+    @FXML
+    private DatePicker dateTour;
+
     private ActionEvent event;
 
     // Instance of MeetingRoom class
     private MeetingRoom meetingRoom;
 
-    // Get the data that was inputted by the user and ensure validation for group booking
+    // Instance of VenueTour class
+    private VenueTour venueTour;
+
+    // Instance of GroupBooking class
+    private GroupBooking groupBooking;
+
+    // Delegate venue tour booking creation to the VenueTour class
     @FXML
-    void createNewBooking(ActionEvent event) {
-        boolean isValid = true;
+    void createNewTourBooking(ActionEvent event) {
+        venueTour.createNewTourBooking();
+    }
 
-        String numOfPeopleString = NumOfPeople.getText().trim();
-        String nameString = Name.getText().trim();
-        String emailString = Email.getText().trim();
-        String institutionChoiceString = InstitutionChoice.getValue();
-        LocalDate startDate = DateGroupBooking.getValue();
-        String DateForGroup = startDate != null ? startDate.toString() : null;
-
-        // Reset border color for all fields
-        NumOfPeople.setStyle("");
-        Name.setStyle("");
-        Email.setStyle("");
-        InstitutionChoice.setStyle("");
-
-        // Validate each field
-        if (numOfPeopleString.isEmpty()) {
-            NumOfPeople.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
-            isValid = false;
-        }
-        if (nameString.isEmpty()) {
-            Name.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
-            isValid = false;
-        }
-        if (emailString.isEmpty()) {
-            Email.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
-            isValid = false;
-        }
-        if (institutionChoiceString == null) {
-            InstitutionChoice.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
-            isValid = false;
-        }
-        if (DateGroupBooking.getValue() == null) {
-            isValid = false;
-        }
-
-        // Only create data if all fields are filled
-        if (isValid) {
-            String[] data = {numOfPeopleString, nameString, emailString, institutionChoiceString, DateForGroup};
-            System.out.println("Data registered: " + Arrays.toString(data));
-        } else {
-            System.out.println("Error: Please fill in all required fields.");
-        }
+    // Delegate group booking creation to the GroupBooking class
+    @FXML
+    void createNewGroupBooking(ActionEvent event) {
+        groupBooking.createNewGroupBooking();
     }
 
     // Delegate meeting room booking creation to the MeetingRoom class
@@ -148,10 +123,13 @@ public class BookingController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Initialize group booking components
-        InstitutionChoice.getItems().addAll(institutionChoices);
+        // Initialize the GroupBooking instance and pass the required UI components
+        groupBooking = new GroupBooking(NumOfPeople, Name, Email, InstitutionChoice, groupEvent);
 
         // Initialize the MeetingRoom instance and pass the required UI components
         meetingRoom = new MeetingRoom(RoomName, ClientName, TimeSlot, Date, MeetingPrice);
+
+        // Initialize the VenueTour instance and pass the required UI components
+        venueTour = new VenueTour(institutionTour, studentsTour, timeTour, dateTour);
     }
 }
