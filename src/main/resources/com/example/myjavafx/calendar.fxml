@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -28,8 +29,8 @@
                         <Font size="17.0" />
                      </font>
                   </Text>
-                  <DatePicker layoutX="158.0" layoutY="26.0" prefHeight="34.0" prefWidth="248.0" />
-                  <Button layoutX="256.0" layoutY="108.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="148.0" style="-fx-background-color: #2e4a63; -fx-background-radius: 15px;" text="VIEW SCHEDULE" textFill="WHITE">
+                  <DatePicker fx:id="datePicker" layoutX="158.0" layoutY="26.0" prefHeight="34.0" prefWidth="248.0" />
+                  <Button fx:id="viewScheduleButton" layoutX="256.0" layoutY="108.0" mnemonicParsing="false" onAction="#viewSchedule" prefHeight="45.0" prefWidth="148.0" style="-fx-background-color: #2e4a63; -fx-background-radius: 15px;" text="VIEW SCHEDULE" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="15.0" />
                      </font>
@@ -48,30 +49,84 @@
                         <Font name="Cambria Math" size="20.0" />
                      </font>
                   </Text>
-                  <TableView layoutX="-155.0" layoutY="-4.0" prefHeight="477.0" prefWidth="722.0">
-                    <columns>
-                      <TableColumn prefWidth="86.44448852539062" text="Monday" />
-                      <TableColumn prefWidth="96.888916015625" text="Tuesday" />
-                        <TableColumn prefWidth="105.11102294921875" text="Wednesday" />
-                        <TableColumn prefWidth="117.55560302734375" text="Thursday" />
-                        <TableColumn prefWidth="106.22216796875" text="Friday" />
-                        <TableColumn prefWidth="102.44451904296875" text="Saturday" />
-                        <TableColumn prefWidth="108.22216796875" text="Sunday" />
-                    </columns>
+                  <Label fx:id="weekLabel" layoutX="10.0" layoutY="10.0" text="Month Year, Week X: YYYY-MM-DD to YYYY-MM-DD">
+                     <font>
+                        <Font name="Calibri Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="weeklyCalendar" layoutX="-155.0" layoutY="40.0" prefHeight="437.0" prefWidth="722.0">
+                     <columns>
+                        <TableColumn fx:id="mondayColumn" prefWidth="86.44448852539062" text="Monday">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="monday" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="tuesdayColumn" prefWidth="96.888916015625" text="Tuesday">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="tuesday" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="wednesdayColumn" prefWidth="105.11102294921875" text="Wednesday">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="wednesday" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="thursdayColumn" prefWidth="117.55560302734375" text="Thursday">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="thursday" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="fridayColumn" prefWidth="106.22216796875" text="Friday">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="friday" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="saturdayColumn" prefWidth="102.44451904296875" text="Saturday">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="saturday" />
+                           </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="sundayColumn" prefWidth="108.22216796875" text="Sunday">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="sunday" />
+                           </cellValueFactory>
+                        </TableColumn>
+                     </columns>
                   </TableView>
                </children>
             </AnchorPane>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-            <TableView layoutX="23.0" layoutY="279.0" prefHeight="200.0" prefWidth="443.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="Date" />
-                <TableColumn prefWidth="75.0" text="Start Time" />
-                  <TableColumn prefWidth="75.0" text="End Time" />
-                  <TableColumn prefWidth="114.00001525878906" text="Event" />
-                  <TableColumn minWidth="0.0" prefWidth="102.0" text="Venue" />
-              </columns>
+            <TableView fx:id="eventList" layoutX="23.0" layoutY="279.0" prefHeight="200.0" prefWidth="443.0">
+               <columns>
+                  <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Date">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="date" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="startTimeColumn" prefWidth="75.0" text="Start Time">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="startTime" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="endTimeColumn" prefWidth="75.0" text="End Time">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="endTime" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="eventColumn" prefWidth="114.00001525878906" text="Event">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="event" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="venueColumn" minWidth="0.0" prefWidth="102.0" text="Venue">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="venue" />
+                     </cellValueFactory>
+                  </TableColumn>
+               </columns>
             </TableView>
-         </children></AnchorPane>
+         </children>
+      </AnchorPane>
    </center>
    <top>
       <AnchorPane prefHeight="92.0" prefWidth="1280.0" style="-fx-background-color: #d5ebff;" BorderPane.alignment="CENTER">
