@@ -14,11 +14,7 @@ public class AdvertisingController {
     @FXML
     private ImageView profileimg;
 
-    @FXML
-    private ChoiceBox<?> InstitutionChoice;
 
-    private final String[] institutionChoices = {"Primary School", "Secondary School", "College", "University"};
-//
     @FXML
     private Label time;
     private ActionEvent event;

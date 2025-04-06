@@ -88,9 +88,9 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <AnchorPane layoutX="230.0" layoutY="100.0" prefHeight="402.0" prefWidth="359.0" style="-fx-background-color: #d8dfe6;">
+            <AnchorPane layoutX="68.0" layoutY="100.0" prefHeight="402.0" prefWidth="359.0" style="-fx-background-color: #d8dfe6;">
                <children>
-                  <Text layoutX="18.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group Booking">
+                  <Text layoutX="18.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Group Booking">
                      <font>
                         <Font size="22.0" />
                      </font>
@@ -114,28 +114,50 @@
                   <Text layoutX="26.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="700.0" layoutY="100.0" prefHeight="402.0" prefWidth="359.0" style="-fx-background-color: #d8dfe6;">
+            <AnchorPane layoutX="472.0" layoutY="100.0" prefHeight="402.0" prefWidth="359.0" style="-fx-background-color: #d8dfe6;">
                <children>
-                  <Text layoutX="18.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Meeting Room Booking">
+                  <Text layoutX="18.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Meeting Room Booking">
                      <font>
                         <Font size="22.0" />
                      </font>
                   </Text>
-                  <Text layoutX="26.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Name:" />
-                  <Text layoutX="26.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Client Name:" />
-                  <DatePicker fx:id="Date" layoutX="170.0" layoutY="140.0" prefHeight="25.0" prefWidth="150.0" />
+                  <Text layoutX="26.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Name:" />
+                  <Text layoutX="26.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Client Name:" />
+                  <DatePicker fx:id="Date" layoutX="170.0" layoutY="172.0" prefHeight="25.0" prefWidth="150.0" />
                   <Button layoutX="196.0" layoutY="340.0" mnemonicParsing="false" onAction="#createNewMeetingRoomBooking" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="12.0" />
                      </font>
                   </Button>
-                  <ChoiceBox fx:id="RoomName" layoutX="170.0" layoutY="50.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
-                  <Text layoutX="26.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" />
-                  <ChoiceBox fx:id="ClientName" layoutX="170.0" layoutY="95.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
-                  <Text layoutX="26.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price(Auto-Filled):" />
-                  <TextField fx:id="MeetingPrice" layoutX="170.0" layoutY="228.0" prefHeight="25.0" prefWidth="150.0" />
-                  <ChoiceBox fx:id="TimeSlot" layoutX="170.0" layoutY="185.0" prefWidth="150.0" />
-                  <Text layoutX="26.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PickLengthOfBooking:" />
+                  <ChoiceBox fx:id="RoomName" layoutX="170.0" layoutY="72.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
+                  <Text layoutX="26.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" />
+                  <ChoiceBox fx:id="ClientName" layoutX="170.0" layoutY="121.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
+                  <Text layoutX="26.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price:" />
+                  <TextField fx:id="MeetingPrice" layoutX="170.0" layoutY="263.0" prefHeight="25.0" prefWidth="150.0" promptText="Auto-Filled" />
+                  <ChoiceBox fx:id="TimeSlot" layoutX="170.0" layoutY="219.0" prefWidth="150.0" />
+                  <Text layoutX="26.0" layoutY="240.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PickLengthOfBooking:" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="876.0" layoutY="100.0" prefHeight="402.0" prefWidth="359.0" style="-fx-background-color: #d8dfe6;">
+               <children>
+                  <Text layoutX="18.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Venue Tour Booking">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="26.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Institution:" />
+                  <Text layoutX="26.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" />
+                  <Text layoutX="26.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Time:" />
+                  <TextField layoutX="155.0" layoutY="239.0" prefHeight="26.0" prefWidth="150.0" />
+                  <DatePicker layoutX="155.0" layoutY="179.0" prefHeight="26.0" prefWidth="150.0" />
+                  <Button layoutX="212.0" layoutY="342.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
+                     <font>
+                        <Font name="Calibri" size="12.0" />
+                     </font>
+                  </Button>
+                  <Text layoutX="26.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of Students:" />
+                  <ChoiceBox fx:id="InstitutionChoice1" layoutX="155.0" layoutY="72.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
+                  <TextField layoutX="156.0" layoutY="120.0" prefHeight="26.0" prefWidth="150.0" />
                </children>
             </AnchorPane>
          </children></AnchorPane>

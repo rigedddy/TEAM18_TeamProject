@@ -12,12 +12,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
@@ -26,7 +21,7 @@ public class BookingController implements Initializable {
     @FXML
     private ImageView profileimg;
 
-    // group meeting
+    // Group meeting fields
     @FXML
     private Label time;
     @FXML
@@ -38,9 +33,13 @@ public class BookingController implements Initializable {
     @FXML
     private TextField Email;
     @FXML
-    private ChoiceBox<String> TimeSlot;
-    private final String[] TimeChoices = {"1Hour", "MorningAndAfternoon", "AllDay", "AllWeek"};
+    private ChoiceBox<String> InstitutionChoice;
+    @FXML
+    private DatePicker DateGroupBooking;
 
+    // Meeting room fields (to be passed to MeetingRoom class)
+    @FXML
+    private ChoiceBox<String> TimeSlot;
     @FXML
     private TextField MeetingPrice;
     @FXML
@@ -49,78 +48,32 @@ public class BookingController implements Initializable {
     private ChoiceBox<String> ClientName;
     @FXML
     private DatePicker Date;
-    @FXML
-    private DatePicker DateGroupBooking;
 
-
-    @FXML
-    private ChoiceBox<String> InstitutionChoice;
-
-    private String[] fetchClientNames() {
-        ArrayList<String> roomNamesList = new ArrayList<>();
-
-        String query = "SELECT company_name FROM CompanyDetails";
-
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                roomNamesList.add(rs.getString("company_name"));
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return roomNamesList.toArray(new String[0]);
-    }
-    private String[] fetchRoomNames() {
-        ArrayList<String> roomNamesList = new ArrayList<>();
-
-        String query = "SELECT RoomName FROM MeetingRooms";
-
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                roomNamesList.add(rs.getString("RoomName"));
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return roomNamesList.toArray(new String[0]);
-    }
     private final String[] institutionChoices = {"Primary School", "Secondary School", "College", "University"};
     private ActionEvent event;
-    private final String[] RoomNameChoices = fetchRoomNames();
-    private final String[] ClientNameChoices = fetchClientNames();
-    // Get the data that was inputted by the user and ensure validation
+
+    // Instance of MeetingRoom class
+    private MeetingRoom meetingRoom;
+
+    // Get the data that was inputted by the user and ensure validation for group booking
     @FXML
     void createNewBooking(ActionEvent event) {
         boolean isValid = true;
 
-        //String bookingIDString = BookingID.getText().trim();
         String numOfPeopleString = NumOfPeople.getText().trim();
         String nameString = Name.getText().trim();
         String emailString = Email.getText().trim();
         String institutionChoiceString = InstitutionChoice.getValue();
         LocalDate startDate = DateGroupBooking.getValue();
-        String DateForGroup = startDate.toString();
+        String DateForGroup = startDate != null ? startDate.toString() : null;
 
         // Reset border color for all fields
-
         NumOfPeople.setStyle("");
         Name.setStyle("");
         Email.setStyle("");
-
         InstitutionChoice.setStyle("");
 
         // Validate each field
-
         if (numOfPeopleString.isEmpty()) {
             NumOfPeople.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             isValid = false;
@@ -133,12 +86,11 @@ public class BookingController implements Initializable {
             Email.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             isValid = false;
         }
-
         if (institutionChoiceString == null) {
             InstitutionChoice.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             isValid = false;
         }
-        if (DateGroupBooking== null) {
+        if (DateGroupBooking.getValue() == null) {
             isValid = false;
         }
 
@@ -150,73 +102,14 @@ public class BookingController implements Initializable {
             System.out.println("Error: Please fill in all required fields.");
         }
     }
+
+    // Delegate meeting room booking creation to the MeetingRoom class
     @FXML
     void createNewMeetingRoomBooking(ActionEvent event) {
-    try{
-        String Client = ClientName.getValue().strip();
-        String Room = RoomName.getValue().strip();
-        String date = Date.getValue().toString();
-        String timeSlot = TimeSlot.getValue().strip();
-        if (Client != null && !Client.isEmpty() && Room != null && !Room.isEmpty() && date != null && !date.isEmpty() && timeSlot != null && !timeSlot.isEmpty()) {
+        meetingRoom.createNewMeetingRoomBooking();
+    }
 
-
-            String SQLSearch = switch (timeSlot) {
-                case "1Hour" -> "RateFor1Hour";
-                case "MorningAndAfternoon" -> "RateForMorningAndAfternoon";
-                case "AllDay" -> "AllDayRate";
-                case "AllWeek" -> "WeekRate";
-                default -> "RateFor1Hour";
-            };
-            String query = "SELECT " + SQLSearch + " FROM MeetingRooms WHERE RoomName = ?";
-            try (Connection conn = DatabaseConnection.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(query)) {
-
-                stmt.setString(1, Room);
-                ResultSet rs = stmt.executeQuery();
-
-                if (rs.next()) {
-                    String price = rs.getString(SQLSearch);
-
-                    MeetingPrice.setText(price);
-                    String[] data = {Client, Room, date, timeSlot, price};
-                    System.out.println("Data registered: " + Arrays.toString(data));
-                    String insertQuery = "INSERT INTO MeetingRoomBooking (RoomName, ClientName, BookingDate, LengthOfBooking, Price) VALUES (?, ?, ?, ?, ?)";
-
-                    try (PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
-                        pstmt.setString(1, Room);
-                        pstmt.setString(2, Client);
-                        pstmt.setString(3, date);
-                        pstmt.setString(4, timeSlot);
-                        pstmt.setString(5, price);
-
-                        int rowsInserted = pstmt.executeUpdate();
-                        if (rowsInserted > 0) {
-                            System.out.println("Booking inserted successfully!");
-                        } else {
-                            System.out.println("No booking was inserted.");
-                        }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
-
-
-                }
-
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } else {
-
-            System.out.println("Please make sure all fields are filled out correctly.");
-        }
-    } catch (Exception e) {
-        System.out.println("Please fill in all required fields.");
-    }}
-
-
-        @FXML
+    @FXML
     void goToDashboard(ActionEvent event) throws IOException {
         LoginApplication.moveToDashboard();
     }
@@ -255,9 +148,10 @@ public class BookingController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Initialize group booking components
         InstitutionChoice.getItems().addAll(institutionChoices);
-        RoomName.getItems().addAll(RoomNameChoices);
-        ClientName.getItems().addAll(ClientNameChoices);
-        TimeSlot.getItems().addAll(TimeChoices);
+
+        // Initialize the MeetingRoom instance and pass the required UI components
+        meetingRoom = new MeetingRoom(RoomName, ClientName, TimeSlot, Date, MeetingPrice);
     }
 }

@@ -83,7 +83,7 @@
                   <Font name="Calibri Bold" size="63.0" />
                </font>
             </Text>
-            <AnchorPane layoutX="700.0" layoutY="100.0" prefHeight="300.0" prefWidth="412.0" style="-fx-background-color: #d8dfe6;">
+            <AnchorPane layoutX="200.0" layoutY="100.0" prefHeight="300.0" prefWidth="412.0" style="-fx-background-color: #d8dfe6;">
                <children>
                   <Text layoutX="17.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Friends of Lancaster's – Notifications">
                      <font>
@@ -109,26 +109,30 @@
                   </Button>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="230.0" layoutY="100.0" prefHeight="300.0" prefWidth="352.0" style="-fx-background-color: #d8dfe6;">
+            <AnchorPane layoutX="700.0" layoutY="100.0" prefHeight="374.0" prefWidth="412.0" style="-fx-background-color: #d8dfe6;">
                <children>
-                  <Text layoutX="18.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Venue Tour Booking">
+                  <Text layoutX="18.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Friends of Lancaster - Reserve Seats ">
                      <font>
                         <Font size="22.0" />
                      </font>
                   </Text>
-                  <Text layoutX="26.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tour Name:" />
-                  <Text layoutX="26.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" />
-                  <Text layoutX="26.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available Times:" />
-                  <TextField layoutX="155.0" layoutY="70.0" prefHeight="26.0" prefWidth="150.0" />
-                  <DatePicker layoutX="155.0" layoutY="160.0" prefHeight="26.0" prefWidth="150.0" />
-                  <Button layoutX="236.0" layoutY="247.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="83.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
+                  <Text layoutX="26.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Show Type:" />
+                  <Text layoutX="26.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seat Letter:" />
+                  <Text layoutX="26.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Show:" />
+                  <Button layoutX="283.0" layoutY="319.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="83.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="12.0" />
                      </font>
                   </Button>
-                  <ChoiceBox layoutX="155.0" layoutY="114.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
-                  <Text layoutX="26.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Institution" />
-                  <ChoiceBox fx:id="InstitutionChoice" layoutX="155.0" layoutY="202.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
+                  <ChoiceBox layoutX="197.0" layoutY="101.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
+                  <Text layoutX="26.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seat Number:" />
+                  <ChoiceBox fx:id="InstitutionChoice" layoutX="198.0" layoutY="182.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
+                  <Text layoutX="26.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seat Number:" />
+                  <ChoiceBox fx:id="InstitutionChoice1" layoutX="198.0" layoutY="224.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
+                  <ChoiceBox fx:id="InstitutionChoice2" layoutX="196.0" layoutY="62.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
+                  <ChoiceBox layoutX="197.0" layoutY="141.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
+                  <Text layoutX="26.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FOL Member:" />
+                  <ChoiceBox fx:id="InstitutionChoice11" layoutX="199.0" layoutY="266.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
                </children>
             </AnchorPane>
          </children></AnchorPane>
