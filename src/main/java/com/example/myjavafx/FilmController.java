@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Arrays;
 import javafx.collections.FXCollections;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -98,12 +99,11 @@ public class FilmController {
         String EndTime = EndTimeField.getText().trim();
         String date = DateTextField.getText().trim();
 
-
+        // Reset text field styles
         filmNameTextField.setStyle("");
         StartTimeField.setStyle("");
         LicenseTextField.setStyle("");
         EndTimeField.setStyle("");
-
         DateTextField.setStyle("");
 
         // Validate each field
@@ -123,7 +123,6 @@ public class FilmController {
             EndTimeField.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             isValid = false;
         }
-
         if (date.isEmpty()) {
             DateTextField.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             isValid = false;
@@ -133,10 +132,36 @@ public class FilmController {
         if (isValid) {
             String[] data = {registeredFilmName, StartTime, license, EndTime, date};
             System.out.println("The registered data: " + Arrays.toString(data));
+
+
+            String insertSQL = "INSERT INTO Film (Title, StartTime, LicenseDuration, EndTime, Date) VALUES (?, ?, ?, ?, ?)";
+
+            try (Connection connection = DatabaseConnection.getConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+
+
+                preparedStatement.setString(1, registeredFilmName);
+                preparedStatement.setString(2, StartTime);
+                preparedStatement.setString(3, license);
+                preparedStatement.setString(4, EndTime);
+                preparedStatement.setString(5, date);
+
+
+                int rowsAffected = preparedStatement.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Film registered successfully.");
+                } else {
+                    System.out.println("Error: Unable to register the film.");
+                }
+
+            } catch (SQLException e) {
+                System.out.println("Error inserting data into database: " + e.getMessage());
+            }
         } else {
             System.out.println("Error: Please fill in all required fields.");
         }
     }
+
 
     @FXML
     void goToDashboard(ActionEvent event) throws IOException {
