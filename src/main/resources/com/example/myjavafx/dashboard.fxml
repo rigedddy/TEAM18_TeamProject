@@ -27,10 +27,11 @@
                         <Font name="Calibri Bold" size="20.0" />
                      </font>
                   </Text>
-                  <TableView layoutX="18.0" layoutY="44.0" prefHeight="485.0" prefWidth="459.0">
+                  <TableView fx:id="eventView" layoutX="18.0" layoutY="44.0" prefHeight="485.0" prefWidth="459.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="EventID" />
-                      <TableColumn prefWidth="382.6667073567708" text="Event" />
+                      <TableColumn fx:id="eventColumn" prefWidth="231.77777099609375" text="Event" />
+                      <TableColumn fx:id="dateColumn" prefWidth="125.5555419921875" text="Date" />
+                        <TableColumn fx:id="timeColumn" prefWidth="100.66670735677081" text="Time" />
                     </columns>
                   </TableView>
                </children>

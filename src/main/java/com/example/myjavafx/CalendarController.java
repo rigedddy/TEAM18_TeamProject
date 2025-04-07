@@ -89,6 +89,8 @@ public class CalendarController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // time
+        time.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         // Bind the TableView data
         weeklyCalendar.setItems(weeklyScheduleData);
         eventList.setItems(eventListData);

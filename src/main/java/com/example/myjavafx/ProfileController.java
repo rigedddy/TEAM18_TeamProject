@@ -12,6 +12,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 public class ProfileController {
 
     @FXML
@@ -37,6 +42,7 @@ public class ProfileController {
     @FXML
     public void initialize() {
         loadProfileData(Session.currentUsername);
+        time.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
     }
 
     private void loadProfileData(String username) {

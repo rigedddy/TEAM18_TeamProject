@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import javafx.collections.FXCollections;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -81,6 +83,9 @@ public class FilmController {
     }
     @FXML
     public void initialize() {
+        // time
+        time.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+
         FilmName.setCellValueFactory(new PropertyValueFactory<>("Title"));
         StartTime.setCellValueFactory(new PropertyValueFactory<>("StartTime"));
         EndTime.setCellValueFactory(new PropertyValueFactory<>("EndTime"));

@@ -9,6 +9,10 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -70,6 +74,9 @@ public class ReportsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // time
+        time.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+
         // Initialize the Reports class
         reports = new Reports();
 
