@@ -26,11 +26,16 @@ public class AdvertisingController implements Initializable {
     private final String[] ShowTypeChoices = {"Music", "Film", "Other"};
     @FXML
     private ChoiceBox<String> ShowChoice;
+    @FXML
+    private ChoiceBox<String> SeatNumber;
+    private final String[] SeatNumberChoices = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15", "16","17","18","19"};
 
     @FXML
     private Label time;
     private ActionEvent event;
-
+    @FXML
+    private ChoiceBox<String> SeatChoiceLetter;
+    private final String[] SeatChoiceLetterChoices = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",};
     @FXML
     void goToBooking(ActionEvent event) throws IOException {
         LoginApplication.moveToBooking();
@@ -120,7 +125,8 @@ public class AdvertisingController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        SeatNumber.getItems().addAll(SeatNumberChoices);
+        SeatChoiceLetter.getItems().addAll(SeatChoiceLetterChoices);
         ShowType.getItems().addAll(ShowTypeChoices);
         ShowType.setOnAction(e -> updateShowChoiceBox());
 
