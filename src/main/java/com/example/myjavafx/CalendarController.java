@@ -91,11 +91,10 @@ public class CalendarController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // time
         time.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        // Bind the TableView data
+        // TableView
         weeklyCalendar.setItems(weeklyScheduleData);
         eventList.setItems(eventListData);
 
-        // Enable text wrapping in the weekly calendar columns
         mondayColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         tuesdayColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         wednesdayColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -107,7 +106,6 @@ public class CalendarController implements Initializable {
         // Set default date to today
         datePicker.setValue(LocalDate.now());
 
-        // Initial update of the calendar
         updateWeeklyCalendar(LocalDate.now());
         updateEventList(LocalDate.now());
     }
@@ -116,46 +114,42 @@ public class CalendarController implements Initializable {
     void viewSchedule(ActionEvent event) {
         LocalDate selectedDate = datePicker.getValue();
         if (selectedDate == null) {
-            // Highlight DatePicker in red if no date is selected
             datePicker.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
             return;
         }
 
-        // Reset border style
         datePicker.setStyle("");
 
-        // Update the weekly calendar
         updateWeeklyCalendar(selectedDate);
 
-        // Update the event list for the selected date
         updateEventList(selectedDate);
     }
 
     private void updateWeeklyCalendar(LocalDate selectedDate) {
         weeklyScheduleData.clear();
 
-        // Calculate the start of the week (Monday)
+        // calculate the start of the week (Monday)
         LocalDate startOfWeek = selectedDate;
         while (startOfWeek.getDayOfWeek() != java.time.DayOfWeek.MONDAY) {
             startOfWeek = startOfWeek.minusDays(1);
         }
         LocalDate endOfWeek = startOfWeek.plusDays(6);
 
-        // Update the week label
+        // update the week label
         String monthYear = startOfWeek.format(DateTimeFormatter.ofPattern("MMMM yyyy"));
         int weekNumber = startOfWeek.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
         String dateRange = startOfWeek.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " to " +
                 endOfWeek.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         weekLabel.setText(monthYear + ", Week " + weekNumber + ": " + dateRange);
 
-        // Fetch events for the week
+        // fetch events for the week
         List<List<String>> eventsByDay = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             eventsByDay.add(new ArrayList<>());
             LocalDate currentDay = startOfWeek.plusDays(i);
             eventsByDay.get(i).add(currentDay.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
-            // Fetch events from CalendarEvents table
+            // fetch events from CalendarEvents table
             String eventQuery = "SELECT EventName, EventTime, EventType FROM CalendarEvents WHERE EventDate = ?";
             try (Connection conn = DatabaseConnection.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(eventQuery)) {
@@ -171,7 +165,7 @@ public class CalendarController implements Initializable {
                 e.printStackTrace();
             }
 
-            // Fetch venue tours from VenueTour table
+            // fetch venue tours from VenueTour table
             String venueTourQuery = "SELECT Institution, Time FROM VenueTour WHERE Date = ?";
             try (Connection conn = DatabaseConnection.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(venueTourQuery)) {
@@ -184,7 +178,7 @@ public class CalendarController implements Initializable {
                 e.printStackTrace();
             }
 
-            // Fetch meeting room bookings from MeetingRoomBooking table
+            // fetch meeting room bookings from MeetingRoomBooking table
             String meetingRoomQuery = "SELECT RoomName, LengthOfBooking FROM MeetingRoomBooking WHERE BookingDate = ?";
             try (Connection conn = DatabaseConnection.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(meetingRoomQuery)) {
@@ -198,10 +192,9 @@ public class CalendarController implements Initializable {
             }
         }
 
-        // Determine the maximum number of events on any day
+        // determine the maximum number of events on any day and add event
         int maxEvents = eventsByDay.stream().mapToInt(List::size).max().orElse(1);
 
-        // Add the events to the TableView
         for (int i = 0; i < maxEvents; i++) {
             String monday = i < eventsByDay.get(0).size() ? eventsByDay.get(0).get(i) : "";
             String tuesday = i < eventsByDay.get(1).size() ? eventsByDay.get(1).get(i) : "";
@@ -217,7 +210,6 @@ public class CalendarController implements Initializable {
     private void updateEventList(LocalDate selectedDate) {
         eventListData.clear();
 
-        // Fetch events from CalendarEvents table
         String eventQuery = "SELECT EventName, EventTime, EventRoomID, EventType FROM CalendarEvents WHERE EventDate = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(eventQuery)) {
@@ -243,7 +235,6 @@ public class CalendarController implements Initializable {
             e.printStackTrace();
         }
 
-        // Fetch venue tours from VenueTour table
         String venueTourQuery = "SELECT Institution, Time FROM VenueTour WHERE Date = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(venueTourQuery)) {
@@ -252,7 +243,7 @@ public class CalendarController implements Initializable {
             while (rs.next()) {
                 String institution = rs.getString("Institution");
                 String startTime = rs.getString("Time");
-                String endTime = calculateEndTime(startTime, "1:00:00"); // Assuming venue tours are 1 hour long
+                String endTime = calculateEndTime(startTime, "1:00:00");
                 eventListData.add(new EventEntry(
                         selectedDate.toString(),
                         startTime,
@@ -266,7 +257,6 @@ public class CalendarController implements Initializable {
             e.printStackTrace();
         }
 
-        // Fetch meeting room bookings from MeetingRoomBooking table
         String meetingRoomQuery = "SELECT RoomName, LengthOfBooking, BookingDate FROM MeetingRoomBooking WHERE BookingDate = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(meetingRoomQuery)) {
@@ -307,13 +297,11 @@ public class CalendarController implements Initializable {
     }
 
     private String calculateEndTime(String startTime, String duration) {
-        // Parse start time (HH:mm:ss)
         String[] startParts = startTime.split(":");
         int startHours = Integer.parseInt(startParts[0]);
         int startMinutes = Integer.parseInt(startParts[1]);
         int startSeconds = Integer.parseInt(startParts[2]);
 
-        // Parse duration (assuming format like "2:00:00" or "1Hour")
         int durationHours = 0;
         int durationMinutes = 0;
         if (duration.contains(":")) {
@@ -339,7 +327,6 @@ public class CalendarController implements Initializable {
             }
         }
 
-        // Calculate end time
         int endHours = startHours + durationHours + (startMinutes + durationMinutes) / 60;
         int endMinutes = (startMinutes + durationMinutes) % 60;
         int endSeconds = startSeconds;

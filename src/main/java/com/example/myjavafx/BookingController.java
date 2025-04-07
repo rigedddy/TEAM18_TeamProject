@@ -33,9 +33,9 @@ public class BookingController implements Initializable {
     @FXML
     private ChoiceBox<String> InstitutionChoice;
     @FXML
-    private ChoiceBox<String> groupEvent; // Updated to ChoiceBox<String>
+    private ChoiceBox<String> groupEvent;
 
-    // Meeting room fields (to be passed to MeetingRoom class)
+    // Meeting room fields
     @FXML
     private ChoiceBox<String> TimeSlot;
     @FXML
@@ -47,7 +47,7 @@ public class BookingController implements Initializable {
     @FXML
     private DatePicker Date;
 
-    // Venue tour fields (to be passed to VenueTour class)
+    // Venue tour fields
     @FXML
     private ChoiceBox<String> institutionTour;
     @FXML
@@ -59,22 +59,17 @@ public class BookingController implements Initializable {
 
     private ActionEvent event;
 
-    // Instance of MeetingRoom class
     private MeetingRoom meetingRoom;
 
-    // Instance of VenueTour class
     private VenueTour venueTour;
 
-    // Instance of GroupBooking class
     private GroupBooking groupBooking;
 
-    // Delegate venue tour booking creation to the VenueTour class
     @FXML
     void createNewTourBooking(ActionEvent event) {
         venueTour.createNewTourBooking();
     }
 
-    // Delegate group booking creation to the GroupBooking class
     @FXML
     void createNewGroupBooking(ActionEvent event) {
         groupBooking.createNewGroupBooking();
@@ -129,13 +124,11 @@ public class BookingController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // time
         time.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        // Initialize the GroupBooking instance and pass the required UI components
+
         groupBooking = new GroupBooking(NumOfPeople, Name, Email, InstitutionChoice, groupEvent);
 
-        // Initialize the MeetingRoom instance and pass the required UI components
         meetingRoom = new MeetingRoom(RoomName, ClientName, TimeSlot, Date, MeetingPrice);
 
-        // Initialize the VenueTour instance and pass the required UI components
         venueTour = new VenueTour(institutionTour, studentsTour, timeTour, dateTour);
     }
 }

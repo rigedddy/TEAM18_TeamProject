@@ -27,7 +27,6 @@ public class Dashboard {
         return eventTime.get();
     }
 
-    // Setters
     public void setEventName(String value) {
         eventName.set(value);
     }
@@ -40,7 +39,6 @@ public class Dashboard {
         eventTime.set(value);
     }
 
-    // Property getters for TableView binding
     public StringProperty eventNameProperty() {
         return eventName;
     }

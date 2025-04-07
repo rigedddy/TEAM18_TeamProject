@@ -130,7 +130,7 @@
                   <ChoiceBox fx:id="ShowType" layoutX="196.0" layoutY="62.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
                   <ChoiceBox fx:id="SeatChoiceLetter" layoutX="197.0" layoutY="141.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
                   <Text layoutX="26.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FOL Member:" />
-                  <ChoiceBox fx:id="FOLMember" layoutX="199.0" layoutY="226.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
+                  <ChoiceBox fx:id="FOLMember" layoutX="199.0" layoutY="226.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #ffffff;" />
                </children>
             </AnchorPane>
          </children></AnchorPane>
