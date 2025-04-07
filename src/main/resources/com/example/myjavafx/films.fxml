@@ -30,11 +30,10 @@
                   </Text>
                   <TableView fx:id="tableView" editable="true" layoutX="14.0" layoutY="38.0" prefHeight="477.0" prefWidth="403.0">
                     <columns>
-                      <TableColumn fx:id="FilmName" prefWidth="75.0" text="FilmName" />
-                      <TableColumn fx:id="StartTime" prefWidth="75.0" text="StartTime" />
-                        <TableColumn fx:id="EndTime" prefWidth="75.0" text="EndTime" />
-                        <TableColumn fx:id="Date" prefWidth="75.0" text="Date" />
-                        <TableColumn prefWidth="100.00006103515625" text="LicenseDuration" />
+                      <TableColumn fx:id="FilmName" prefWidth="136.66668319702148" text="FilmName" />
+                      <TableColumn fx:id="StartTime" prefWidth="85.33338928222656" text="StartTime" />
+                        <TableColumn fx:id="EndTime" prefWidth="88.0" text="EndTime" />
+                        <TableColumn fx:id="Date" prefWidth="94.0" text="Date" />
                     </columns>
                   </TableView>
                </children>
