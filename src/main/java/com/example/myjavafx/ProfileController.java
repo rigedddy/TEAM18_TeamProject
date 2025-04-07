@@ -100,8 +100,9 @@ public class ProfileController {
     }
 
     @FXML
-    void signOut(ActionEvent event) {
-
+    void signOut(ActionEvent event) throws IOException {
+        LoginApplication.moveToSignIn(); // this must exist in LoginApplication
     }
+
 
 }
