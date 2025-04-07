@@ -122,6 +122,98 @@ public class AdvertisingController implements Initializable {
         this.event = event;
         LoginApplication.moveToAdvertising();
     }
+    @FXML
+    void SubmitFOLReservation() {
+        String selectedShowType = ShowType.getValue();
+        String selectedShow = ShowChoice.getValue();
+        String selectedSeatLetter = SeatChoiceLetter.getValue();
+        String selectedSeatNumber = SeatNumber.getValue();
+        String selectedFriendName = FOLMember.getValue();
+
+
+        if (selectedShowType == null || selectedShow == null || selectedSeatLetter == null
+                || selectedSeatNumber == null || selectedFriendName == null) {
+            System.out.println("Please select all fields before submitting.");
+            return;
+        }
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            Integer filmID = null;
+            Integer eventID = null;
+            Integer friendID = null;
+
+
+            if (selectedShowType.equals("Film")) {
+                String filmQuery = "SELECT FilmID FROM Film WHERE Title = ?";
+                try (PreparedStatement stmt = conn.prepareStatement(filmQuery)) {
+                    stmt.setString(1, selectedShow);
+                    ResultSet rs = stmt.executeQuery();
+                    if (rs.next()) {
+                        filmID = rs.getInt("FilmID");
+                    }
+                }
+            } else if (selectedShowType.equals("Music")) {
+                String eventQuery = "SELECT EventID FROM Events WHERE EventName = ?";
+                try (PreparedStatement stmt = conn.prepareStatement(eventQuery)) {
+                    stmt.setString(1, selectedShow);
+                    ResultSet rs = stmt.executeQuery();
+                    if (rs.next()) {
+                        eventID = rs.getInt("EventID");
+                    }
+                }
+            } else {
+                System.out.println("Invalid show type.");
+                return;
+            }
+
+            // Get FriendID
+            String friendQuery = "SELECT FriendID FROM FriendsOfLancaster WHERE Name = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(friendQuery)) {
+                stmt.setString(1, selectedFriendName);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    friendID = rs.getInt("FriendID");
+                }
+            }
+
+            if ((filmID == null && eventID == null) || friendID == null) {
+                System.out.println("Could not find necessary IDs.");
+                return;
+            }
+
+
+            String insertQuery = "INSERT INTO FriendsOfLancasterTicketReservation (FilmID, EventID, SeatLetter, SeatNumber, FriendID) " +
+                    "VALUES (?, ?, ?, ?, ?)";
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
+                if (filmID != null) {
+                    insertStmt.setInt(1, filmID);
+                } else {
+                    insertStmt.setNull(1, java.sql.Types.INTEGER);
+                }
+
+                if (eventID != null) {
+                    insertStmt.setInt(2, eventID);
+                } else {
+                    insertStmt.setNull(2, java.sql.Types.INTEGER);
+                }
+
+                insertStmt.setString(3, selectedSeatLetter);
+                insertStmt.setString(4, selectedSeatNumber);
+                insertStmt.setInt(5, friendID);
+
+                int rowsAffected = insertStmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Reservation submitted successfully!");
+                } else {
+                    System.out.println("Failed to submit reservation.");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
