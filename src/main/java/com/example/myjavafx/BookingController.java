@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -84,6 +86,8 @@ public class BookingController implements Initializable {
         meetingRoom.createNewMeetingRoomBooking();
     }
 
+
+
     @FXML
     void goToDashboard(ActionEvent event) throws IOException {
         LoginApplication.moveToDashboard();
@@ -123,6 +127,8 @@ public class BookingController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // time
+        time.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         // Initialize the GroupBooking instance and pass the required UI components
         groupBooking = new GroupBooking(NumOfPeople, Name, Email, InstitutionChoice, groupEvent);
 
