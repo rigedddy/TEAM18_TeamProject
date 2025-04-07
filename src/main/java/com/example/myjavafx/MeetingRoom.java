@@ -22,7 +22,6 @@ public class MeetingRoom {
     private final String[] roomNameChoices;
     private final String[] clientNameChoices;
 
-    // Constructor
     public MeetingRoom(ChoiceBox<String> roomName, ChoiceBox<String> clientName, ChoiceBox<String> timeSlot,
                        DatePicker date, TextField meetingPrice) {
         this.roomName = roomName;
@@ -31,15 +30,13 @@ public class MeetingRoom {
         this.date = date;
         this.meetingPrice = meetingPrice;
 
-        // Fetch room names and client names during initialization
         this.roomNameChoices = fetchRoomNames();
         this.clientNameChoices = fetchClientNames();
 
-        // Populate the ChoiceBox components
         initializeChoiceBoxes();
     }
 
-    // Fetch room names from the database
+    // fetch room names from the database
     private String[] fetchRoomNames() {
         ArrayList<String> roomNamesList = new ArrayList<>();
 
@@ -60,7 +57,7 @@ public class MeetingRoom {
         return roomNamesList.toArray(new String[0]);
     }
 
-    // Fetch client names from the database
+    // fetch client names from the database
     private String[] fetchClientNames() {
         ArrayList<String> clientNamesList = new ArrayList<>();
 
@@ -81,29 +78,26 @@ public class MeetingRoom {
         return clientNamesList.toArray(new String[0]);
     }
 
-    // Initialize the ChoiceBox components
+    // initialize the ChoiceBox components
     private void initializeChoiceBoxes() {
         roomName.getItems().addAll(roomNameChoices);
         clientName.getItems().addAll(clientNameChoices);
         timeSlot.getItems().addAll(timeChoices);
     }
 
-    // Method to create a new meeting room booking
+    // method to create a new meeting room booking
     public void createNewMeetingRoomBooking() {
         try {
-            // Get and validate input values
             String client = clientName.getValue() != null ? clientName.getValue().strip() : null;
             String room = roomName.getValue() != null ? roomName.getValue().strip() : null;
             String dateValue = date.getValue() != null ? date.getValue().toString() : null;
             String timeSlotValue = timeSlot.getValue() != null ? timeSlot.getValue().strip() : null;
 
-            // Reset border styles for validation feedback
             roomName.setStyle("");
             clientName.setStyle("");
             timeSlot.setStyle("");
             date.setStyle("");
 
-            // Validate inputs
             boolean isValid = true;
 
             if (room == null || room.isEmpty()) {
@@ -123,9 +117,7 @@ public class MeetingRoom {
                 isValid = false;
             }
 
-            // If all fields are valid, proceed with booking
             if (isValid) {
-                // Determine the correct rate column based on the time slot
                 String SQLSearch = switch (timeSlotValue) {
                     case "1Hour" -> "RateFor1Hour";
                     case "MorningAndAfternoon" -> "RateForMorningAndAfternoon";
@@ -134,7 +126,6 @@ public class MeetingRoom {
                     default -> "RateFor1Hour";
                 };
 
-                // Fetch the price for the selected room and time slot
                 String query = "SELECT " + SQLSearch + " FROM MeetingRooms WHERE RoomName = ?";
                 try (Connection conn = DatabaseConnection.getConnection();
                      PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -146,11 +137,9 @@ public class MeetingRoom {
                         String price = rs.getString(SQLSearch);
                         meetingPrice.setText(price);
 
-                        // Log the data
                         String[] data = {client, room, dateValue, timeSlotValue, price};
                         System.out.println("Meeting Room Booking Data registered: " + java.util.Arrays.toString(data));
 
-                        // Insert the booking into the database
                         String insertQuery = "INSERT INTO MeetingRoomBooking (RoomName, ClientName, BookingDate, LengthOfBooking, Price) VALUES (?, ?, ?, ?, ?)";
                         try (PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
                             pstmt.setString(1, room);

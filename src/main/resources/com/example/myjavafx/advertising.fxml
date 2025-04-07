@@ -92,17 +92,17 @@
                   </Text>
                   <Text layoutX="33.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Upcoming Shows:" />
                   <Text layoutX="39.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                  <ChoiceBox layoutX="210.0" layoutY="110.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
+                  <ChoiceBox fx:id="upcomingShowChoice" layoutX="210.0" layoutY="110.0" prefHeight="25.0" prefWidth="150.0" style="-fx-background-color: #bcd1e3;" />
                   <Text fill="#2e4a63" layoutX="47.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Send a notification to our beloved subscribers to remind them of our new upcoming shows!" textAlignment="CENTER" wrappingWidth="295.62762451171875">
                      <font>
                         <Font name="Calibri Italic" size="13.0" />
                      </font>
                   </Text>
                   <Text layoutX="33.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schedule Notification:" />
-                  <DatePicker layoutX="210.0" layoutY="151.0" prefHeight="25.0" prefWidth="151.0" />
+                  <DatePicker fx:id="scheduleDatePicker" layoutX="210.0" layoutY="151.0" prefHeight="25.0" prefWidth="151.0" />
                   <Text layoutX="33.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Message:" />
-                  <TextField layoutX="209.0" layoutY="191.0" prefHeight="26.0" prefWidth="150.0" />
-                  <Button layoutX="307.0" layoutY="247.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="83.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
+                  <TextField fx:id="notificationMessage" layoutX="209.0" layoutY="191.0" prefHeight="26.0" prefWidth="150.0" />
+                  <Button fx:id="submitNotificationButton" layoutX="307.0" layoutY="247.0" mnemonicParsing="false" onAction="#submitNotification" prefHeight="29.0" prefWidth="83.0" style="-fx-background-color: #2e4a63;" text="SUBMIT" textFill="WHITE">
                      <font>
                         <Font name="Calibri" size="12.0" />
                      </font>

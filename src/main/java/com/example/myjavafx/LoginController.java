@@ -14,24 +14,24 @@ public class LoginController {
     private ActionEvent event;
 
     @FXML
-    private TextField username; // Reference to the TextField in FXML
+    private TextField username;
     @FXML
-    private TextField password; // Reference to the TextField in FXML
+    private TextField password;
 
     @FXML
     void signIn(ActionEvent event) throws IOException {
         this.event = event;
 
-        String enteredUserName = username.getText(); // Get user input
-        String enteredPassword = password.getText(); // Get user input
+        String enteredUserName = username.getText();
+        String enteredPassword = password.getText();
 
         if (userExists(enteredUserName, enteredPassword)) {
-            System.out.println("Login successful!"); // Debugging message
+            System.out.println("Login successful!");
             Session.currentUsername = enteredUserName;
-            LoginApplication.moveToDashboard(); // Change screen
+            LoginApplication.moveToDashboard(); // change screen
         }
         else {
-            System.out.println("Incorrect username! Try again."); // Debugging message
+            System.out.println("Incorrect username! Try again."); // debugging message
         }
     }
 

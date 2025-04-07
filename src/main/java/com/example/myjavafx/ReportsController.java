@@ -77,24 +77,18 @@ public class ReportsController implements Initializable {
         // time
         time.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
-        // Initialize the Reports class
         reports = new Reports();
 
-        // Load the marketing general metrics (labels and graph)
         loadMarketingGeneralMetrics();
 
-        // Load the pie chart and update labels
         loadInstitutionsPieChart();
 
-        // Load the Friends of Lancaster's section
         loadFOLSection();
 
-        // Load the Film Costs vs Ticket Sales section
         loadFilmTicketSection();
     }
 
     private void loadMarketingGeneralMetrics() {
-        // Update the labels
         double totalRevenue = reports.getTotalRevenue();
         double totalCosts = reports.getTotalCosts();
         double totalProfits = reports.getTotalProfits();
@@ -103,31 +97,25 @@ public class ReportsController implements Initializable {
         totalCostsLabel.setText("Total Costs: £" + String.format("%.2f", totalCosts));
         totalProfitsLabel.setText("Total Profits: £" + String.format("%.2f", totalProfits));
 
-        // Populate the general graph
         reports.populateGeneralGraph(generalGraph);
     }
 
     private void loadInstitutionsPieChart() {
-        // Populate the pie chart using the Reports class
         reports.populateInstitutionsPieChart(InstitutionsPie);
 
-        // Update the labels
         totalInstitutionsLabel.setText("Total Institutions: " + reports.getTotalInstitutions());
         totalToursLabel.setText("Total Tours: " + reports.getTotalTours());
     }
 
     private void loadFOLSection() {
-        // Populate the ChoiceBox with years
         List<String> years = reports.getFOLYears();
         FoLYear.getItems().addAll(years);
 
-        // Set the default year to the most recent (first in the list, since it's sorted DESC)
         if (!years.isEmpty()) {
             FoLYear.setValue(years.get(0));
             updateFOLGraph(years.get(0));
         }
 
-        // Add a listener to update the graph and label when the year changes
         FoLYear.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 updateFOLGraph(newValue);
@@ -136,26 +124,21 @@ public class ReportsController implements Initializable {
     }
 
     private void updateFOLGraph(String year) {
-        // Update the line chart
         reports.populateFOLGraph(FOLGraph, year);
 
-        // Update the total subscribers label
         int totalSubscribers = reports.getTotalSubscribers(year);
         TotalFOL.setText("Total Subscribers: " + totalSubscribers);
     }
 
     private void loadFilmTicketSection() {
-        // Populate the ChoiceBox with years
         List<String> years = reports.getFilmTicketYears();
         FilmTicketYear.getItems().addAll(years);
 
-        // Set the default year to the most recent (2024)
         if (!years.isEmpty()) {
             FilmTicketYear.setValue("2024");
             updateFilmTicketGraph("2024");
         }
 
-        // Add a listener to update the graph and labels when the year changes
         FilmTicketYear.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 updateFilmTicketGraph(newValue);
@@ -164,10 +147,8 @@ public class ReportsController implements Initializable {
     }
 
     private void updateFilmTicketGraph(String year) {
-        // Update the line chart
         reports.populateFilmTicketGraph(FilmTicketGraph, year);
 
-        // Update the labels
         int totalFilmsCount = reports.getTotalFilms(year);
         double totalRevenue = reports.getTotalTicketRevenue(year);
         totalFilms.setText("Total Films Shown: " + totalFilmsCount);

@@ -18,33 +18,28 @@ public class VenueTour {
 
     private final String[] institutionChoices = {"Primary School", "Secondary School", "College", "University"};
 
-    // Constructor
     public VenueTour(ChoiceBox<String> institutionTour, TextField studentsTour, TextField timeTour, DatePicker dateTour) {
         this.institutionTour = institutionTour;
         this.studentsTour = studentsTour;
         this.timeTour = timeTour;
         this.dateTour = dateTour;
 
-        // Populate the institutionTour ChoiceBox
         initializeChoiceBox();
     }
 
-    // Initialize the ChoiceBox for institutionTour
     private void initializeChoiceBox() {
         institutionTour.getItems().addAll(institutionChoices);
     }
 
-    // Method to create a new venue tour booking
+    // method to create a new venue tour booking
     public void createNewTourBooking() {
         try {
-            // Get and validate input values
             String institution = institutionTour.getValue() != null ? institutionTour.getValue().strip() : null;
             String numberOfPeople = studentsTour.getText() != null ? studentsTour.getText().trim() : null;
             String time = timeTour.getText() != null ? timeTour.getText().trim() : null;
             LocalDate dateValue = dateTour.getValue();
             String date = dateValue != null ? dateValue.toString() : null;
 
-            // Reset border styles for validation feedback
             institutionTour.setStyle("");
             studentsTour.setStyle("");
             timeTour.setStyle("");

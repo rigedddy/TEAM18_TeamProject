@@ -57,37 +57,35 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Set up the TableView columns
         eventColumn.setCellValueFactory(new PropertyValueFactory<>("eventName"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("eventDate"));
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("eventTime"));
 
-        // Populate the TableView with upcoming events
+        // tableView upcoming events
         eventView.setItems(getUpcomingEventsFromDatabase());
 
-        // Set the current date in the time label
+        // set the current date in the time label
         time.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
-        // Set up the ChoiceBox items for eventType
+        // set up the ChoiceBox items for eventType
         eventType.getItems().addAll("Events", "Films");
 
-        // Set up the ChoiceBox items for chooseYear (only 2023 and 2024)
+        // set up the ChoiceBox items for chooseYear (only 2023 and 2024)
         List<Integer> years = new ArrayList<>();
         years.add(2023);
         years.add(2024);
         chooseYear.getItems().addAll(years);
 
-        // Set up the LineChart
+        // set up the LineChart
         ticketsGraph.setTitle("Ticket Sales Per Event/Film");
         ticketsGraph.getXAxis().setLabel(""); // X-axis label removed
         ticketsGraph.getYAxis().setLabel("Tickets Sold");
         ticketsGraph.setLegendSide(javafx.geometry.Side.TOP); // Legend at the top
 
-        // Add listeners to update the graph when the year or event type changes
         chooseYear.valueProperty().addListener((obs, oldValue, newValue) -> updateTicketsGraph());
         eventType.valueProperty().addListener((obs, oldValue, newValue) -> updateTicketsGraph());
 
-        // Set a default year and event type if none is selected
+        // default year and event type
         if (chooseYear.getValue() == null) {
             chooseYear.setValue(2024);
         }
@@ -95,14 +93,14 @@ public class DashboardController implements Initializable {
             eventType.setValue("Films"); // Default to Films
         }
 
-        // Initial population of the graph
+        // initial population of the graph
         updateTicketsGraph();
     }
 
     private ObservableList<Dashboard> getUpcomingEventsFromDatabase() {
         ObservableList<Dashboard> eventList = FXCollections.observableArrayList();
 
-        // Query to fetch events on or after the current date
+        // query to fetch events on or after the current date
         String query = "SELECT EventName, EventDate, EventTime FROM Events WHERE EventDate >= ? ORDER BY EventDate, EventTime";
 
         try (Connection conn = DatabaseConnection.getConnection();
@@ -125,10 +123,10 @@ public class DashboardController implements Initializable {
     }
 
     private void updateTicketsGraph() {
-        // Clear the existing data in the graph
+        // clear the existing data in the graph
         ticketsGraph.getData().clear();
 
-        // Get the selected year and event type
+        // get the selected year and event type
         Integer selectedYear = chooseYear.getValue();
         if (selectedYear == null) {
             System.out.println("No year selected.");
@@ -140,7 +138,7 @@ public class DashboardController implements Initializable {
             return; // No type selected, do nothing
         }
 
-        // Create a new series for the graph
+        // create a new series for the graph
         XYChart.Series<String, Number> series = new XYChart.Series<>();
         series.setName("Tickets Sold in " + selectedYear);
 
@@ -171,7 +169,7 @@ public class DashboardController implements Initializable {
                 e.printStackTrace();
             }
         } else if (selectedType.equals("Films")) {
-            // Fetch ticket sales for films in the selected year
+            // fetch ticket sales for films in the selected year
             String query = "SELECT f.Title, f.TicketsSold " +
                     "FROM Film f " +
                     "WHERE YEAR(f.Date) = ?";
@@ -196,7 +194,7 @@ public class DashboardController implements Initializable {
             }
         }
 
-        // Add the series to the graph
+        // add the series to the graph
         ticketsGraph.getData().add(series);
     }
 

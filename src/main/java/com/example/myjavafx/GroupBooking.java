@@ -17,7 +17,6 @@ public class GroupBooking {
 
     private final String[] institutionChoices = {"NULL", "Primary School", "Secondary School", "College", "University"};
 
-    // Constructor
     public GroupBooking(TextField numOfPeople, TextField name, TextField email,
                         ChoiceBox<String> institutionChoice, ChoiceBox<String> groupEvent) {
         this.numOfPeople = numOfPeople;
@@ -30,14 +29,13 @@ public class GroupBooking {
         initializeChoiceBoxes();
     }
 
-    // Initialize the ChoiceBox components
     private void initializeChoiceBoxes() {
         institutionChoice.getItems().addAll(institutionChoices);
         // Populate groupEvent with event names from the Events table
         fetchEventNames();
     }
 
-    // Fetch event names from the Events table
+    // fetch event names from the Events table
     private void fetchEventNames() {
         String query = "SELECT EventName FROM Events";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -54,7 +52,6 @@ public class GroupBooking {
         }
     }
 
-    // Method to create a new group booking
     public void createNewGroupBooking() {
         try {
             // Get and validate input values
@@ -64,14 +61,12 @@ public class GroupBooking {
             String institutionChoiceString = institutionChoice.getValue();
             String eventName = groupEvent.getValue();
 
-            // Reset border styles for validation feedback
             numOfPeople.setStyle("");
             name.setStyle("");
             email.setStyle("");
             institutionChoice.setStyle("");
             groupEvent.setStyle("");
 
-            // Validate inputs
             boolean isValid = true;
 
             if (numOfPeopleString == null || numOfPeopleString.isEmpty()) {
@@ -95,16 +90,14 @@ public class GroupBooking {
                 isValid = false;
             }
 
-            // If all fields are valid, proceed with booking
+            // if all fields are valid, proceed with booking
             if (isValid) {
-                // Log the data for debugging
                 String[] data = {numOfPeopleString, nameString, emailString, institutionChoiceString, eventName};
                 System.out.println("Group Booking Data registered: " + java.util.Arrays.toString(data));
 
-                // Fetch the FilmID based on the selected event name
                 Integer filmID = getFilmIDForEvent(eventName);
 
-                // Insert into the GroupBooking table
+                // insert into the GroupBooking table
                 String insertQuery = "INSERT INTO GroupBookings (PrimaryContactName, PrimaryContactEmail, NumberOfPeople, status, FilmID, Institution) VALUES (?, ?, ?, ?, ?, ?)";
                 try (Connection conn = DatabaseConnection.getConnection();
                      PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
@@ -139,7 +132,6 @@ public class GroupBooking {
         }
     }
 
-    // Method to fetch the FilmID based on the event name
     private Integer getFilmIDForEvent(String eventName) {
         String query = "SELECT EventID FROM Events WHERE EventName = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -156,6 +148,6 @@ public class GroupBooking {
             e.printStackTrace();
             System.out.println("Error fetching FilmID for event: " + e.getMessage());
         }
-        return null; // Return null if no matching event is found
+        return null;
     }
 }

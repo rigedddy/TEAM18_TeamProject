@@ -81,10 +81,10 @@
                   </Text>
                   <TableView fx:id="EmptySpace" layoutX="16.0" layoutY="36.0" prefHeight="474.0" prefWidth="400.0">
                     <columns>
-                      <TableColumn fx:id="StartTime2" prefWidth="75.0" text="StartTime" />
-                        <TableColumn fx:id="EndTime2" prefWidth="75.0" text="EndTime" />
-                        <TableColumn fx:id="Date2" prefWidth="75.0" text="Date" />
-                        <TableColumn fx:id="Venue" prefWidth="75.0" text="Venue" />
+                      <TableColumn fx:id="StartTime2" prefWidth="85.33331298828125" text="StartTime" />
+                        <TableColumn fx:id="EndTime2" prefWidth="84.66668701171875" text="EndTime" />
+                        <TableColumn fx:id="Date2" prefWidth="97.33331298828125" text="Date" />
+                        <TableColumn fx:id="Venue" prefWidth="130.6666259765625" text="Venue" />
                     </columns>
                   </TableView>
                </children>
