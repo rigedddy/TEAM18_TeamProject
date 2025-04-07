@@ -79,10 +79,12 @@
                         <Font name="Cambria Math" size="20.0" />
                      </font>
                   </Text>
-                  <TableView layoutX="16.0" layoutY="36.0" prefHeight="474.0" prefWidth="400.0">
+                  <TableView fx:id="EmptySpace" layoutX="16.0" layoutY="36.0" prefHeight="474.0" prefWidth="400.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
+                      <TableColumn fx:id="StartTime2" prefWidth="75.0" text="StartTime" />
+                        <TableColumn fx:id="EndTime2" prefWidth="75.0" text="EndTime" />
+                        <TableColumn fx:id="Date2" prefWidth="75.0" text="Date" />
+                        <TableColumn fx:id="Venue" prefWidth="75.0" text="Venue" />
                     </columns>
                   </TableView>
                </children>
