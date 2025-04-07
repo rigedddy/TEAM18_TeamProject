@@ -5,7 +5,6 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -43,13 +42,10 @@
                         <Font name="Calibri Bold" size="20.0" />
                      </font>
                   </Text>
-                  <ChoiceBox layoutX="54.0" layoutY="440.0" prefWidth="150.0" />
-                  <DatePicker layoutX="254.0" layoutY="440.0" />
-                  <Text layoutX="254.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose start date:" />
-                  <Text layoutX="54.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose method of ticket:" />
-                  <DatePicker layoutX="476.0" layoutY="440.0" />
-                  <Text layoutX="476.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose end date:" />
-                  <LineChart layoutX="5.0" layoutY="30.0" prefHeight="400.0" prefWidth="677.0">
+                  <ChoiceBox fx:id="eventType" layoutX="302.0" layoutY="440.0" prefWidth="150.0" />
+                  <Text layoutX="293.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose year:" x="200.0" />
+                  <Text layoutX="303.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose show type:" />
+                  <LineChart fx:id="ticketsGraph" layoutX="5.0" layoutY="30.0" prefHeight="400.0" prefWidth="677.0">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -57,6 +53,7 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </LineChart>
+                  <ChoiceBox fx:id="chooseYear" layoutX="489.0" layoutY="440.0" prefWidth="150.0" />
                </children>
             </AnchorPane>
             <Text fill="#2e4a63" layoutX="26.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LANCASTER'S MUSIC HALL">
