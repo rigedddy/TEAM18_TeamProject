@@ -74,7 +74,7 @@ public class AdvertisingController implements Initializable {
 
         String selectedType = ShowType.getValue();
         if (selectedType == null) return;
-
+       //test
         try (Connection conn = DatabaseConnection.getConnection()) {
             String query = "";
 
