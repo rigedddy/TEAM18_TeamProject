@@ -1,6 +1,6 @@
 package com.example.myjavafx;
 
-import javafx.animation.Animation;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,18 +10,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import javafx.collections.FXCollections;
-import javafx.scene.control.cell.PropertyValueFactory;
-import java.sql.ResultSet;
-
 
 public class FilmController {
 
@@ -34,8 +32,6 @@ public class FilmController {
     @FXML
     private TextField filmNameTextField;
 
-
-
     @FXML
     private TextField LicenseTextField;
     @FXML
@@ -46,18 +42,29 @@ public class FilmController {
 
     @FXML
     private TextField DateTextField;
+
     @FXML
     private TableView<Film> tableView;
     @FXML
-    private TableColumn<Film, String> FilmName;
+    private TableView<EmptySpace> EmptySpace;
 
+    @FXML
+    private TableColumn<EmptySpace, String> StartTime2;
+    @FXML
+    private TableColumn<EmptySpace, String> EndTime2;
+    @FXML
+    private TableColumn<EmptySpace, String> Date2;
+    @FXML
+    private TableColumn<EmptySpace, String> Venue;
+
+    @FXML
+    private TableColumn<Film, String> FilmName;
     @FXML
     private TableColumn<Film, String> StartTime;
     @FXML
     private TableColumn<Film, String> EndTime;
     @FXML
     private TableColumn<Film, String> Date;
-    private ActionEvent event;
 
     private ObservableList<Film> getFilmsFromDatabase() {
         ObservableList<Film> filmList = FXCollections.observableArrayList();
@@ -81,18 +88,53 @@ public class FilmController {
         }
         return filmList;
     }
+
+    // ObservableList for EmptySpace data
+    private ObservableList<EmptySpace> emptySpaceList;
+
+    private ObservableList<EmptySpace> getEmptySpacesFromDatabase() {
+        emptySpaceList = FXCollections.observableArrayList();
+        String query = "SELECT StartTime, EndTime, Date, Venue FROM EmptyCalendarSpaces WHERE Venue = 'Main Hall'";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                emptySpaceList.add(new EmptySpace(
+                        rs.getString("StartTime"),
+                        rs.getString("EndTime"),
+                        rs.getString("Date"),
+                        rs.getString("Venue")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return emptySpaceList;
+    }
+
     @FXML
     public void initialize() {
         // time
         time.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 
+        // Set Film table view cell value factories
         FilmName.setCellValueFactory(new PropertyValueFactory<>("Title"));
         StartTime.setCellValueFactory(new PropertyValueFactory<>("StartTime"));
         EndTime.setCellValueFactory(new PropertyValueFactory<>("EndTime"));
         Date.setCellValueFactory(new PropertyValueFactory<>("Date"));
-        tableView.setItems(getFilmsFromDatabase());
-    }
 
+        // Set EmptySpace table view cell value factories
+        StartTime2.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        EndTime2.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        Date2.setCellValueFactory(new PropertyValueFactory<>("date"));
+        Venue.setCellValueFactory(new PropertyValueFactory<>("venue"));
+
+        // Set items for both tables
+        tableView.setItems(getFilmsFromDatabase());
+        EmptySpace.setItems(getEmptySpacesFromDatabase());
+    }
 
     @FXML
     void createNewFilm(ActionEvent event) {
@@ -133,24 +175,20 @@ public class FilmController {
             isValid = false;
         }
 
-
         if (isValid) {
             String[] data = {registeredFilmName, StartTime, license, EndTime, date};
             System.out.println("The registered data: " + Arrays.toString(data));
-
 
             String insertSQL = "INSERT INTO Film (Title, StartTime, LicenseDuration, EndTime, Date) VALUES (?, ?, ?, ?, ?)";
 
             try (Connection connection = DatabaseConnection.getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 
-
                 preparedStatement.setString(1, registeredFilmName);
                 preparedStatement.setString(2, StartTime);
                 preparedStatement.setString(3, license);
                 preparedStatement.setString(4, EndTime);
                 preparedStatement.setString(5, date);
-
 
                 int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected > 0) {
@@ -166,7 +204,6 @@ public class FilmController {
             System.out.println("Error: Please fill in all required fields.");
         }
     }
-
 
     @FXML
     void goToDashboard(ActionEvent event) throws IOException {
@@ -195,14 +232,13 @@ public class FilmController {
 
     @FXML
     void goToCalendar(ActionEvent event) throws IOException {
-        this.event = event;
+
         LoginApplication.moveToCalendar();
     }
 
     @FXML
     void goToAdvertising(ActionEvent event) throws IOException {
-        this.event = event;
+
         LoginApplication.moveToAdvertising();
     }
-    
 }
