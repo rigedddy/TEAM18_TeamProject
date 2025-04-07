@@ -2,18 +2,30 @@ package com.example.myjavafx;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ResourceBundle;
 
-public class AdvertisingController {
+public class AdvertisingController implements Initializable {
+    @FXML
+    private ChoiceBox<String> FOLMember;
 
     @FXML
     private ImageView profileimg;
-
+    @FXML
+    private ChoiceBox<String> ShowType;
+    private final String[] ShowTypeChoices = {"Music", "Film", "Other"};
+    @FXML
+    private ChoiceBox<String> ShowChoice;
 
     @FXML
     private Label time;
@@ -32,8 +44,54 @@ public class AdvertisingController {
 
     @FXML
     void goToProfile(MouseEvent event) throws IOException {
-        //System.out.println("clicked");
         LoginApplication.moveToProfile();
+    }
+
+    private void getFOLNames() {
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String query = "SELECT Name FROM FriendsOfLancaster";
+
+            try (PreparedStatement stmt = conn.prepareStatement(query);
+                 ResultSet rs = stmt.executeQuery()) {
+
+                while (rs.next()) {
+                    FOLMember.getItems().add(rs.getString("Name"));
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateShowChoiceBox() {
+        ShowChoice.getItems().clear();
+
+        String selectedType = ShowType.getValue();
+        if (selectedType == null) return;
+
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            String query = "";
+
+            if (selectedType.equals("Film")) {
+                query = "SELECT Title FROM Film";
+            } else if (selectedType.equals("Music")) {
+                query = "SELECT EventName FROM Events";
+            } else {
+                return;
+            }
+
+            try (PreparedStatement stmt = conn.prepareStatement(query);
+                 ResultSet rs = stmt.executeQuery()) {
+
+                while (rs.next()) {
+                    ShowChoice.getItems().add(rs.getString(1));
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -41,6 +99,7 @@ public class AdvertisingController {
         this.event = event;
         LoginApplication.moveToReports();
     }
+
     @FXML
     void goToFilms(ActionEvent event) throws IOException {
         this.event = event;
@@ -59,8 +118,16 @@ public class AdvertisingController {
         LoginApplication.moveToAdvertising();
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        ShowType.getItems().addAll(ShowTypeChoices);
+        ShowType.setOnAction(e -> updateShowChoiceBox());
 
 
-
+        FOLMember.setOnShowing(event -> {
+            FOLMember.getItems().clear();
+            getFOLNames();
+        });
+    }
 }
-
