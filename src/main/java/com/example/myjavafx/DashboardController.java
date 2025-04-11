@@ -24,6 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the Dashboard view.
+ * Handles UI initialisation, loading upcoming events, and displaying ticket sales data
+ * for both events and films based on user selection.
+ */
 public class DashboardController implements Initializable {
 
     @FXML
@@ -54,7 +59,12 @@ public class DashboardController implements Initializable {
     private ChoiceBox<String> eventType;
 
     private ActionEvent event;
-
+    /**
+     * Initialises the dashboard by populating tables and setting up event handlers.
+     *
+     * @param url            The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources used to localise the root object.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         eventColumn.setCellValueFactory(new PropertyValueFactory<>("eventName"));
@@ -96,7 +106,11 @@ public class DashboardController implements Initializable {
         // initial population of the graph
         updateTicketsGraph();
     }
-
+    /**
+     * Fetches upcoming events from the database and returns them as an observable list.
+     *
+     * @return List of Dashboard entries for events happening today or in the future.
+     */
     private ObservableList<Dashboard> getUpcomingEventsFromDatabase() {
         ObservableList<Dashboard> eventList = FXCollections.observableArrayList();
 
@@ -121,7 +135,9 @@ public class DashboardController implements Initializable {
         }
         return eventList;
     }
-
+    /**
+     * Updates the line chart with ticket sales data based on the selected year and event type.
+     */
     private void updateTicketsGraph() {
         // clear the existing data in the graph
         ticketsGraph.getData().clear();

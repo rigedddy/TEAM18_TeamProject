@@ -2,12 +2,21 @@ package com.example.myjavafx;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
+/**
+ * Represents an event entry for display on the dashboard.
+ * Contains the name, date, and time of the event using JavaFX properties.
+ */
 public class Dashboard {
     private final StringProperty eventName;
     private final StringProperty eventDate;
     private final StringProperty eventTime;
-
+    /**
+     * Constructs a new Dashboard event entry with the specified details.
+     *
+     * @param eventName The name of the event.
+     * @param eventDate The date of the event.
+     * @param eventTime The time of the event.
+     */
     public Dashboard(String eventName, String eventDate, String eventTime) {
         this.eventName = new SimpleStringProperty(eventName);
         this.eventDate = new SimpleStringProperty(eventDate);

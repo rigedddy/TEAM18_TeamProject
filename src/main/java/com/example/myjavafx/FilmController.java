@@ -21,6 +21,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
+/**
+ * Controller class for managing film-related operations in the user interface, including
+ * film registration, table view population, and navigation between different sections of the app.
+ */
 public class FilmController {
 
     @FXML
@@ -65,7 +69,11 @@ public class FilmController {
     private TableColumn<Film, String> EndTime;
     @FXML
     private TableColumn<Film, String> Date;
-
+    /**
+     * Fetches the list of films from the database to populate the film table view.
+     *
+     * @return an {@link ObservableList} of {@link Film} objects.
+     */
     private ObservableList<Film> getFilmsFromDatabase() {
         ObservableList<Film> filmList = FXCollections.observableArrayList();
 
@@ -92,6 +100,11 @@ public class FilmController {
     // ObservableList for EmptySpace data
     private ObservableList<EmptySpace> emptySpaceList;
 
+    /**
+     * Fetches the list of empty spaces from the database to populate the empty space table view.
+     *
+     * @return an {@link ObservableList} of {@link EmptySpace} objects.
+     */
     private ObservableList<EmptySpace> getEmptySpacesFromDatabase() {
         emptySpaceList = FXCollections.observableArrayList();
         String query = "SELECT StartTime, EndTime, Date, Venue FROM EmptyCalendarSpaces WHERE Venue = 'Main Hall'";
@@ -113,7 +126,9 @@ public class FilmController {
         }
         return emptySpaceList;
     }
-
+    /**
+     * Initializes the controller, setting the date label and configuring the table views.
+     */
     @FXML
     public void initialize() {
         // time
@@ -135,7 +150,11 @@ public class FilmController {
         tableView.setItems(getFilmsFromDatabase());
         EmptySpace.setItems(getEmptySpacesFromDatabase());
     }
-
+    /**
+     * Creates a new film entry in the database after validating the input fields.
+     *
+     * @param event the action event triggered by the user.
+     */
     @FXML
     void createNewFilm(ActionEvent event) {
         boolean isValid = true;

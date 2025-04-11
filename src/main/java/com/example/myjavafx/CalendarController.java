@@ -1,5 +1,4 @@
 package com.example.myjavafx;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +21,11 @@ import java.time.temporal.IsoFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
+/**
+ * Controller class for the Calendar view in the application.
+ * Handles user interactions related to viewing and managing weekly schedules
+ * and daily events, and enables navigation between different sections.
+ */
 public class CalendarController implements Initializable {
 
     @FXML
@@ -86,7 +89,10 @@ public class CalendarController implements Initializable {
 
     private ObservableList<WeeklySchedule> weeklyScheduleData = FXCollections.observableArrayList();
     private ObservableList<EventEntry> eventListData = FXCollections.observableArrayList();
-
+    /**
+     * Called to initialise the controller after the FXML is loaded.
+     * Sets the current date, initialises table views and populates data.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // time
@@ -109,7 +115,11 @@ public class CalendarController implements Initializable {
         updateWeeklyCalendar(LocalDate.now());
         updateEventList(LocalDate.now());
     }
-
+    /**
+     * Updates the schedule and events shown based on the selected date.
+     *
+     * @param event The action event triggered by clicking the view schedule button.
+     */
     @FXML
     void viewSchedule(ActionEvent event) {
         LocalDate selectedDate = datePicker.getValue();
@@ -124,7 +134,12 @@ public class CalendarController implements Initializable {
 
         updateEventList(selectedDate);
     }
-
+    /**
+     * Updates the weekly calendar table based on the selected date.
+     * Retrieves events from the database for each day in the week.
+     *
+     * @param selectedDate The date selected by the user.
+     */
     private void updateWeeklyCalendar(LocalDate selectedDate) {
         weeklyScheduleData.clear();
 
@@ -206,7 +221,11 @@ public class CalendarController implements Initializable {
             weeklyScheduleData.add(new WeeklySchedule(monday, tuesday, wednesday, thursday, friday, saturday, sunday));
         }
     }
-
+    /**
+     * Updates the list of events for the selected day.
+     *
+     * @param selectedDate The selected date.
+     */
     private void updateEventList(LocalDate selectedDate) {
         eventListData.clear();
 
@@ -280,7 +299,12 @@ public class CalendarController implements Initializable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Retrieves the name of a meeting room by its ID.
+     *
+     * @param roomID The ID of the room.
+     * @return The room name or null if not found.
+     */
     private String getRoomName(int roomID) {
         String query = "SELECT RoomName FROM MeetingRooms WHERE RoomID = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -295,7 +319,13 @@ public class CalendarController implements Initializable {
         }
         return null;
     }
-
+    /**
+     * Calculates the end time given a start time and duration.
+     *
+     * @param startTime The starting time in HH:mm:ss format.
+     * @param duration  The duration in HH:mm:ss or a label such as "AllDay".
+     * @return The calculated end time in HH:mm:ss format.
+     */
     private String calculateEndTime(String startTime, String duration) {
         String[] startParts = startTime.split(":");
         int startHours = Integer.parseInt(startParts[0]);

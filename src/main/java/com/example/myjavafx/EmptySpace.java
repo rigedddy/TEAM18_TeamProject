@@ -2,7 +2,11 @@ package com.example.myjavafx;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
+/**
+ * Represents an empty time slot in the schedule, including start and end times,
+ * the date, and the venue where the slot is available.
+ * This class is typically used to display available gaps in the event calendar or booking system.
+ */
 public class EmptySpace {
 
 
@@ -10,7 +14,14 @@ public class EmptySpace {
     private final StringProperty endTime;
     private final StringProperty date;
     private final StringProperty venue;
-
+    /**
+     * Constructs an {@code EmptySpace} instance with the specified time range, date, and venue.
+     *
+     * @param startTime the start time of the empty slot (e.g., "14:00")
+     * @param endTime   the end time of the empty slot (e.g., "15:30")
+     * @param date      the date of the empty slot (e.g., "2025-04-11")
+     * @param venue     the venue where the slot is available (e.g., "Main Hall")
+     */
     public EmptySpace(String startTime, String endTime, String date, String venue) {
 
         this.startTime = new SimpleStringProperty(startTime);
