@@ -7,6 +7,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * Handles group booking operations including user input validation,
+ * populating dropdown menus with event and institution data, and
+ * inserting valid booking entries into the database.
+ */
 public class GroupBooking {
 
     private TextField numOfPeople;
@@ -17,6 +22,16 @@ public class GroupBooking {
 
     private final String[] institutionChoices = {"NULL", "Primary School", "Secondary School", "College", "University"};
 
+    /**
+     * Constructor for GroupBooking. Initializes the form fields and populates
+     * the ChoiceBox elements for institution and event options.
+     *
+     * @param numOfPeople       TextField for the number of people in the group.
+     * @param name              TextField for the primary contact's name.
+     * @param email             TextField for the primary contact's email.
+     * @param institutionChoice ChoiceBox containing institution types.
+     * @param groupEvent        ChoiceBox containing event names.
+     */
     public GroupBooking(TextField numOfPeople, TextField name, TextField email,
                         ChoiceBox<String> institutionChoice, ChoiceBox<String> groupEvent) {
         this.numOfPeople = numOfPeople;
@@ -29,13 +44,17 @@ public class GroupBooking {
         initializeChoiceBoxes();
     }
 
+    /**
+     * Initializes the ChoiceBoxes for institution and event selection.
+     */
     private void initializeChoiceBoxes() {
         institutionChoice.getItems().addAll(institutionChoices);
-        // Populate groupEvent with event names from the Events table
         fetchEventNames();
     }
 
-    // fetch event names from the Events table
+    /**
+     * Populates the groupEvent ChoiceBox with event names from the database.
+     */
     private void fetchEventNames() {
         String query = "SELECT EventName FROM Events";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -52,9 +71,11 @@ public class GroupBooking {
         }
     }
 
+    /**
+     * Validates form input fields and inserts a new group booking into the database if all inputs are valid.
+     */
     public void createNewGroupBooking() {
         try {
-            // Get and validate input values
             String numOfPeopleString = numOfPeople.getText() != null ? numOfPeople.getText().trim() : null;
             String nameString = name.getText() != null ? name.getText().trim() : null;
             String emailString = email.getText() != null ? email.getText().trim() : null;
@@ -90,14 +111,12 @@ public class GroupBooking {
                 isValid = false;
             }
 
-            // if all fields are valid, proceed with booking
             if (isValid) {
                 String[] data = {numOfPeopleString, nameString, emailString, institutionChoiceString, eventName};
                 System.out.println("Group Booking Data registered: " + java.util.Arrays.toString(data));
 
                 Integer filmID = getFilmIDForEvent(eventName);
 
-                // insert into the GroupBooking table
                 String insertQuery = "INSERT INTO GroupBookings (PrimaryContactName, PrimaryContactEmail, NumberOfPeople, status, FilmID, Institution) VALUES (?, ?, ?, ?, ?, ?)";
                 try (Connection conn = DatabaseConnection.getConnection();
                      PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {
@@ -105,7 +124,7 @@ public class GroupBooking {
                     pstmt.setString(1, nameString);
                     pstmt.setString(2, emailString);
                     pstmt.setInt(3, Integer.parseInt(numOfPeopleString));
-                    pstmt.setString(4, "pending"); // Default status
+                    pstmt.setString(4, "pending");
                     if (filmID != null) {
                         pstmt.setInt(5, filmID);
                     } else {
@@ -132,6 +151,12 @@ public class GroupBooking {
         }
     }
 
+    /**
+     * Retrieves the EventID for a given event name from the database.
+     *
+     * @param eventName The name of the event to look up.
+     * @return The corresponding EventID, or null if not found.
+     */
     private Integer getFilmIDForEvent(String eventName) {
         String query = "SELECT EventID FROM Events WHERE EventName = ?";
         try (Connection conn = DatabaseConnection.getConnection();
