@@ -9,6 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+/**
+ * Handles the creation of venue tour bookings, including UI field validation
+ * and insertion into the database.
+ */
 public class VenueTour {
 
     private ChoiceBox<String> institutionTour;
@@ -18,6 +22,14 @@ public class VenueTour {
 
     private final String[] institutionChoices = {"Primary School", "Secondary School", "College", "University"};
 
+    /**
+     * Constructor to initialize form components and populate the institution dropdown.
+     *
+     * @param institutionTour ChoiceBox for institution selection.
+     * @param studentsTour    TextField for entering number of students.
+     * @param timeTour        TextField for entering the tour time.
+     * @param dateTour        DatePicker for selecting the tour date.
+     */
     public VenueTour(ChoiceBox<String> institutionTour, TextField studentsTour, TextField timeTour, DatePicker dateTour) {
         this.institutionTour = institutionTour;
         this.studentsTour = studentsTour;
@@ -27,11 +39,16 @@ public class VenueTour {
         initializeChoiceBox();
     }
 
+    /**
+     * Populates the institution choice box with predefined options.
+     */
     private void initializeChoiceBox() {
         institutionTour.getItems().addAll(institutionChoices);
     }
 
-    // method to create a new venue tour booking
+    /**
+     * Validates input fields and inserts a new venue tour booking into the database if valid.
+     */
     public void createNewTourBooking() {
         try {
             String institution = institutionTour.getValue() != null ? institutionTour.getValue().strip() : null;
@@ -45,7 +62,6 @@ public class VenueTour {
             timeTour.setStyle("");
             dateTour.setStyle("");
 
-            // Validate inputs
             boolean isValid = true;
 
             if (institution == null || institution.isEmpty()) {
@@ -65,13 +81,10 @@ public class VenueTour {
                 isValid = false;
             }
 
-            // If all fields are valid, proceed with booking
             if (isValid) {
-                // Log the data for debugging
                 String[] data = {institution, numberOfPeople, time, date};
                 System.out.println("Venue Tour Data registered: " + java.util.Arrays.toString(data));
 
-                // Insert into the VenueTour table
                 String insertQuery = "INSERT INTO VenueTour (Date, Time, numberOfPeople, Institution) VALUES (?, ?, ?, ?)";
                 try (Connection conn = DatabaseConnection.getConnection();
                      PreparedStatement pstmt = conn.prepareStatement(insertQuery)) {

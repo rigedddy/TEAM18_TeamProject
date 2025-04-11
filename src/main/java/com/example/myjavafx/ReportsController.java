@@ -9,85 +9,63 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
+/**
+ * Controller class for the Reports.fxml UI.
+ * Displays various data-driven marketing metrics such as subscriber stats, tour counts,
+ * film ticket revenue, and general revenue/cost/profit summaries.
+ */
 public class ReportsController implements Initializable {
 
-    @FXML
-    private ImageView profileimg;
+    @FXML private ImageView profileimg;
 
-    @FXML
-    private ChoiceBox<String> FoLYear;
+    @FXML private ChoiceBox<String> FoLYear;
+    @FXML private LineChart<String, Number> FOLGraph;
+    @FXML private Label TotalFOL;
 
-    @FXML
-    private LineChart<String, Number> FOLGraph;
+    @FXML private PieChart InstitutionsPie;
+    @FXML private Label totalInstitutionsLabel;
+    @FXML private Label totalToursLabel;
 
-    @FXML
-    private Label TotalFOL;
+    @FXML private LineChart<String, Number> FilmTicketGraph;
+    @FXML private ChoiceBox<String> FilmTicketYear;
+    @FXML private Label totalFilms;
+    @FXML private Label revenueTickets;
 
-    @FXML
-    private PieChart InstitutionsPie;
+    @FXML private LineChart<String, Number> generalGraph;
+    @FXML private Label totalCostsLabel;
+    @FXML private Label totalProfitsLabel;
+    @FXML private Label totalRevenueLabel;
 
-    @FXML
-    private Label totalInstitutionsLabel;
+    @FXML private Label time;
 
-    @FXML
-    private Label totalToursLabel;
-
-    @FXML
-    private LineChart<String, Number> FilmTicketGraph;
-
-    @FXML
-    private ChoiceBox<String> FilmTicketYear;
-
-    @FXML
-    private Label totalFilms;
-
-    @FXML
-    private Label revenueTickets;
-
-    @FXML
-    private LineChart<String, Number> generalGraph; // Updated to specify types
-
-    @FXML
-    private Label totalCostsLabel;
-
-    @FXML
-    private Label totalProfitsLabel;
-
-    @FXML
-    private Label totalRevenueLabel;
-
-    @FXML
-    private Label time;
     private ActionEvent event;
+    private Reports reports;
 
-    private Reports reports; // Instance of the Reports class
-
+    /**
+     * Initializes the controller after the root element has been completely processed.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // time
         time.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-
         reports = new Reports();
 
         loadMarketingGeneralMetrics();
-
         loadInstitutionsPieChart();
-
         loadFOLSection();
-
         loadFilmTicketSection();
     }
 
+    /**
+     * Loads general financial metrics including revenue, costs, and profits.
+     */
     private void loadMarketingGeneralMetrics() {
         double totalRevenue = reports.getTotalRevenue();
         double totalCosts = reports.getTotalCosts();
@@ -100,6 +78,9 @@ public class ReportsController implements Initializable {
         reports.populateGeneralGraph(generalGraph);
     }
 
+    /**
+     * Loads institution-related booking data into a pie chart.
+     */
     private void loadInstitutionsPieChart() {
         reports.populateInstitutionsPieChart(InstitutionsPie);
 
@@ -107,6 +88,9 @@ public class ReportsController implements Initializable {
         totalToursLabel.setText("Total Tours: " + reports.getTotalTours());
     }
 
+    /**
+     * Loads Friends of Lancaster subscriber data into the graph and dropdown.
+     */
     private void loadFOLSection() {
         List<String> years = reports.getFOLYears();
         FoLYear.getItems().addAll(years);
@@ -123,13 +107,18 @@ public class ReportsController implements Initializable {
         });
     }
 
+    /**
+     * Updates the subscriber line chart and label for the selected year.
+     */
     private void updateFOLGraph(String year) {
         reports.populateFOLGraph(FOLGraph, year);
-
         int totalSubscribers = reports.getTotalSubscribers(year);
         TotalFOL.setText("Total Subscribers: " + totalSubscribers);
     }
 
+    /**
+     * Loads the film ticket graph and year selector.
+     */
     private void loadFilmTicketSection() {
         List<String> years = reports.getFilmTicketYears();
         FilmTicketYear.getItems().addAll(years);
@@ -146,6 +135,9 @@ public class ReportsController implements Initializable {
         });
     }
 
+    /**
+     * Updates the film ticket graph and financial summary for the selected year.
+     */
     private void updateFilmTicketGraph(String year) {
         reports.populateFilmTicketGraph(FilmTicketGraph, year);
 

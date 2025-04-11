@@ -15,8 +15,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * A utility class for generating reports and visualizations based on database data.
+ * Provides methods to fetch and display institution tour counts, subscriber metrics,
+ * film ticket sales, and general financial metrics using JavaFX charts.
+ */
 public class Reports {
 
+    /** Array of colors used for styling pie chart slices and legend items. */
     private static final String[] COLORS = {
             "#FF8C00",
             "#FFD700",
@@ -25,14 +31,20 @@ public class Reports {
             "#4169E1"
     };
 
-    // month names for the x-axis
+    /** Array of month abbreviations for the x-axis of charts. */
     private static final String[] MONTHS = {
             "Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
     };
 
+    /** Conversion rate from GBP to USD for financial calculations. */
     private static final double GBP_TO_USD = 1.3;
 
+    /**
+     * Retrieves the count of tours per institution from VenueTour and GroupBookings tables.
+     *
+     * @return a map with institution names as keys and tour counts as values
+     */
     public Map<String, Integer> getInstitutionTourCounts() {
         Map<String, Integer> institutionCounts = new HashMap<>();
 
@@ -45,6 +57,12 @@ public class Reports {
         return institutionCounts;
     }
 
+    /**
+     * Fetches institution tour counts from the database using the provided query and updates the counts map.
+     *
+     * @param query the SQL query to fetch institution counts
+     * @param institutionCounts the map to store institution names and their tour counts
+     */
     private void fetchInstitutionCounts(String query, Map<String, Integer> institutionCounts) {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
@@ -66,13 +84,16 @@ public class Reports {
         }
     }
 
-    // method to populate the PieChart with combined institution data
+    /**
+     * Populates a PieChart with institution tour count data, applying custom colors and styling.
+     *
+     * @param pieChart the PieChart to populate with institution data
+     */
     public void populateInstitutionsPieChart(PieChart pieChart) {
         Map<String, Integer> institutionCounts = getInstitutionTourCounts();
 
         pieChart.getData().clear();
 
-        // sort the entries alphabetically by institution name for consistent coloring
         institutionCounts.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .forEach(entry -> {
@@ -85,7 +106,6 @@ public class Reports {
         Platform.runLater(() -> {
             int colorIndex = 0;
             for (PieChart.Data data : pieChart.getData()) {
-                // Apply color to the pie chart slice
                 Node node = data.getNode();
                 if (node != null) {
                     String color = COLORS[colorIndex % COLORS.length];
@@ -112,7 +132,11 @@ public class Reports {
         pieChart.setLegendSide(Side.RIGHT);
     }
 
-    // method to get the total number of distinct institutions (excluding "Not Specified")
+    /**
+     * Calculates the total number of distinct institutions, excluding "Not Specified".
+     *
+     * @return the total number of unique institutions
+     */
     public int getTotalInstitutions() {
         Map<String, Integer> institutionCounts = getInstitutionTourCounts();
         return (int) institutionCounts.keySet().stream()
@@ -120,13 +144,21 @@ public class Reports {
                 .count();
     }
 
-    // method to get the total number of tours/bookings (total rows from both tables)
+    /**
+     * Calculates the total number of tours/bookings across all institutions.
+     *
+     * @return the total number of tours
+     */
     public int getTotalTours() {
         Map<String, Integer> institutionCounts = getInstitutionTourCounts();
         return institutionCounts.values().stream().mapToInt(Integer::intValue).sum();
     }
 
-    // method to fetch distinct years from the JoinYear column
+    /**
+     * Retrieves distinct years from the FriendsOfLancaster JoinYear column.
+     *
+     * @return a list of years in descending order
+     */
     public List<String> getFOLYears() {
         List<String> years = new ArrayList<>();
         String query = "SELECT DISTINCT YEAR(JoinYear) as year FROM FriendsOfLancaster ORDER BY year DESC";
@@ -147,10 +179,14 @@ public class Reports {
         return years;
     }
 
-    // method to fetch the number of active subscribers per month for a given year
+    /**
+     * Fetches the number of active subscribers per month for a given year.
+     *
+     * @param year the year to query subscriber data for
+     * @return a map with month names as keys and subscriber counts as values
+     */
     private Map<String, Integer> getSubscribersPerMonth(String year) {
         Map<String, Integer> subscribersPerMonth = new LinkedHashMap<>();
-        // Initialize counts for each month
         for (String month : MONTHS) {
             subscribersPerMonth.put(month, 0);
         }
@@ -173,14 +209,10 @@ public class Reports {
                 LocalDate joinDate = LocalDate.parse(joinYearStr, formatter);
                 LocalDate expiryDate = LocalDate.parse(expiryDateStr, formatter);
 
-                // check each month of the selected year
                 for (int month = 1; month <= 12; month++) {
                     LocalDate monthStart = LocalDate.of(Integer.parseInt(year), month, 1);
                     LocalDate monthEnd = monthStart.withDayOfMonth(monthStart.lengthOfMonth());
 
-                    // Subscriber is active in this month if:
-                    // - JoinYear is on or before the end of the month
-                    // - ExpiryDate is on or after the start of the month
                     if (!joinDate.isAfter(monthEnd) && !expiryDate.isBefore(monthStart)) {
                         String monthName = MONTHS[month - 1];
                         subscribersPerMonth.put(monthName, subscribersPerMonth.get(monthName) + 1);
@@ -195,7 +227,12 @@ public class Reports {
         return subscribersPerMonth;
     }
 
-    // method to populate the LineChart with subscribers per month for a given year
+    /**
+     * Populates a LineChart with the number of subscribers per month for a given year.
+     *
+     * @param lineChart the LineChart to populate
+     * @param year the year to display subscriber data for
+     */
     public void populateFOLGraph(LineChart<String, Number> lineChart, String year) {
         Map<String, Integer> subscribersPerMonth = getSubscribersPerMonth(year);
 
@@ -213,7 +250,12 @@ public class Reports {
         lineChart.setTitle("Subscribers per Month (" + year + ")");
     }
 
-    // method to get the total number of active subscribers for a given year
+    /**
+     * Retrieves the total number of active subscribers for a given year.
+     *
+     * @param year the year to query
+     * @return the total number of active subscribers
+     */
     public int getTotalSubscribers(String year) {
         int totalSubscribers = 0;
         String query = "SELECT COUNT(*) as count " +
@@ -240,12 +282,21 @@ public class Reports {
         return totalSubscribers;
     }
 
-    // method to fetch years for the FilmTicketYear ChoiceBox (hardcoded 2023-2024)
+    /**
+     * Retrieves a hardcoded list of years for film ticket data (2023-2024).
+     *
+     * @return a list of years
+     */
     public List<String> getFilmTicketYears() {
         return Arrays.asList("2024", "2023");
     }
 
-    // method to fetch films and their license costs for a given year
+    /**
+     * Fetches film license costs for a given year.
+     *
+     * @param year the year to query
+     * @return a map with film IDs as keys and license costs as values
+     */
     private Map<String, Double> getFilmLicenseCosts(String year) {
         Map<String, Double> filmLicenseCosts = new LinkedHashMap<>();
 
@@ -273,7 +324,12 @@ public class Reports {
         return filmLicenseCosts;
     }
 
-    // method to fetch ticket sales revenue for each film in a given year
+    /**
+     * Fetches ticket sales revenue for each film in a given year.
+     *
+     * @param year the year to query
+     * @return a map with film IDs as keys and ticket sales revenue as values
+     */
     private Map<String, Double> getFilmTicketSales(String year) {
         Map<String, Double> filmTicketSales = new LinkedHashMap<>();
 
@@ -290,7 +346,7 @@ public class Reports {
 
             while (rs.next()) {
                 int filmId = rs.getInt("FilmID");
-                filmTicketSales.put(String.valueOf(filmId), 0.0); // Initialize to 0
+                filmTicketSales.put(String.valueOf(filmId), 0.0);
             }
 
         } catch (SQLException e) {
@@ -322,7 +378,12 @@ public class Reports {
         return filmTicketSales;
     }
 
-    // method to populate the LineChart with film license costs and ticket sales revenue
+    /**
+     * Populates a LineChart with film license costs and ticket sales revenue for a given year.
+     *
+     * @param lineChart the LineChart to populate
+     * @param year the year to display data for
+     */
     public void populateFilmTicketGraph(LineChart<String, Number> lineChart, String year) {
         Map<String, Double> licenseCosts = getFilmLicenseCosts(year);
         Map<String, Double> ticketSales = getFilmTicketSales(year);
@@ -345,7 +406,6 @@ public class Reports {
         Platform.runLater(() -> {
             for (XYChart.Series<String, Number> series : lineChart.getData()) {
                 for (XYChart.Data<String, Number> data : series.getData()) {
-                    // Add tooltip
                     javafx.scene.control.Tooltip tooltip = new javafx.scene.control.Tooltip(
                             "Film ID: " + data.getXValue() + "\n" +
                                     series.getName() + ": $" + String.format("%.2f", data.getYValue())
@@ -375,7 +435,12 @@ public class Reports {
         ((javafx.scene.chart.NumberAxis) lineChart.getYAxis()).setTickUnit(Math.ceil(maxValue / 5000) * 1000);
     }
 
-    // method to get the total number of films shown in a given year
+    /**
+     * Retrieves the total number of films shown in a given year.
+     *
+     * @param year the year to query
+     * @return the total number of films
+     */
     public int getTotalFilms(String year) {
         int totalFilms = 0;
         String query = "SELECT COUNT(*) as count FROM Film WHERE YEAR(Date) = ?";
@@ -397,7 +462,12 @@ public class Reports {
         return totalFilms;
     }
 
-    // method to get the total revenue from ticket sales in a given year
+    /**
+     * Calculates the total revenue from ticket sales in a given year.
+     *
+     * @param year the year to query
+     * @return the total ticket sales revenue
+     */
     public double getTotalTicketRevenue(String year) {
         double totalRevenue = 0.0;
         String query = "SELECT SUM(TicketPrice) as total FROM TicketSales WHERE YEAR(PurchaseDateTime) = ? AND FilmID IS NOT NULL";
@@ -419,9 +489,11 @@ public class Reports {
         return totalRevenue;
     }
 
-    // methods for Marketing General Metrics
-
-    // method to fetch distinct years for the general metrics (based on TicketSales, MeetingRoomBooking, etc.)
+    /**
+     * Retrieves distinct years from TicketSales, MeetingRoomBooking, and FriendsOfLancaster tables.
+     *
+     * @return a list of years in descending order
+     */
     public List<String> getGeneralMetricYears() {
         List<String> years = new ArrayList<>();
         String query = "SELECT DISTINCT YEAR(PurchaseDateTime) as year FROM TicketSales " +
@@ -447,7 +519,11 @@ public class Reports {
         return years;
     }
 
-    // method to calculate total revenue by year
+    /**
+     * Calculates total revenue by year from ticket sales, meeting room bookings, and subscriptions.
+     *
+     * @return a map with years as keys and total revenue as values
+     */
     private Map<String, Double> getTotalRevenueByYear() {
         Map<String, Double> revenueByYear = new TreeMap<>();
 
@@ -455,7 +531,6 @@ public class Reports {
             revenueByYear.put(year, 0.0);
         }
 
-        // 1. Ticket Sales Revenue
         String ticketSalesQuery = "SELECT YEAR(PurchaseDateTime) as year, SUM(TicketPrice) as total " +
                 "FROM TicketSales GROUP BY YEAR(PurchaseDateTime)";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -470,7 +545,6 @@ public class Reports {
             System.out.println("Error fetching ticket sales revenue by year: " + e.getMessage());
         }
 
-        // 2. Meeting Room Booking Revenue
         String meetingRoomQuery = "SELECT YEAR(BookingDate) as year, Price " +
                 "FROM MeetingRoomBooking";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -480,14 +554,13 @@ public class Reports {
                 String year = String.valueOf(rs.getInt("year"));
                 String priceStr = rs.getString("Price").replace("£", "");
                 double priceInGBP = Double.parseDouble(priceStr);
-                double priceInUSD = priceInGBP * GBP_TO_USD; // Convert to USD
+                double priceInUSD = priceInGBP * GBP_TO_USD;
                 revenueByYear.put(year, revenueByYear.getOrDefault(year, 0.0) + priceInUSD);
             }
         } catch (SQLException e) {
             System.out.println("Error fetching meeting room revenue by year: " + e.getMessage());
         }
 
-        // 3. Friends of Lancaster Subscription Revenue (Assume $50 per active subscriber)
         String subscriptionQuery = "SELECT YEAR(JoinYear) as year, COUNT(*) as count " +
                 "FROM FriendsOfLancaster " +
                 "WHERE SubscriptionStatus = 1 " +
@@ -498,7 +571,7 @@ public class Reports {
             while (rs.next()) {
                 String year = String.valueOf(rs.getInt("year"));
                 int activeSubscribers = rs.getInt("count");
-                double subscriptionRevenue = activeSubscribers * 50.0; // $50 per subscriber
+                double subscriptionRevenue = activeSubscribers * 50.0;
                 revenueByYear.put(year, revenueByYear.getOrDefault(year, 0.0) + subscriptionRevenue);
             }
         } catch (SQLException e) {
@@ -508,7 +581,11 @@ public class Reports {
         return revenueByYear;
     }
 
-    // method to calculate total costs by year
+    /**
+     * Calculates total costs by year from film licenses, marketing campaigns, and events.
+     *
+     * @return a map with years as keys and total costs as values
+     */
     private Map<String, Double> getTotalCostsByYear() {
         Map<String, Double> costsByYear = new TreeMap<>();
 
@@ -516,7 +593,6 @@ public class Reports {
             costsByYear.put(year, 0.0);
         }
 
-        // 1. Film License Costs
         String filmCostQuery = "SELECT YEAR(Date) as year, SUM(LicenseCost) as total " +
                 "FROM Film GROUP BY YEAR(Date)";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -531,7 +607,6 @@ public class Reports {
             System.out.println("Error fetching film license costs by year: " + e.getMessage());
         }
 
-        // 2. Marketing Campaign Costs (Assume $500 per campaign)
         String marketingCostQuery = "SELECT YEAR(StartDate) as year, COUNT(*) as count " +
                 "FROM MarketingCampaign GROUP BY YEAR(StartDate)";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -540,14 +615,13 @@ public class Reports {
             while (rs.next()) {
                 String year = String.valueOf(rs.getInt("year"));
                 int campaignCount = rs.getInt("count");
-                double marketingCost = campaignCount * 500.0; // $500 per campaign
+                double marketingCost = campaignCount * 500.0;
                 costsByYear.put(year, costsByYear.getOrDefault(year, 0.0) + marketingCost);
             }
         } catch (SQLException e) {
             System.out.println("Error fetching marketing campaign costs by year: " + e.getMessage());
         }
 
-        // 3. Event Costs (Assume $200 per event)
         String eventCostQuery = "SELECT YEAR(EventDate) as year, COUNT(*) as count " +
                 "FROM Events GROUP BY YEAR(EventDate)";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -556,7 +630,7 @@ public class Reports {
             while (rs.next()) {
                 String year = String.valueOf(rs.getInt("year"));
                 int eventCount = rs.getInt("count");
-                double eventCost = eventCount * 200.0; // $200 per event
+                double eventCost = eventCount * 200.0;
                 costsByYear.put(year, costsByYear.getOrDefault(year, 0.0) + eventCost);
             }
         } catch (SQLException e) {
@@ -566,7 +640,11 @@ public class Reports {
         return costsByYear;
     }
 
-    // method to calculate total profits by year
+    /**
+     * Calculates total profits by year based on revenue and costs.
+     *
+     * @return a map with years as keys and total profits as values
+     */
     private Map<String, Double> getTotalProfitsByYear() {
         Map<String, Double> revenueByYear = getTotalRevenueByYear();
         Map<String, Double> costsByYear = getTotalCostsByYear();
@@ -581,22 +659,38 @@ public class Reports {
         return profitsByYear;
     }
 
-    // method to calculate total revenue (for the labels, all years combined)
+    /**
+     * Calculates the total revenue across all years.
+     *
+     * @return the total revenue
+     */
     public double getTotalRevenue() {
         return getTotalRevenueByYear().values().stream().mapToDouble(Double::doubleValue).sum();
     }
 
-    // method to calculate total costs (for the labels, all years combined)
+    /**
+     * Calculates the total costs across all years.
+     *
+     * @return the total costs
+     */
     public double getTotalCosts() {
         return getTotalCostsByYear().values().stream().mapToDouble(Double::doubleValue).sum();
     }
 
-    // method to calculate total profits (for the labels, all years combined)
+    /**
+     * Calculates the total profits across all years.
+     *
+     * @return the total profits
+     */
     public double getTotalProfits() {
         return getTotalProfitsByYear().values().stream().mapToDouble(Double::doubleValue).sum();
     }
 
-    // method to populate the generalGraph with revenue, costs, and profits by year
+    /**
+     * Populates a LineChart with total revenue, costs, and profits by year.
+     *
+     * @param lineChart the LineChart to populate
+     */
     public void populateGeneralGraph(LineChart<String, Number> lineChart) {
         Map<String, Double> revenueByYear = getTotalRevenueByYear();
         Map<String, Double> costsByYear = getTotalCostsByYear();
@@ -631,17 +725,15 @@ public class Reports {
         Platform.runLater(() -> {
             for (XYChart.Series<String, Number> series : lineChart.getData()) {
                 for (XYChart.Data<String, Number> data : series.getData()) {
-                    // Add tooltip
                     javafx.scene.control.Tooltip tooltip = new javafx.scene.control.Tooltip(
                             "Year: " + data.getXValue() + "\n" +
                                     series.getName() + ": $" + String.format("%.2f", data.getYValue())
                     );
                     javafx.scene.control.Tooltip.install(data.getNode(), tooltip);
 
-                    // Style the data points
                     String color = series.getName().equals("Total Revenue") ? "#00FF00" :
                             series.getName().equals("Total Costs") ? "#FF0000" :
-                                    "#0000FF"; // Green for revenue, Red for costs, Blue for profits
+                                    "#0000FF";
                     data.getNode().setStyle("-fx-background-color: " + color + ";");
                 }
                 if (series.getName().equals("Total Revenue")) {
@@ -661,7 +753,7 @@ public class Reports {
                 costsByYear.values().stream().mapToDouble(Double::doubleValue).max().orElse(0.0)
         );
         double minValue = profitsByYear.values().stream().mapToDouble(Double::doubleValue).min().orElse(0.0);
-        minValue = Math.min(minValue, 0); // Ensure the y-axis goes below 0 if profits are negative
+        minValue = Math.min(minValue, 0);
         ((javafx.scene.chart.NumberAxis) lineChart.getYAxis()).setLowerBound(Math.floor(minValue / 1000) * 1000);
         ((javafx.scene.chart.NumberAxis) lineChart.getYAxis()).setUpperBound(Math.ceil(maxValue / 1000) * 1000);
         ((javafx.scene.chart.NumberAxis) lineChart.getYAxis()).setTickUnit(Math.ceil(maxValue / 5000) * 1000);

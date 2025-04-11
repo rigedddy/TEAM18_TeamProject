@@ -10,6 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Handles meeting room bookings by fetching available rooms, clients, time slots,
+ * and inserting new bookings into the database with calculated pricing.
+ */
 public class MeetingRoom {
 
     private ChoiceBox<String> roomName;
@@ -22,6 +26,16 @@ public class MeetingRoom {
     private final String[] roomNameChoices;
     private final String[] clientNameChoices;
 
+    /**
+     * Constructor for MeetingRoom. Initializes UI components and fetches
+     * choices for room names and client names from the database.
+     *
+     * @param roomName     ChoiceBox for room names.
+     * @param clientName   ChoiceBox for client company names.
+     * @param timeSlot     ChoiceBox for selecting the duration of booking.
+     * @param date         DatePicker for selecting the booking date.
+     * @param meetingPrice TextField to display the calculated price.
+     */
     public MeetingRoom(ChoiceBox<String> roomName, ChoiceBox<String> clientName, ChoiceBox<String> timeSlot,
                        DatePicker date, TextField meetingPrice) {
         this.roomName = roomName;
@@ -36,7 +50,11 @@ public class MeetingRoom {
         initializeChoiceBoxes();
     }
 
-    // fetch room names from the database
+    /**
+     * Fetches available meeting room names from the database.
+     *
+     * @return Array of room names.
+     */
     private String[] fetchRoomNames() {
         ArrayList<String> roomNamesList = new ArrayList<>();
 
@@ -57,7 +75,11 @@ public class MeetingRoom {
         return roomNamesList.toArray(new String[0]);
     }
 
-    // fetch client names from the database
+    /**
+     * Fetches client company names from the database.
+     *
+     * @return Array of client names.
+     */
     private String[] fetchClientNames() {
         ArrayList<String> clientNamesList = new ArrayList<>();
 
@@ -78,14 +100,19 @@ public class MeetingRoom {
         return clientNamesList.toArray(new String[0]);
     }
 
-    // initialize the ChoiceBox components
+    /**
+     * Initializes the ChoiceBox components with fetched values for rooms, clients, and time slots.
+     */
     private void initializeChoiceBoxes() {
         roomName.getItems().addAll(roomNameChoices);
         clientName.getItems().addAll(clientNameChoices);
         timeSlot.getItems().addAll(timeChoices);
     }
 
-    // method to create a new meeting room booking
+    /**
+     * Validates user input and inserts a new meeting room booking into the database.
+     * Automatically calculates and displays the price based on the selected time slot.
+     */
     public void createNewMeetingRoomBooking() {
         try {
             String client = clientName.getValue() != null ? clientName.getValue().strip() : null;
